@@ -76,4 +76,7 @@ public class CustomerService {
 		return repository.findByPreferedUrlName(preferredUrl);
 	}
 
+	public List<Customer> findBySimulationSolutionAndState(String simulation, List<String> solution, String state) {
+		return repository.findBySimulationSolutionAndState(simulation,solution,state);
+	}
 }

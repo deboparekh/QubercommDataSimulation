@@ -804,7 +804,7 @@ public class NetworkConfRestController extends WebController {
 				BeaconDevice beacondevice = null;
 				beacondevice = getBeaconDeviceService().findOneByUid(uid);
 				if (beacondevice != null) {
-					geoFinderRestController.Pixel2Coordinate(spid, uid, xposition, yposition);
+					geoFinderRestController.Pixel2Coordinate(null,spid, uid, xposition, yposition);
 				}
 			} else {
 				// LOG.info("Reposition type " + type);
@@ -1838,7 +1838,7 @@ public class NetworkConfRestController extends WebController {
 					beacondevice = getBeaconDeviceService().findOneByUid(uid);
 				}
 
-				geoFinderRestController.Pixel2Coordinate(spid, uid, xposition, yposition);
+				geoFinderRestController.Pixel2Coordinate(null,spid, uid, xposition, yposition);
 				nd.id = beacondevice.getId();
 				beacondevice = getBeaconDeviceService().findOneByUid(uid);
 				beacondevice.setTemplate(template.toString());
@@ -1895,7 +1895,7 @@ public class NetworkConfRestController extends WebController {
 					beacondevice = getBeaconDeviceService().findOneByUid(uid);
 				}
 
-				geoFinderRestController.Pixel2Coordinate(spid, uid, xposition, yposition);
+				geoFinderRestController.Pixel2Coordinate(null,spid, uid, xposition, yposition);
 
 				nd.id = beacondevice.getId();
 				beacondevice = getBeaconDeviceService().findOneByUid(uid);

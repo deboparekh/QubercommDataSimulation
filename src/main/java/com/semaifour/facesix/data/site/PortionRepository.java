@@ -12,4 +12,7 @@ public interface PortionRepository extends MongoRepository<Portion, String> {
 
 	@Query("{id:{$in:?0}}")
 	public List<Portion> findByIds(List<String> ids);
+
+	@Query("{cid:{$in:?0}}")
+	public List<Portion> findByCids(List<String> cidList);
 }

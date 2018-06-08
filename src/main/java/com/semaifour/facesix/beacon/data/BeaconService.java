@@ -1,6 +1,7 @@
 package com.semaifour.facesix.beacon.data;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,15 +11,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
 import com.semaifour.facesix.data.elasticsearch.ElasticService;
@@ -32,7 +37,9 @@ import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.mqtt.Payload;
 import com.semaifour.facesix.spring.CCC;
 import com.semaifour.facesix.util.CustomerUtils;
+
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 
@@ -323,7 +330,6 @@ public class BeaconService {
 		String scannerUid = "0";
 		int minor = 0;
 		int major = 0;
-		int batteryLevel = 0;
 		long batteryTimestamp = 0;
 		String uid = "0";
 
@@ -331,66 +337,11 @@ public class BeaconService {
 
 		if (beacon == null) {
 			beacon = new Beacon();
-			beacon.setMacaddr(macaddr);
-			beacon.setCreatedBy(whoami);
-			beacon.setCreatedOn(new Date());
-
-			// LOG.info("=========New Tags Entry in MongoDB ====> mac "
-			// +macaddr);
 		}
-
-		if (beacon != null) {
-			if (beacon.getStatus() != null && beacon.getStatus().equalsIgnoreCase("checkedout")) {
-				// LOG.info(" duplicate ====> mac " +beacon.getMacaddr());
-				// LOG.info(" minor ======> " + beacon.getMinor() +"major "
-				// +beacon.getMajor());
-				// LOG.info("cid ========> " +beacon.getCid());
-				// LOG.info(" scannerUid=========== > "
-				// +beacon.getScannerUid());
-				return null;
-			}
-		}
-
-		Beacon Newbeacon = getScannedBeacon(macaddr, request.getSession().getId());
-		if (Newbeacon != null) {
-			scannerUid = Newbeacon.getScannerUid();
-			minor = Newbeacon.getMinor();
-			major = Newbeacon.getMajor();
-			batteryLevel = Newbeacon.getBattery_level();
-			batteryTimestamp = Newbeacon.getBattery_timestamp();
-			uid = Newbeacon.getUid();
-
-			// LOG.info("beacon major=========== > " +major);
-			// LOG.info("beacon minor=========== > " +minor);
-			// LOG.info("beacon scannerUid=========== > " +scannerUid);
-			// LOG.info("New Tags====> mac " +macaddr);
-			// LOG.info("beacon majore=========== > " +major);
-			// LOG.info("beacon minor=========== > " +minor);
-			// LOG.info("beacon batteryLevel=========== > " +batteryLevel);
-			// LOG.info("beacon uid=========== > " +uid);
-
-		} else {
-			if (name.equals("qubertag")) {
-				scannerUid = jsonScannerUid;
-				minor = 1;
-				major = 1000;
-				batteryLevel = 0;
-				uid = "00BBCCEE-6666-4FCE-11AC-00BBCCEE66AA";
-				LOG.info("beacon scannerUid=========== > " + scannerUid);
-			} else {
-				LOG.info("=============Invalid TAGS===================");
-				return null;
-			}
-		}
-
-		// LOG.info("=== scannerUid" + scannerUid);
-		// LOG.info("===== minor" + minor + " major " + major);
-		// LOG.info("===== checkout beacons " + beacon);
-		// LOG.info("==== assto " + assto + " macaddr " + macaddr + "tagname" +
-		// name);
-		// LOG.info("=======bi " + bi + " txpwr " + txpwr);
-		// LOG.info("batteryLevel" + batteryLevel + " batteryTimestamp " +
-		// batteryTimestamp);
+		
+		beacon.setMacaddr(macaddr);
+		beacon.setCreatedBy(whoami);
+		beacon.setCreatedOn(new Date());
 
 		int tpwr = Integer.parseInt(txpwr);
 		int b = Integer.parseInt(bi);
@@ -439,7 +390,6 @@ public class BeaconService {
 			beacon.setRefTxPwr(reftx);
 
 			beacon = save(beacon, true);
-			removeScannedBeacon(beacon.getMacaddr(), request.getSession().getId());
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("opcode", "checkedout");
 			map.put("visitId", beacon.getId());
@@ -1136,6 +1086,60 @@ public class BeaconService {
 		} catch (Exception e) {
 			LOG.info("Error While Updadating Entry Exit Tag  information, Opcode :  " + op);
 			e.printStackTrace();
+		}
+	}
+
+	public List<Beacon> simulateTags(String cid, int tagCount) {
+		
+		List<Beacon> stimulatedBeacons = new ArrayList<Beacon>();
+		String macDef = "TEST";
+		DecimalFormat dformat = new DecimalFormat("00000000");
+		Random rand = new Random(); 
+		String tag_type = "Female",tag_model = "neck",ref_txpwr = "-59", scannerUid = "00:00:00:00:00:00";
+		Beacon addBeacon = null;
+		
+		List<Beacon> alreadyAvailableTags = (List<Beacon>) getSavedBeaconByCidAndStatus(cid, "checkedout");
+		int availableTagCount = alreadyAvailableTags.size();
+		
+		if(availableTagCount >= tagCount){
+			int removeBeacon = availableTagCount - tagCount;
+			if(removeBeacon != 0){
+				List<Beacon> deleteBeacons = alreadyAvailableTags.subList(removeBeacon, availableTagCount);
+				delete(deleteBeacons);
+			}
+			stimulatedBeacons  = alreadyAvailableTags.subList(0, tagCount);
+			return stimulatedBeacons;
+		} else {
+			stimulatedBeacons.addAll(alreadyAvailableTags);
+			tagCount -= availableTagCount;
+		}
+		
+		for (int i = 0; i < tagCount; i++) {
+			
+			String mac = generateMacAddress(macDef,rand,dformat);
+			String assignedTo = mac.replaceAll(":", "").toUpperCase();
+			addBeacon = checkout(mac, assignedTo, tag_type, cid, "qubertag", "1000", "4", 
+								 tag_model, ref_txpwr, scannerUid, "simulatedTag", null);
+			
+			stimulatedBeacons.add(addBeacon);
+		}
+		return stimulatedBeacons;
+	}
+
+	public String generateMacAddress(String macDef, Random rand, DecimalFormat dformat) {
+		
+		int randomNumber = rand.nextInt(999999);
+		String mac = dformat.format(randomNumber);
+		mac = macDef + String.valueOf(randomNumber);
+		
+		mac = mac.substring(0, 2) + ":" + mac.substring(2, 4) + ":" + mac.substring(4, 6)
+			+ mac.substring(6, 8) + ":" + mac.substring(8, 10) + ":" + mac.substring(10, 12);
+		
+		Beacon beacon = findOneByMacaddr(mac);
+		if(beacon == null){
+			return mac;
+		} else {
+			return generateMacAddress(macDef, rand, dformat);
 		}
 	}
 }

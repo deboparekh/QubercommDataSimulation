@@ -61,7 +61,6 @@ public class Customer extends FSObject {
 	private int batteryAlertCount;
 	private int deviceAlertCount;
 	private String vpn;
-
 	/*
 	 * Support EmailId details
 	 */
@@ -72,6 +71,12 @@ public class Customer extends FSObject {
 	private String custSupportHost;
 	private String custSupportPort;
 
+	/*
+	 * Simulation Details
+	 */
+	private String simulation;
+	private String simulationVia;
+	
 	public Customer() {
 
 	}
@@ -556,6 +561,22 @@ public class Customer extends FSObject {
 		this.vpn = vpn;
 	}
 
+	public String getSimulation() {
+		return simulation;
+	}
+
+	public void setSimulation(String simulation) {
+		this.simulation = simulation;
+	}
+
+	public String getSimulationVia() {
+		return simulationVia;
+	}
+
+	public void setSimulationVia(String simulationVia) {
+		this.simulationVia = simulationVia;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", customerName=" + customerName + ", address=" + address + ", city=" + city
@@ -579,6 +600,7 @@ public class Customer extends FSObject {
 				+ ", batteryAlertCount=" + batteryAlertCount + ", deviceAlertCount=" + deviceAlertCount + ", vpn=" + vpn
 				+ ", custSupportEmailEnable=" + custSupportEmailEnable + ", custSupportEmailId=" + custSupportEmailId
 				+ ", custSupportPassword=" + custSupportPassword + ", custSupportHost=" + custSupportHost
-				+ ", custSupportPort=" + custSupportPort + "]";
+				+ ", custSupportPort=" + custSupportPort + ", simulation=" + simulation + ", simulationVia="
+				+ simulationVia + "]";
 	}
 }

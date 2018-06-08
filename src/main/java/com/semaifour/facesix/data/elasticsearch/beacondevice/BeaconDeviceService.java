@@ -1,20 +1,19 @@
 
 package com.semaifour.facesix.data.elasticsearch.beacondevice;
 
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +26,20 @@ import org.springframework.stereotype.Service;
 
 import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
-import com.semaifour.facesix.beacon.data.Beacon;
 import com.semaifour.facesix.beacon.data.BeaconService;
-import com.semaifour.facesix.beacon.finder.geo.GeoFinderLayoutData;
 import com.semaifour.facesix.beacon.finder.geo.GeoFinderLayoutDataService;
+import com.semaifour.facesix.beacon.rest.GeoFinderRestController;
 import com.semaifour.facesix.boot.Application;
 import com.semaifour.facesix.data.elasticsearch.device.HeartBeat;
+import com.semaifour.facesix.data.elasticsearch.device.NetworkDevice;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDeviceService;
 import com.semaifour.facesix.data.site.Portion;
 import com.semaifour.facesix.data.site.PortionService;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.rest.NetworkConfRestController;
+import com.semaifour.facesix.util.SessionUtil;
 import com.semaifour.facesix.util.SimpleCache;
+
 import net.sf.json.JSONArray;
 
 @Service
@@ -55,10 +56,14 @@ public class BeaconDeviceService {
 	@Autowired
 	NetworkConfRestController netRestController;
 
+	@Autowired
 	NetworkDeviceService _networkDeviceService;
 
 	@Autowired
 	BeaconDeviceService beaconDeviceService;
+	
+	@Autowired
+	GeoFinderRestController geoFinderRestController;
 
 	String mqttMsgTemplate = " \"opcode\":\"{0}\", \"uid\":\"{1}\",\"type\":\"{2}\",\"cid\":\"{3}\","
 			+ " \"sid\":\"{4}\",\"spid\":\"{5}\",\"ip\":\"{6}\", \"serverip\":\"{7}\", "
@@ -909,6 +914,90 @@ public class BeaconDeviceService {
 			list.add(bd);
 		}
 		return list;
+	}
+
+	public List<BeaconDevice> simulateDevices(String cid, int deviceCount) {
+		
+		List<BeaconDevice> simulatedDevices = new ArrayList<BeaconDevice>();
+		Random rand = new Random(); 
+
+		List<Portion> availableFloors = portionService.findByCid(cid);
+		if (availableFloors != null && !availableFloors.isEmpty()) {
+			int devicesInEachFloor = deviceCount / availableFloors.size();
+			for (Portion p : availableFloors) {
+				
+				String spid = p.getId();
+				String sid = p.getSiteId();
+				int width = p.getWidth();
+				int height = p.getHeight();
+				int deviceInThisFloor = devicesInEachFloor > deviceCount ? devicesInEachFloor : deviceCount;
+				
+				deviceCount -= deviceInThisFloor;
+				
+				simulatedDevices.addAll(createDevices(cid,sid,spid,deviceInThisFloor,width,height,rand));
+			}
+		}
+		return null;
+	}
+
+	public List<BeaconDevice> createDevices(String cid,String sid,String spid, int deviceCount, int width, int height, Random rand) {
+
+		DecimalFormat dformat = new DecimalFormat("000000000000");
+		String parent = "ble";
+		
+		List<BeaconDevice> createdDevices = new ArrayList<BeaconDevice>();
+		
+		String static_template = "{\"attributes\":[{\"type\":\"receiver\",\"proximity\":\"2.0\","
+				+ "\"scanduration\":\"5.0\",\"ssid\":\"Locatum\",\"encryption\":\"wpa2-psk\","
+				+ "\"key\":\"sudavasu\",\"batteryinterval\":\"12\",\"statusinterval\":\"15\","
+				+ "\"tluinterval\":\"1\",\"loglevel\":\"all\",\"configuration\":\"trilateration\","
+				+ "\"keepaliveinterval\":\"10\"},{\"diag_key\":\"\",\"diag_value\":\"\"}]}";
+		
+		for (int i = 0; i < deviceCount; i++) {
+			int x = rand.nextInt(width);
+			int y = rand.nextInt(height);
+			String uid = beaconService.generateMacAddress("", rand, dformat);
+			String alias = uid.replaceAll(":", "");
+			
+			BeaconDevice beacondevice = new BeaconDevice();
+			beacondevice.setCreatedBy("simulation");
+			beacondevice.setUid(uid);
+			beacondevice.setCid(cid);
+			beacondevice.setAlias(alias);
+			beacondevice.setName(alias);
+			beacondevice.setFstype("sensor");
+			beacondevice.setStatus(BeaconDevice.STATUS.AUTOCONFIGURED.name());
+			beacondevice.setState("active");
+			beacondevice.setTemplate(static_template);
+			beacondevice.setConf(static_template);
+			beacondevice.setModifiedBy("simulation");
+			beacondevice.setType("receiver");
+			beacondevice.setIp("0.0.0.0");
+			beacondevice.setKeepAliveInterval("10");
+			beacondevice.setTlu(1);
+			beacondevice = save(beacondevice, false);
+			
+			NetworkDevice nd = new NetworkDevice();
+			nd.setCreatedOn(new Date());
+			nd.setCreatedBy("simulation");
+			nd.setModifiedOn(new Date());
+			nd.setModifiedBy("simulation");
+			nd.setParent(parent);
+			nd.setCid(cid);
+			nd.setSid(sid);
+			nd.setSpid(spid);
+			nd.setXposition(String.valueOf(x));
+			nd.setYposition(String.valueOf(y));
+			nd.setUid(uid);
+			nd.setStatus("active");
+			nd.setTypefs("sensor");
+			nd.setUuid(alias);
+			nd.setAlias(alias);
+			_networkDeviceService.save(nd, false);
+			
+			geoFinderRestController.Pixel2Coordinate(createdDevices,spid, uid, String.valueOf(x), String.valueOf(y));
+		}
+		return createdDevices;
 	}
 
 }

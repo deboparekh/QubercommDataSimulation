@@ -32,6 +32,7 @@ import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDeviceService
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.mqtt.Payload;
 import com.semaifour.facesix.rest.FSqlRestController;
+import com.semaifour.facesix.util.CustomerUtils;
 import com.semaifour.facesix.util.SessionUtil;
 import com.semaifour.facesix.web.WebController;
 import net.sf.json.JSONArray;
@@ -50,6 +51,9 @@ public class BeaconRestController extends WebController {
 
 	@Autowired
 	BeaconDeviceService beaconDeviceService;
+	
+	@Autowired
+	CustomerUtils customerUtils;
 
 	/* Room show preference */
 	Map<String, Integer> roomInxPreference = new HashMap<String, Integer>() {
@@ -798,5 +802,21 @@ public class BeaconRestController extends WebController {
 			LOG.info("Tag Debug enable error " + e);
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value = "/simulateTagDetails", method = RequestMethod.POST)
+	public void simulateTagDetails(JSONObject jsonObject) {
+
+		String cid = jsonObject.getString("cid");
+		String simulation = jsonObject.getString("simulation");
+		String simulateVia = "";
+		if(simulation.equals("enable")){
+			simulateVia = jsonObject.getString("simulateVia");
+			int tagCount = jsonObject.getInt("tagCount");
+			int deviceCount = jsonObject.getInt("deviceCount");
+			beaconService.simulateTags(cid, tagCount);
+			beaconDeviceService.simulateDevices(cid, deviceCount);
+		}
+		customerUtils.setSimulation(cid,simulation,simulateVia);
 	}
 }

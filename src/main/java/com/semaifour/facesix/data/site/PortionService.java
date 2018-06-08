@@ -97,6 +97,10 @@ public class PortionService {
 		List<String> list = convertJSONArrayToList(placenames);
 		return repository.findByIds(list);
 	}
+	
+	public List<Portion> findByCids(List<String> cidList) {
+		return repository.findByCids(cidList);
+	}
 
 	private List<String> convertJSONArrayToList(JSONArray placenames) {
 		List<String> list = new ArrayList<String>();

@@ -23,4 +23,9 @@ public interface CustomerRepository extends MongoRepository<Customer, String> {
 	@Query("{solution:{$in:?0},status:?1}")
 	public Iterable<Customer> findBySolutionAndStatus(List<String> solution, String status);
 
+	public List<Customer> findBySimulation(String simulation);
+
+	@Query("{simulation:?0,solution:{$in:?1},status:?2}")
+	public List<Customer> findBySimulationSolutionAndState(String simulation, List<String> solution, String state);
+
 }

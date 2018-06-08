@@ -404,4 +404,14 @@ public class CustomerUtils {
 		}
 	}
 
+	public void setSimulation(String cid, String simulation, String simulateVia) {
+		Customer customer = customerService.findById(cid);
+		if (customer != null) {
+			customer.setSimulation(simulation);
+			if (simulation.equals("enable")) {
+				customer.setSimulationVia(simulateVia);
+			}
+			customerService.save(customer, false);
+		}
+	}
 }

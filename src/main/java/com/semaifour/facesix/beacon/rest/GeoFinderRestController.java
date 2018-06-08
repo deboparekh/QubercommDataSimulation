@@ -247,7 +247,7 @@ public class GeoFinderRestController {
 		return spid;
 	}
 
-	public void Pixel2Coordinate(String spid, String uid, String xposition, String yposition) {
+	public void Pixel2Coordinate(List<BeaconDevice> createdDevices, String spid, String uid, String xposition, String yposition) {
 
 		int count = 1;
 		String filePath = "";
@@ -342,7 +342,10 @@ public class GeoFinderRestController {
 									device.setPixelresult(pixcelObj.toString());
 									device.setModifiedBy("cloud");
 									device.setModifiedOn(new Date(System.currentTimeMillis()));
-									device = beaconDeviceService.save(device, true);
+									device = beaconDeviceService.save(device, false);
+									if(createdDevices != null){
+										createdDevices.add(device);
+									}
 								}
 
 							}
@@ -471,7 +474,6 @@ public class GeoFinderRestController {
 	private List<GeoPoint> getGeoPoints(org.json.JSONArray jsonArray) {
 
 		ArrayList<GeoPoint> list = new ArrayList<GeoPoint>();
-
 		if (jsonArray != null) {
 			int len = jsonArray.length();
 			for (int i = 0; i < len; i++) {
