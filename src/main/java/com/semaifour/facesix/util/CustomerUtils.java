@@ -404,12 +404,15 @@ public class CustomerUtils {
 		}
 	}
 
-	public void setSimulation(String cid, String simulation, String simulateVia) {
+	public void setSimulation(String cid, String simulation, String simulateVia, int maxCount) {
 		Customer customer = customerService.findById(cid);
 		if (customer != null) {
 			customer.setSimulation(simulation);
 			if (simulation.equals("enable")) {
 				customer.setSimulationVia(simulateVia);
+				customer.setThreshold(String.valueOf(maxCount));
+			} else {
+				customer.setSimulationVia(null);
 			}
 			customerService.save(customer, false);
 		}

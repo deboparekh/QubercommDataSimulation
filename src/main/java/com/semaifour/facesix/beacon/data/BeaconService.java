@@ -1130,10 +1130,10 @@ public class BeaconService {
 		
 		int randomNumber = rand.nextInt(999999);
 		String mac = dformat.format(randomNumber);
-		mac = macDef + String.valueOf(randomNumber);
+		LOG.info("mac "+mac);
+		mac = macDef + mac;
 		
-		mac = mac.substring(0, 2) + ":" + mac.substring(2, 4) + ":" + mac.substring(4, 6)
-			+ mac.substring(6, 8) + ":" + mac.substring(8, 10) + ":" + mac.substring(10, 12);
+		mac = mac.substring(0, 2) + ":" + mac.substring(2, 4) + ":" + mac.substring(4, 6) + mac.substring(6, 8) + ":" + mac.substring(8, 10) + ":" + mac.substring(10, 12);
 		
 		Beacon beacon = findOneByMacaddr(mac);
 		if(beacon == null){

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -805,18 +806,20 @@ public class BeaconRestController extends WebController {
 	}
 	
 	@RequestMapping(value = "/simulateTagDetails", method = RequestMethod.POST)
-	public void simulateTagDetails(JSONObject jsonObject) {
+	public void simulateTagDetails(@RequestBody Map<String, Object> map) {
 
-		String cid = jsonObject.getString("cid");
-		String simulation = jsonObject.getString("simulation");
+		String cid = (String)map.get("cid");
+		String simulation = (String)map.get("simulation");
 		String simulateVia = "";
-		if(simulation.equals("enable")){
-			simulateVia = jsonObject.getString("simulateVia");
-			int tagCount = jsonObject.getInt("tagCount");
-			int deviceCount = jsonObject.getInt("deviceCount");
+		int maxCount = 0;
+		if (simulation.equals("enable")) {
+			simulateVia = (String) map.get("simulateVia");
+			int tagCount = (int) map.get("tagCount");
+			int deviceCount = (int) map.get("deviceCount");
+			maxCount = (int) map.get("maxCount");
 			beaconService.simulateTags(cid, tagCount);
 			beaconDeviceService.simulateDevices(cid, deviceCount);
 		}
-		customerUtils.setSimulation(cid,simulation,simulateVia);
+		customerUtils.setSimulation(cid,simulation,simulateVia,maxCount);
 	}
 }
