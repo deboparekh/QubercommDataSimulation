@@ -923,21 +923,23 @@ public class BeaconDeviceService {
 
 		List<Portion> availableFloors = portionService.findByCid(cid);
 		if (availableFloors != null && !availableFloors.isEmpty()) {
-			int devicesInEachFloor = deviceCount / availableFloors.size();
-			for (Portion p : availableFloors) {
-				
+			int floorCount = availableFloors.size();
+			int devicesInEachFloor = deviceCount / floorCount;
+			for (int i = 0; i < floorCount; i++) {
+				Portion p = availableFloors.get(i);
 				String spid = p.getId();
 				String sid = p.getSiteId();
 				int width = p.getWidth();
 				int height = p.getHeight();
-				int deviceInThisFloor = devicesInEachFloor > deviceCount ? devicesInEachFloor : deviceCount;
-				
+				int deviceInThisFloor = devicesInEachFloor;
+				if(i== floorCount-1){
+					deviceInThisFloor = deviceCount;
+				}
 				deviceCount -= deviceInThisFloor;
-				
 				simulatedDevices.addAll(createDevices(cid,sid,spid,deviceInThisFloor,width,height,rand));
 			}
 		}
-		return null;
+		return simulatedDevices;
 	}
 
 	public List<BeaconDevice> createDevices(String cid,String sid,String spid, int deviceCount, int width, int height, Random rand) {
