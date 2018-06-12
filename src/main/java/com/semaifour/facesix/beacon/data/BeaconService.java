@@ -340,7 +340,7 @@ public class BeaconService {
 		}
 		
 		beacon.setMacaddr(macaddr);
-		beacon.setCreatedBy(whoami);
+		beacon.setCreatedBy("simulation");
 		beacon.setCreatedOn(new Date());
 
 		int tpwr = Integer.parseInt(txpwr);
@@ -370,7 +370,7 @@ public class BeaconService {
 			beacon.setStatus("checkedout");
 			beacon.setUpdatedstatus("checkedout");
 			beacon.setModifiedOn(new Date());
-			beacon.setModifiedBy(whoami);
+			beacon.setModifiedBy("simulation");
 			beacon.setCid(cid);
 			beacon.setBattery_level(100);
 			beacon.setBattery_timestamp(batteryTimestamp);
@@ -389,7 +389,7 @@ public class BeaconService {
 			beacon.setTagModel(tagmod);
 			beacon.setRefTxPwr(reftx);
 
-			beacon = save(beacon, true);
+			beacon = save(beacon, false);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("opcode", "checkedout");
 			map.put("visitId", beacon.getId());
@@ -426,9 +426,9 @@ public class BeaconService {
 			beacon.setStatus("checkedin");
 			beacon.setUpdatedstatus("checkedin");
 			beacon.setModifiedOn(new Date());
-			beacon.setModifiedBy(whoami);
+			beacon.setModifiedBy("simulation");
 			beacon.setTemplate(null);
-			beacon = save(beacon, true);
+			beacon = save(beacon, false);
 
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("opcode", "checkedin");
