@@ -71,6 +71,10 @@ public class NetworkDeviceService {
 	public List<NetworkDevice> findByCid(String cid) {
 		return repository.findByCid(cid);
 	}
+	
+	public List<NetworkDevice> findByCidAndBleType(String cid,String bleType) {
+		return repository.findByCidAndBleType(cid,bleType);
+	}
 
 	public List<NetworkDevice> findBySvid(String svid) {
 		return repository.findBySvid(svid);

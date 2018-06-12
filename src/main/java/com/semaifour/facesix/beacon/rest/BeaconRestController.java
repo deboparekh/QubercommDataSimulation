@@ -821,5 +821,6 @@ public class BeaconRestController extends WebController {
 			beaconDeviceService.simulateDevices(cid, deviceCount);
 		}
 		customerUtils.setSimulation(cid,simulation,simulateVia,maxCount);
+		LOG.info("simulation is enabled for cid "+cid);
 	}
 }

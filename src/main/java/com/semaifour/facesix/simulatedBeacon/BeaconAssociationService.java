@@ -51,7 +51,7 @@ public class BeaconAssociationService {
 		return repository.findByCidAndMacaddr(cid,macaddr);
 	}
 	
-	@Scheduled(fixedDelay = 600000)
+//	@Scheduled(fixedDelay=600000)
 	public void BeaconAssociation() {
 		String simulation = "enable";
 		String cx_state = "ACTIVE";
@@ -61,6 +61,8 @@ public class BeaconAssociationService {
 		
 		List<String> solution = Arrays.asList("GatewayFinder","GeoFinder");
 		List<Customer> customerList =customerService.findBySimulationSolutionAndState(simulation,solution,cx_state);
+		//testing
+		customerList = customerService.findOneById("5a65cd7ddb9a525c12dd035e");
 		List<String> cidList = new ArrayList<String>();
 		List<Beacon> beaconList = null;
 		List<BeaconDevice> deviceList = null;
@@ -96,13 +98,13 @@ public class BeaconAssociationService {
 					String spid = chosenDevice.getSpid();
 					String pixelResult = chosenDevice.getPixelresult();
 					String macaddr = b.getMacaddr();
-
-					JSONObject result = (JSONObject) parse.parse(pixelResult);
-					JSONArray latAndLon = (JSONArray) result.get("result");
 					
-					result = latAndLon.getJSONObject(0);
-					String lat = result.getString("latitude");
-					String lon = result.getString("longitude");
+					org.json.simple.JSONObject result = (org.json.simple.JSONObject) parse.parse(pixelResult);
+					org.json.simple.JSONArray latAndLon = (org.json.simple.JSONArray) result.get("result");
+					
+					result = (org.json.simple.JSONObject)latAndLon.get(0);
+					String lat = (String)result.get("latitude");
+					String lon = (String)result.get("longitude");
 					
 					associatedBeacon = findByCidAndMacaddr(cid,macaddr);
 					

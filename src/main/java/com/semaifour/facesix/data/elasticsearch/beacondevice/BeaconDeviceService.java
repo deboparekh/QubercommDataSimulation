@@ -156,14 +156,10 @@ public class BeaconDeviceService {
 	public void delete(String id) {
 		BeaconDevice device = repository.findOne(id);
 		repository.delete(id);
-		if (device != null) {
-			notify_delete(device, "device-delete");
-		}
 	}
 
 	public void delete(BeaconDevice device) {
 		repository.delete(device);
-		notify_delete(device, "device-delete");
 	}
 
 	public long count() {
@@ -919,8 +915,29 @@ public class BeaconDeviceService {
 	public List<BeaconDevice> simulateDevices(String cid, int deviceCount) {
 		
 		List<BeaconDevice> simulatedDevices = new ArrayList<BeaconDevice>();
-		Random rand = new Random(); 
-
+		Random rand = new Random();
+		
+		List<NetworkDevice> availableDevices = _networkDeviceService.findByCidAndBleType(cid,"receiver");
+		if(availableDevices != null) {
+			int availDeviceCount =  availableDevices.size();
+			if (availDeviceCount > deviceCount) {
+				int deleteDevices = availDeviceCount - deviceCount;
+				List<NetworkDevice> deleteSublist = availableDevices.subList(0, deleteDevices);
+				for(NetworkDevice nd: deleteSublist) {
+					BeaconDevice bd = findOneByUid(nd.getUid());
+					delete(bd);
+					_networkDeviceService.delete(nd);
+				}
+			} else if(availDeviceCount < deviceCount) {
+				deviceCount -= availDeviceCount;
+			} else {
+				for (NetworkDevice nd : availableDevices) {
+					BeaconDevice bd = findOneByUid(nd.getUid());
+					simulatedDevices.add(bd);
+				}
+			}
+		}
+		
 		List<Portion> availableFloors = portionService.findByCid(cid);
 		if (availableFloors != null && !availableFloors.isEmpty()) {
 			int floorCount = availableFloors.size();
@@ -965,11 +982,13 @@ public class BeaconDeviceService {
 			beacondevice.setCreatedBy("simulation");
 			beacondevice.setUid(uid);
 			beacondevice.setCid(cid);
+			beacondevice.setSid(sid);
+			beacondevice.setSpid(spid);
 			beacondevice.setAlias(alias);
 			beacondevice.setName(alias);
-			beacondevice.setFstype("sensor");
+			beacondevice.setFstype("server");
 			beacondevice.setStatus(BeaconDevice.STATUS.AUTOCONFIGURED.name());
-			beacondevice.setState("active");
+			beacondevice.setState("inactive");
 			beacondevice.setTemplate(static_template);
 			beacondevice.setConf(static_template);
 			beacondevice.setModifiedBy("simulation");
@@ -980,6 +999,7 @@ public class BeaconDeviceService {
 			beacondevice = save(beacondevice, false);
 			
 			NetworkDevice nd = new NetworkDevice();
+			nd.id = beacondevice.getId();
 			nd.setCreatedOn(new Date());
 			nd.setCreatedBy("simulation");
 			nd.setModifiedOn(new Date());
@@ -991,8 +1011,9 @@ public class BeaconDeviceService {
 			nd.setXposition(String.valueOf(x));
 			nd.setYposition(String.valueOf(y));
 			nd.setUid(uid);
-			nd.setStatus("active");
-			nd.setTypefs("sensor");
+			nd.setStatus("inactive");
+			nd.setTypefs("server");
+			nd.setBleType("receiver");
 			nd.setUuid(alias);
 			nd.setAlias(alias);
 			_networkDeviceService.save(nd, false);

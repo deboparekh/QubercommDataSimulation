@@ -23,4 +23,6 @@ public interface NetworkDeviceRepository extends ElasticsearchRepository<Network
 	public List<NetworkDevice> findByCid(String cid);
 
 	public List<NetworkDevice> findByCidAndStatus(String cid, String status);
+
+	public List<NetworkDevice> findByCidAndBleType(String cid, String bleType);
 }

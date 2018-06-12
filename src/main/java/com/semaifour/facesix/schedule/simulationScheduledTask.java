@@ -9,7 +9,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Controller;
 
 import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
@@ -21,21 +24,47 @@ import com.semaifour.facesix.data.site.PortionService;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.simulatedBeacon.BeaconAssociation;
 import com.semaifour.facesix.simulatedBeacon.BeaconAssociationService;
+import com.semaifour.facesix.util.CustomerUtils;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import scala.concurrent.forkjoin.ForkJoinPool;
 import scala.concurrent.forkjoin.RecursiveTask;
 
+@Controller
 public class simulationScheduledTask extends RecursiveTask<Integer> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5071601145810944146L;
+
+	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
 	PortionService portionService;
+	
+	@Autowired
 	BeaconDeviceService beaconDeviceService;
+	
+	@Autowired
 	BeaconService beaconService;
+	
+	@Autowired
 	DeviceEventPublisher mqttPublisher;
+	
+	@Autowired
 	BeaconAssociationService beaconAssociationService;
 	
+	@Autowired
+	CustomerUtils customerUtils;
+	
+	
+	@Value("${facesix.simulationScheduledTask.enable}")
+	private boolean simulation_enable;
+	
+	public final String classname = simulationScheduledTask.class.getName();
 	public final String simulation = "enable";
 	public final String opcode = "current-location-update";
 	public final String cx_state = "ACTIVE";
@@ -68,9 +97,15 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		this.threshold = threshold;
 	}
 	
-//	@Scheduled (fixedDelay=100)
+	@Scheduled (fixedDelay=100)
 	public void simulationSchedule() throws InterruptedException {
+
+		if (!simulation_enable) {
+			// return;
+		}
+		
 		List<Customer> customerList = getCustomerService().findBySimulationSolutionAndState(simulation,solution,cx_state);
+		customerList = customerService.findOneById("5a65cd7ddb9a525c12dd035e");
 		List<String> cidList = new ArrayList<String>();
 		Map<String,Boolean> enableLogs = new HashMap<String,Boolean>();
 		Map<String,String> simulationVia = new HashMap<String,String>();
@@ -90,6 +125,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		
 		List<Portion> portionList = getPortionService().findByCids(cidList);
 		int i = 0;
+		forkJoinPool 	= new ForkJoinPool();
 		for (Portion p : portionList) {
 			simulationScheduledTask sst = new simulationScheduledTask();
 			cid = p.getCid();
@@ -127,7 +163,8 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		boolean logenabled = this.logenabled;
 		String simulateVia = this.simulateVia;
 		int threshold = this.threshold;
-		List<BeaconAssociation> associatedBeaconList = beaconAssociationService.findBySpid(spid);
+		List<BeaconAssociation> associatedBeaconList = getBeaconAssociationService().findBySpid(spid);
+		getCustomerUtils().logs(logenabled, classname, "spid "+spid+" associatedBeaconList "+associatedBeaconList);
 		if(associatedBeaconList == null || associatedBeaconList.size()==0){
 			return 0;
 		}
@@ -141,7 +178,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		for (int record_num = 1; record_num <= max_record; record_num++) {
 			int tag_count = tagsInFloor - threshold > 0 ? threshold : tagsInFloor;
 			tagsInFloor -= threshold;
-			toIndex += threshold;
+			toIndex += tag_count;
 			List<BeaconAssociation> subList = associatedBeaconList.subList(fromIndex, toIndex);
 			fromIndex = toIndex;
 			JSONArray tag_list = maketagList(subList);
@@ -153,14 +190,15 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			message.put("record_num", record_num);
 			message.put("max_record", max_record);
 			message.put("tag_list", tag_list);
-			
+			//testing
+			simulateVia = "mqtt";
 			switch (simulateVia) {
 			case "mqtt":
 				String msg = MessageFormat.format(mqttMsgTemplate,
 						new Object[] { opcode, uid, spid, tag_count,
 									   record_num, max_record, tag_list
 									  });
-				mqttPublisher.publish("{"+msg+"}",spid);
+				getMqttPublisher().publish("{"+msg+"}",spid);
 				break;
 			default:
 				break;
@@ -243,7 +281,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		return beaconService;
 	}
 	
-	public DeviceEventPublisher getDeviceEventPublisher() {
+	public DeviceEventPublisher getMqttPublisher() {
 		if (mqttPublisher == null) {
 			mqttPublisher = Application.context.getBean(DeviceEventPublisher.class);
 		}
@@ -255,5 +293,12 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			beaconAssociationService = Application.context.getBean(BeaconAssociationService.class);
 		}
 		return beaconAssociationService;
+	}
+	
+	public CustomerUtils getCustomerUtils() {
+		if (customerUtils == null) {
+			customerUtils = Application.context.getBean(CustomerUtils.class);
+		}
+		return customerUtils;
 	}
 }

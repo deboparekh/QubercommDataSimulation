@@ -414,7 +414,9 @@ public class CustomerUtils {
 			} else {
 				customer.setSimulationVia(null);
 			}
-			customerService.save(customer, false);
+			customer = customerService.save(customer, false);
+			LOG.info("customer "+customer.getCustomerName()+" simulation "+customer.getSimulation()
+					+" \n simulation via "+customer.getSimulationVia()+" threshold "+customer.getThreshold());
 		}
 	}
 }
