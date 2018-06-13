@@ -249,7 +249,7 @@ public class AccountWebController extends WebController {
 				}
 			}
 
-			String str = "/facesix/" + param;
+			String str = "/simulate/" + param;
 			response.sendRedirect(str);
 
 		} catch (Exception e) {
@@ -324,7 +324,7 @@ public class AccountWebController extends WebController {
 			}
 
 			LOG.info("Reset Notification:Change Password");
-			String str = "/facesix/" + param;
+			String str = "/simulate/" + param;
 			response.sendRedirect(str);
 
 		} catch (Exception e) {

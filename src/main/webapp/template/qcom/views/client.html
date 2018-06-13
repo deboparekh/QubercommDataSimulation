@@ -165,7 +165,7 @@
                         
                         <!-- <div class="editicons"> n 
                             <span ng-click="singleAccount(x)"><i class="fa fa-edit"></i></span>
-                            <span><a href="/facesix/web/site/list?cid={[{x.id}]}"><i class="fa fa-map-marker"></i></a></span>
+                            <span><a href="/simulate/web/site/list?cid={[{x.id}]}"><i class="fa fa-map-marker"></i></a></span>
                         </div> -->
                         
                     </div>
@@ -399,7 +399,7 @@
                          	   <div class="w50">
                                 <div class="tc">
                                     <div class="accountSupport">
-                                   		<!--  <img src="/facesix/static/qcom/img/alexa1.png" style="width: 50%;">  -->
+                                   		<!--  <img src="/simulate/static/qcom/img/alexa1.png" style="width: 50%;">  -->
                                    		<h2>Enable Oauth</h2>
                                    		<div class="clearfix"></div>
                                         <label class="switch">
@@ -459,7 +459,7 @@
                             <div class="w50">
                                 <div class="tc">
                                     <div class="accountSupport">
-                                   		<img src="/facesix/static/qcom/img/alexa1.png" style="width: 50%;">
+                                   		<img src="/simulate/static/qcom/img/alexa1.png" style="width: 50%;">
                                    		<div class="clearfix"></div>
                                         <label class="switch">
                                             <input type="checkbox" ng-model="newCus.alexa" ng-true-value="'true'" ng-false-value="'false'">
@@ -491,7 +491,7 @@
                                     <label>Service Start Date</label>
 <!--                                    <label class="errorMsg" ng-show="customerStep3.serviceStartDate.$invalid && errorMsgLable"> <small>!Required</small></label>-->
                                 <input autocomplete="off"
-                                    type="text" class="form-control" data-min-date="today" ng-model="newCus.serviceStartDate" bs-datepicker data-date-format="dd/MM/yyyy" autoclose="true" ng-attr-data-template="/facesix/static/qcom/datepicker/datepicker.tpl.html" name="serviceStartDate" required>
+                                    type="text" class="form-control" data-min-date="today" ng-model="newCus.serviceStartDate" bs-datepicker data-date-format="dd/MM/yyyy" autoclose="true" ng-attr-data-template="/simulate/static/qcom/datepicker/datepicker.tpl.html" name="serviceStartDate" required>
                                 </div>
                                 <div class="form-group" ng-class="{'error':customerStep3.serviceDurationinMonths.$invalid && errorMsgLable}">
                                     <label>Service Duration <small>in Months</small></label>
@@ -501,7 +501,7 @@
                                 <div class="form-group" ng-class="{'error':customerStep3.serviceExpiryDate.$invalid && errorMsgLable}">
                                     <label>Service Expiry Date</label>
 <!--                                    <label class="errorMsg" ng-show="customerStep3.serviceExpiryDate.$invalid && errorMsgLable"> <small>!Required</small></label>-->
-                                    <input type="text" class="form-control" ng-model="newCus.serviceExpiryDate" bs-datepicker data-date-format="dd/MM/yyyy" autoclose="true" ng-attr-data-template="/facesix/static/qcom/datepicker/datepicker.tpl.html" disabled name="serviceExpiryDate" required>
+                                    <input type="text" class="form-control" ng-model="newCus.serviceExpiryDate" bs-datepicker data-date-format="dd/MM/yyyy" autoclose="true" ng-attr-data-template="/simulate/static/qcom/datepicker/datepicker.tpl.html" disabled name="serviceExpiryDate" required>
                                 </div>
                                 <div class="form-group" style="display: none;">
                                     <label>Server IP</label>
@@ -1042,7 +1042,7 @@
                    <button class="btn" ng-click="newCustomerOpen()">Skip</button>
                     </div>
                     <div class="fr tr">
-                        <a href="/facesix/web/site/open?cid={[{getClientvalue.id}]}" class="btn">Create Venue</a>
+                        <a href="/simulate/web/site/open?cid={[{getClientvalue.id}]}" class="btn">Create Venue</a>
                     </div> -->
                     
                     

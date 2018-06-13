@@ -7,10 +7,10 @@
         timeoutCount: 10000,
         charts: {
             urls: {
-                txRx: '/facesix/rest/beacon/ble/networkdevice/rxtx?sid='+urlObj.sid,
-                netFlow: '/facesix/rest/beacon/ble/networkdevice/venueagg?sid='+urlObj.sid+"&cid="+urlObj.cid,
-                typeOfDevices: '/facesix/rest/beacon/ble/networkdevice/venue/connectedTagType?sid='+urlObj.sid+"&cid="+urlObj.cid,
-                devicesConnected: '/facesix/rest/beacon/ble/networkdevice/gettags?sid='+urlObj.sid+"&cid="+urlObj.cid, //Todo Url has to be changed here
+                txRx: '/simulate/rest/beacon/ble/networkdevice/rxtx?sid='+urlObj.sid,
+                netFlow: '/simulate/rest/beacon/ble/networkdevice/venueagg?sid='+urlObj.sid+"&cid="+urlObj.cid,
+                typeOfDevices: '/simulate/rest/beacon/ble/networkdevice/venue/connectedTagType?sid='+urlObj.sid+"&cid="+urlObj.cid,
+                devicesConnected: '/simulate/rest/beacon/ble/networkdevice/gettags?sid='+urlObj.sid+"&cid="+urlObj.cid, //Todo Url has to be changed here
                 
             },
             setChart: {
@@ -523,7 +523,7 @@ var renderRecentActivitiesTemplate = function (data) {
 }
 var fetchRecentActivitiesTemplateData = function (){
     $.ajax({
-        url: '/facesix/rest/site/portion/networkdevice/alerts?cid='+urlObj.cid+'&sid='+urlObj.sid, //Todo-Url has to be changed here
+        url: '/simulate/rest/site/portion/networkdevice/alerts?cid='+urlObj.cid+'&sid='+urlObj.sid, //Todo-Url has to be changed here
         success: function (result) {
              var templateObj={
                         data:[]
@@ -539,7 +539,7 @@ var fetchRecentActivitiesTemplateData = function (){
                         if(obj.description!=null)
                          templateObj.data.push(obj);
                      }
-                     var tagurl ='/facesix/rest/beacon/ble/networkdevice/beacon/alerts?sid='+urlObj.sid+"&cid="+urlObj.cid
+                     var tagurl ='/simulate/rest/beacon/ble/networkdevice/beacon/alerts?sid='+urlObj.sid+"&cid="+urlObj.cid
                      fetchTagData(templateObj,tagurl)
            // renderRecentActivitiesTemplate({recent_activities:templateObj.data});
             setTimeout(function(){fetchRecentActivitiesTemplateData();}, VenueDashboard.timeoutCount);

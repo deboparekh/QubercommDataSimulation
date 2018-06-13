@@ -7,7 +7,7 @@
 //devconfig
 
 $(document).ready(function(){
-	var url  = "/facesix/rest/user/profile";	
+	var url  = "/simulate/rest/user/profile";	
 	$.ajax({
  	  	url:url,
  	  	method:'GET',
@@ -30,7 +30,7 @@ $(document).ready(function(){
 	search = window.location.search.substr(1)
 	urlObj=JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
 	
-	var url  = '/facesix/rest/beacon/ble/networkdevice/inactivityNotify?cid='+urlObj.cid	
+	var url  = '/simulate/rest/beacon/ble/networkdevice/inactivityNotify?cid='+urlObj.cid	
 	$.ajax({
  	  	url:url,
  	  	method:'GET',
@@ -90,7 +90,7 @@ $(document).ready(function() {
 });
 
 $('#beaconconfig').on('click',function(){
-	     var url  = "/facesix/rest/beacon/device/beacondefaultconfig";	
+	     var url  = "/simulate/rest/beacon/device/beacondefaultconfig";	
 			$.ajax({
 	  	   	  	url:url,
 	  	   	  	method:'POST',
@@ -192,7 +192,7 @@ function doInsert(ctl)
 $('#check').on('click',function(){
 	
 	
-	     var url  = "/facesix/rest/device/meshdefaultconfig?&band2g="+band2g+"&band5g="+band5g;
+	     var url  = "/simulate/rest/device/meshdefaultconfig?&band2g="+band2g+"&band5g="+band5g;
 			
 			$.ajax({
 		  	   	  	url:url,
@@ -214,19 +214,19 @@ $('#check').on('click',function(){
 $('#exportJSON').on('click',function(){
 	var uid=$('#uuid').val();
 	var conf=$('#deconfig').val();
-	var url  = "/facesix/rest/site/portion/networkdevice/exportJSONConfig?uid="+uid+"&conf="+conf;
+	var url  = "/simulate/rest/site/portion/networkdevice/exportJSONConfig?uid="+uid+"&conf="+conf;
 	window.open(url, "_blank");
 });
 
 $(document).on("click",".csvOption",function(evt){
-	window.open("/facesix/rest/site/portion/networkdevice/csv", "_blank");  
+	window.open("/simulate/rest/site/portion/networkdevice/csv", "_blank");  
 });
 
 //plot
 $('#plot').on('click',function(){
 
 	var sid  = location.search.split("&")[0].replace("?","").split("=")[1];
-	var url  = "/facesix/web/site/portion/plot?sid="+sid;
+	var url  = "/simulate/web/site/portion/plot?sid="+sid;
 	window.location.href=url;
 	
 });
@@ -500,7 +500,7 @@ $(function(){
 $(function(){
 	$('.submit1 img').hover(function(){
      // on mouse enter
-     var customdata = "/facesix/static/qubercomm/images/floorlist/delete-hover.png";
+     var customdata = "/simulate/static/qubercomm/images/floorlist/delete-hover.png";
      $(this).attr('src',customdata); 
  }, function(){
       // on mouse leave
@@ -604,7 +604,7 @@ function rpc(uid, ap, macid, cmd) {
 	if(uid=="?")
 		return false;
 	
-  	var url="/facesix/rest/beacon/device/rpc?args=none&uid=" + uid + "&ap="+ap + "&mac="+macid + "&cmd="+cmd;
+  	var url="/simulate/rest/beacon/device/rpc?args=none&uid=" + uid + "&ap="+ap + "&mac="+macid + "&cmd="+cmd;
    	$.ajax({
    	  	url:url,
    	  	method:'POST',
@@ -655,7 +655,7 @@ function blk(uid, macid) {
    		pid:uid,
  	};
      	
-  	var url="/facesix/rest/site/portion/clientdevice/save";
+  	var url="/simulate/rest/site/portion/clientdevice/save";
    	$.ajax({
    	  	url:url,
    	  	method:'POST',
@@ -715,8 +715,8 @@ function rightMenu(event) {
 	});
 	block_row = $(this).parent().closest('tr').clone();
 	
-	$(".custom-menu .block").attr({"action-url":"/facesix/static/qubercomm/dashboard.json","macId":$(this).parent().attr("mac-id"),"action":"block","uid":$(this).parent().attr("uid"),"ap":$(this).parent().attr("ap"),"ssid":$(this).parent().attr("ssid")})
-	$(".custom-menu .delete").attr({"action-url":"/facesix/static/qubercomm/dashboard.json","macId":$(this).parent().attr("mac-id"),"action":"remove","uid":$(this).parent().attr("uid"),"ap":$(this).parent().attr("ap"),"ssid":$(this).parent().attr("ssid")})
+	$(".custom-menu .block").attr({"action-url":"/simulate/static/qubercomm/dashboard.json","macId":$(this).parent().attr("mac-id"),"action":"block","uid":$(this).parent().attr("uid"),"ap":$(this).parent().attr("ap"),"ssid":$(this).parent().attr("ssid")})
+	$(".custom-menu .delete").attr({"action-url":"/simulate/static/qubercomm/dashboard.json","macId":$(this).parent().attr("mac-id"),"action":"remove","uid":$(this).parent().attr("uid"),"ap":$(this).parent().attr("ap"),"ssid":$(this).parent().attr("ssid")})
 }	
 $(document).on("contextmenu",'table .showPopup ',rightMenu);
 $(document).on("tap",'table .showPopup ',rightMenu);
@@ -729,7 +729,7 @@ function blockMenu(event) {
 		left: event.pageX?event.pageX:event.originalEvent.pageX + "px"
 	});
 	
-	$(".custom-menu-block .unblock").attr({"action-url":"/facesix/static/qubercomm/dashboard.json","macId":$(this).parent().attr("mac-id"),"action":"unblock","uid":$(this).parent().attr("uid"),"ap":$(this).parent().attr("ap"),"ssid":$(this).parent().attr("ssid")})
+	$(".custom-menu-block .unblock").attr({"action-url":"/simulate/static/qubercomm/dashboard.json","macId":$(this).parent().attr("mac-id"),"action":"unblock","uid":$(this).parent().attr("uid"),"ap":$(this).parent().attr("ap"),"ssid":$(this).parent().attr("ssid")})
 }
 
 $(document).on("contextmenu",'table .blockPopup ',blockMenu);
@@ -811,11 +811,11 @@ $(document).on("keyup",".searchLogs",function(evt){
 		}
 })
 $(document).on("click",".pdfOption",function(evt){
-	window.open("/facesix/rest/site/portion/networkdevice/pdf", "_blank");  
+	window.open("/simulate/rest/site/portion/networkdevice/pdf", "_blank");  
 })
 
 $(document).on("click",".export",function(evt){
-	window.open("/facesix/rest/site/portion/networkdevice/export", "_blank");
+	window.open("/simulate/rest/site/portion/networkdevice/export", "_blank");
 })
 
 
@@ -1115,7 +1115,7 @@ $('body').on('click', '.deleteIcon', function (e) {
 	$.each( spid, function( k, v ){
 	  //console.log( "Key: " + k + ", Value: " + v );
 		$.ajax({
-			url: '/facesix/web/site/portion/delete?&spid='+v,
+			url: '/simulate/web/site/portion/delete?&spid='+v,
 			success: function (result) {				
 				location.reload();
 			},
@@ -1187,11 +1187,11 @@ function sortFloorList(url) {
 }
 $(document).on("click","")
 $("body").on('click', '.sortView', function () {
-	//sortFloorList('/facesix/static/qubercomm/dashboard.json', window.isReverseList);
+	//sortFloorList('/simulate/static/qubercomm/dashboard.json', window.isReverseList);
 });
 
 $("body").on("click",".captureIcon",function(evt){
-	window.open("/facesix/rest/site/portion/networkdevice/imgcapture", "_blank");  	
+	window.open("/simulate/rest/site/portion/networkdevice/imgcapture", "_blank");  	
 })
 
 $("body").on('click', '.floor-count .select-floor', function () {
@@ -1258,7 +1258,7 @@ $('.floor-list-search').on('keyup', function (e) {
 $(function(){
     $('.sidebaricon').hover(function(){
     // on mouse enter
-    var customdata = "/facesix/static/qubercomm/images/sidebaricon.png"
+    var customdata = "/simulate/static/qubercomm/images/sidebaricon.png"
     $(this).children().attr('src',customdata); 
 }, function(){
      // on mouse leave
@@ -1622,7 +1622,7 @@ $(document).ready(function(){
 	var title = "Qubercomm | Compute Connect Cloud";
 	var prefix = '';
 	var c_cid = getParameterByName('cid'); 
-	var url = '/facesix/rest/customer/paramValue?cid='+c_cid;
+	var url = '/simulate/rest/customer/paramValue?cid='+c_cid;
 	$.ajax({
    	  	url:url,
    	  	method:'GET',
@@ -1631,13 +1631,13 @@ $(document).ready(function(){
    	  		title = response.customerName;
    	  		var favicon = response.logofile;
    	  		if (favicon != ''){
-   	  		   $('link[rel="shortcut icon"]').attr('href', '/facesix/static/qubercomm/images/favicon_blank.png?v=2');
+   	  		   $('link[rel="shortcut icon"]').attr('href', '/simulate/static/qubercomm/images/favicon_blank.png?v=2');
    	  		}
    	  		$('title').html(title);
    	  		if(prefix != ''){
-   	  			$('#NavLogout > a').attr('href', '/facesix/goodbye/'+prefix);
+   	  			$('#NavLogout > a').attr('href', '/simulate/goodbye/'+prefix);
    	  		}else{
-   	  			$('#NavLogout > a').attr('href', '/facesix/goodbye');
+   	  			$('#NavLogout > a').attr('href', '/simulate/goodbye');
    	  		}
    	  	},
    	  	error:function(error){

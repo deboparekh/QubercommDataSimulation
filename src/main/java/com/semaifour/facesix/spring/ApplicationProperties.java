@@ -62,7 +62,7 @@ public class ApplicationProperties {
 		if (restrictedUris == null) {
 			synchronized (this) {
 				if (restrictedUris == null) {
-					String tmp = getProperty("facesix.restricted.uris", "/facesix/web,/facesix/rest");
+					String tmp = getProperty("facesix.restricted.uris", "/simulate/web,/simulate/rest");
 					restrictedUris = tmp.split(",");
 				}
 			}

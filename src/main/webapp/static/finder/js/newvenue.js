@@ -15,12 +15,12 @@ var txty = 9;
         timeoutCount: 10000,
         charts: {
             urls: {
-                activeConnections:'/facesix/rest/beacon/ble/networkdevice/venue/peercount?sid='+urlObj.sid+"&cid="+urlObj.cid, //Active Tags
-                netFlow: '/facesix/rest/beacon/ble/networkdevice/venue/agg?sid='+urlObj.sid+"&cid="+urlObj.cid, // Floor vs traffic
-                TagTypes: '/facesix/rest/beacon/ble/networkdevice/venue/connectedTagType?sid='+urlObj.sid+"&cid="+urlObj.cid, // Connected Tag Type
-                devicesConnected: '/facesix/rest/beacon/ble/networkdevice/inactiveTagsCount?sid='+urlObj.sid+"&cid="+urlObj.cid,  //inactive tags  
-                avgUplinkSpeed: '/facesix/rest/beacon/ble/networkdevice/venue/checkoutTag?sid='+urlObj.sid+"&cid="+urlObj.cid, //Total Tags
-                idle: '/facesix/rest/beacon/ble/networkdevice/idleTagsCount?sid='+urlObj.sid+"&cid="+urlObj.cid, //idle Tags
+                activeConnections:'/simulate/rest/beacon/ble/networkdevice/venue/peercount?sid='+urlObj.sid+"&cid="+urlObj.cid, //Active Tags
+                netFlow: '/simulate/rest/beacon/ble/networkdevice/venue/agg?sid='+urlObj.sid+"&cid="+urlObj.cid, // Floor vs traffic
+                TagTypes: '/simulate/rest/beacon/ble/networkdevice/venue/connectedTagType?sid='+urlObj.sid+"&cid="+urlObj.cid, // Connected Tag Type
+                devicesConnected: '/simulate/rest/beacon/ble/networkdevice/inactiveTagsCount?sid='+urlObj.sid+"&cid="+urlObj.cid,  //inactive tags  
+                avgUplinkSpeed: '/simulate/rest/beacon/ble/networkdevice/venue/checkoutTag?sid='+urlObj.sid+"&cid="+urlObj.cid, //Total Tags
+                idle: '/simulate/rest/beacon/ble/networkdevice/idleTagsCount?sid='+urlObj.sid+"&cid="+urlObj.cid, //idle Tags
             },
             setChart: {
                 activeConnections: function (initialData,params) {
@@ -527,16 +527,16 @@ var txty = 9;
         
         /*systemAlerts:function(){
             $.ajax({
-                url:'/facesix/rest/beacon/ble/networkdevice/venue/alerts?sid='+urlObj.sid+"&cid="+urlObj.cid,
+                url:'/simulate/rest/beacon/ble/networkdevice/venue/alerts?sid='+urlObj.sid+"&cid="+urlObj.cid,
                 method:'GET',
                 success:function(result){
                      var result=result.length;
                      if(result==0){
-                        $(".alert-gif").removeClass("hide").attr('src','/facesix/static/qubercomm/images/venue/correct.gif');
+                        $(".alert-gif").removeClass("hide").attr('src','/simulate/static/qubercomm/images/venue/correct.gif');
                         $(".alertText").text("All Systems Healthy");
                      }
                      else{
-                        $(".alert-gif").removeClass("hide").attr('src','/facesix/static/qubercomm/images/venue/alert.gif');
+                        $(".alert-gif").removeClass("hide").attr('src','/simulate/static/qubercomm/images/venue/alert.gif');
                         $(".alertText").text("Alerts");
                      }       
                 },
@@ -572,7 +572,7 @@ var renderAlertsTemplate = function (data) {
 
 }
 var fetchTagStatus = function (templateObj,id,cid){
-    	var tagStatusUrl ='/facesix/rest/beacon/ble/networkdevice/beacon/alerts?sid='+id+"&cid="+cid
+    	var tagStatusUrl ='/simulate/rest/beacon/ble/networkdevice/beacon/alerts?sid='+id+"&cid="+cid
     	$.ajax({
             	url: tagStatusUrl,
             	success: function(result) {
@@ -593,7 +593,7 @@ var fetchTagStatus = function (templateObj,id,cid){
  }
 var fetchAlertsTemplateData = function (){
     $.ajax({
-        url: '/facesix/rest/site/portion/networkdevice/alerts?sid='+urlObj.sid+"&cid="+urlObj.cid,
+        url: '/simulate/rest/site/portion/networkdevice/alerts?sid='+urlObj.sid+"&cid="+urlObj.cid,
         success: function (result) {
 
             var templateObj={
@@ -761,7 +761,7 @@ var floornetworkConfig={
 				//$('.qrnd').remove(); 
 				
 		    	$.ajax({
-		         	url:'/facesix/rest/site/portion/networkdevice/personinfo?spid='+spid,
+		         	url:'/simulate/rest/site/portion/networkdevice/personinfo?spid='+spid,
 		             method:'get',
 		             success:function(response){
 		            	 list = response;
@@ -1019,16 +1019,16 @@ var floornetworkConfig={
         }
         var urlObj=JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
         if (type == "server") {
-            var url="/facesix/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&cid="+urlObj.cid+"&uid="+uid+"&param=1" 
+            var url="/simulate/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&cid="+urlObj.cid+"&uid="+uid+"&param=1" 
         } else if (type == "sensor") {
         	if (GatewayFinder=='true') {
-                var url="/facesix/web/finder/device/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid+"&dashview=2"
+                var url="/simulate/web/finder/device/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid+"&dashview=2"
         	} else {
-                var url="/facesix/web/finder/device/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid
+                var url="/simulate/web/finder/device/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid
         	}
         } else if (type == "switch"){
         	if(GatewayFinder == "true"){
-        		var url="/facesix/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid
+        		var url="/simulate/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid
         		
         	} else {
         		var url ="javascript:void(0)";
@@ -1036,14 +1036,14 @@ var floornetworkConfig={
         	      	
         } else if (type == "ap"){
         	if(GatewayFinder == "true"){
-        		var url="/facesix/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid
+        		var url="/simulate/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid
         		
         	} else {
         		var url ="javascript:void(0)";
         	}
         	
         } else {
-            var url="/facesix/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid+"&type="+(type=="switch" || type=="ap"?type:"device") 
+            var url="/simulate/web/site/portion/"+urlMap[type]+"?sid="+urlObj.sid+"&spid="+spid+"&uid="+uid+"&cid="+urlObj.cid+"&type="+(type=="switch" || type=="ap"?type:"device") 
        }
 
         
@@ -1101,7 +1101,7 @@ var floornetworkConfig={
     getDevices:function(p1,p2,p3){
         
     	var that	= this;
-    	var urlLink ='/facesix/rest/site/portion/networkdevice/list?spid='+spid;
+    	var urlLink ='/simulate/rest/site/portion/networkdevice/list?spid='+spid;
     	var person	= 0;
      	var taginfo;
      	
@@ -1130,7 +1130,7 @@ var floornetworkConfig={
                     		var type=devices[ii].typefs;
                     		
                         var status  = devices[ii].status;
-                        var image	= "/facesix/static/qubercomm/images/networkicons/"+type+"_"+status+".png";
+                        var image	= "/simulate/static/qubercomm/images/networkicons/"+type+"_"+status+".png";
                         var uid		= devices[ii].uid;
                        
                         if (p3 == "false") {
@@ -1185,14 +1185,14 @@ $('#floorType').on('change', function() {
 	} 
 	
 	
-	var url = "url('/facesix/web/site/portion/planfile?spid=" + spid
+	var url = "url('/simulate/web/site/portion/planfile?spid=" + spid
 	url 	 = url +   "') no-repeat"
 	 
     // $('#flrmap').style = url;
     // $('#flrmap').css ('background', url); 
 	
 	 
- 	var imagepath = '/facesix/web/site/portion/planfile?spid='+ spid; 
+ 	var imagepath = '/simulate/web/site/portion/planfile?spid='+ spid; 
  	
     
     var newImage=svgNew.append("image")
@@ -1415,14 +1415,14 @@ $('#floorTypeZoom').on('change', function() {
 	} 
 	
 	
-	var url = "url('/facesix/web/site/portion/planfile?spid=" + spid
+	var url = "url('/simulate/web/site/portion/planfile?spid=" + spid
 	url 	 = url +   "') no-repeat"
 	 
     // $('#flrmap').style = url;
     // $('#flrmap').css ('background', url); 
 	
 	 
- 	var imagepath = '/facesix/web/site/portion/planfile?spid='+ spid; 
+ 	var imagepath = '/simulate/web/site/portion/planfile?spid='+ spid; 
  	
     
     var newImage=svgNew.append("image")

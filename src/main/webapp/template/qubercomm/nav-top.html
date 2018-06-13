@@ -1,6 +1,6 @@
 {{#partial "topnav"}}
             <div class="topNavMobile navbar-fixed-top mobileShow"/>             
-                <img src="/facesix/static/qubercomm/images/header/logo.png" alt="Qubercomm">
+                <img src="/simulate/static/qubercomm/images/header/logo.png" alt="Qubercomm">
              </a>
            </div>
 			<nav class="navbar navbar-default navbar-fixed-top">
@@ -20,16 +20,16 @@
 						<div>
 						<div>
 						{{#if ADMIN_WRITE}}
-						<a class="navbar-brand logo-sec mobilehideS" href="/facesix/qubercloud/cloud/home" style="margin-left:-15px;">
-							<img src="/facesix/preferredLogoUrl?id={{cid}}">
+						<a class="navbar-brand logo-sec mobilehideS" href="/simulate/qubercloud/cloud/home" style="margin-left:-15px;">
+							<img src="/simulate/preferredLogoUrl?id={{cid}}">
 						</a>						 
 						{{else if finder}}
-			             <a class="navbar-brand logo-sec mobilehideS" href="/facesix/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}" >
-							 <img src="/facesix/preferredLogoUrl?id={{cid}}">
+			             <a class="navbar-brand logo-sec mobilehideS" href="/simulate/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}" >
+							 <img src="/simulate/preferredLogoUrl?id={{cid}}">
 			             </a>
 						{{else}}
-						<a class="navbar-brand logo-sec mobilehideS" href="/facesix/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}" >
-							 <img src="/facesix/preferredLogoUrl?id={{cid}}">
+						<a class="navbar-brand logo-sec mobilehideS" href="/simulate/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}" >
+							 <img src="/simulate/preferredLogoUrl?id={{cid}}">
 						</a>
 						{{/if}}
 						</div>
@@ -40,7 +40,7 @@
                     
                     {{#if uid}}                 
                     <span class="sidebaricon right_panel_icon mobileShow pull-right">
-                            <img src="/facesix/static/qubercomm/images/sidebaricon.png" alt="" data-orig="/facesix/static/qubercomm/images/sidebaricon.png">
+                            <img src="/simulate/static/qubercomm/images/sidebaricon.png" alt="" data-orig="/simulate/static/qubercomm/images/sidebaricon.png">
                     </span>
                     {{/if}} 
 					</div> 
@@ -55,8 +55,8 @@
 									{{/if}}
 									<span class="caret"></span></a>
 									<ul class="dropdown-menu list-catg-dropdown">
-										<li><a href="/facesix/web/site/list">View all Venues</a></li>
-										<li><a href="/facesix/web/site/open">Add new Venue</a></li>
+										<li><a href="/simulate/web/site/list">View all Venues</a></li>
+										<li><a href="/simulate/web/site/open">Add new Venue</a></li>
 									</ul>
 								</li>
 								{{#if sid}}
@@ -69,8 +69,8 @@
 									{{/if}}
 									<span class="caret"></span></a>
 									<ul class="dropdown-menu list-catg-dropdown">
-										<li><a href="/facesix/web/site/portion/list?sid={{sid}}">View all FloorPlans</a></li>
-										<li><a href="/facesix/web/site/portion/new?sid={{sid}}">Add new Floorplan</a></li>
+										<li><a href="/simulate/web/site/portion/list?sid={{sid}}">View all FloorPlans</a></li>
+										<li><a href="/simulate/web/site/portion/new?sid={{sid}}">Add new Floorplan</a></li>
 									</ul>
 								</li>
 								{{/if}}
@@ -81,93 +81,93 @@
 						<!--  
 						{{#if uid}}
 						    <li class="margintop10 rightBarSec sideba"src/main/webapp/static/qubercomm/css/custom.css"ricon right_panel_icon">
-                                 <img src="/facesix/static/qubercomm/images/sidebaricon-hover.png" alt="" data-orig="/facesix/static/qubercomm/images/sidebaricon-hover.png">
+                                 <img src="/simulate/static/qubercomm/images/sidebaricon-hover.png" alt="" data-orig="/simulate/static/qubercomm/images/sidebaricon-hover.png">
                         	</li>
                         {{/if}}
 							<li class="pdf-Option">
-								<a href="/facesix/static/qubercomm/images/header/pdf-hover.png" class="pdfOption">
-									<img src="/facesix/static/qubercomm/images/header/pdf.png" alt="" data-orig="/facesix/static/qubercomm/images/header/pdf.png">
+								<a href="/simulate/static/qubercomm/images/header/pdf-hover.png" class="pdfOption">
+									<img src="/simulate/static/qubercomm/images/header/pdf.png" alt="" data-orig="/simulate/static/qubercomm/images/header/pdf.png">
 								</a>
 							</li>
 							
 							<li class="dropdown profile-dash">
 								<a href="#" class="pad0 dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
-									<img src="/facesix/web/account/profilepic" class="profile-circle"/>
+									<img src="/simulate/web/account/profilepic" class="profile-circle"/>
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu profile-dash-menu profile-dropDown">
-									<li><a href="/facesix/web/account/profile">Account</a></li>
-									<li><a href="/facesix/goodbye">Logout</a></li>
+									<li><a href="/simulate/web/account/profile">Account</a></li>
+									<li><a href="/simulate/goodbye">Logout</a></li>
 								</ul>
 							</li>
 							-->
 							<!-- 
-                            <li><a href="/facesix/qubercloud/welcome#!/client"><img src="/facesix/static/qcom/img/office.png"/><span>Clients</span></a></li>
+                            <li><a href="/simulate/qubercloud/welcome#!/client"><img src="/simulate/static/qcom/img/office.png"/><span>Clients</span></a></li>
                            -->
                             {{#if finder}}
 									
 								{{#if cid}}
-	                            	<li class="zoom" title="Venue"><a href="/facesix/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-map-marker"></i><p class="navtopalign">Venue</p></a></li>
+	                            	<li class="zoom" title="Venue"><a href="/simulate/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-map-marker"></i><p class="navtopalign">Venue</p></a></li>
 	                            	
 	                            {{/if}}
 	                            
 	                            {{#if sid}}
-	                                 <li class="zoom" title="Floor"><a href="/facesix/web/site/portion/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-building"></i><p class="navtopalign">Floor</p></a></li>
+	                                 <li class="zoom" title="Floor"><a href="/simulate/web/site/portion/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-building"></i><p class="navtopalign">Floor</p></a></li>
 	                            	
 	                            {{/if}}
 	                            
 	                            {{#if tree}}
-	                            	<li class="right_panel_icon zoom mhide" title="Device tree"><a><img src="/facesix/static/qcom/img/network.png" style="margin-top: 15px;"/><p class="" style="margin-top: 5px;">Tree</p></a></li>                                                       
+	                            	<li class="right_panel_icon zoom mhide" title="Device tree"><a><img src="/simulate/static/qcom/img/network.png" style="margin-top: 15px;"/><p class="" style="margin-top: 5px;">Tree</p></a></li>                                                       
 	                            {{/if}}
 	                            
 	                            {{#if CUST_WRITE}}
-                            		<li class="zoom" title="User Management"><a href="/facesix/qubercloud/cloud/home#!/usermanagement"><i class="fa fa-users"></i><p class="navtopalign">Users</p></a></li>
+                            		<li class="zoom" title="User Management"><a href="/simulate/qubercloud/cloud/home#!/usermanagement"><i class="fa fa-users"></i><p class="navtopalign">Users</p></a></li>
                             	{{/if}}
                             
-                           		<li title="User Account"><a href="/facesix/qubercloud/cloud/home#!/myaccount"><i class="fa fa-user"></i><p class="navtopalign">Account</p></a></li>
+                           		<li title="User Account"><a href="/simulate/qubercloud/cloud/home#!/myaccount"><i class="fa fa-user"></i><p class="navtopalign">Account</p></a></li>
 	                            						
 							
 							{{else}}
 								{{#if GeoFinder}}
-                          			<li  class="zoom altNot" title="Alerts"><a href="/facesix/web/beacon/alerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>
+                          			<li  class="zoom altNot" title="Alerts"><a href="/simulate/web/beacon/alerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>
 	                          	{{/if}}
 	                          	{{#if GatewayFinder}}
-	                          		<!-- <li  class="zoom" title="Finder Alerts"><a href="/facesix/web/beacon/alerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-eye"></i><p class="navtopalign ">Alarm</p></a></li> 
-	                          	    <li  class="zoom" title="Gateway Alerts"><a href="/facesix/gwalerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>	  -->
-	                          	    <li  class="zoom altNot " title="Alerts"><a href="/facesix/web/beacon/alerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>  
+	                          		<!-- <li  class="zoom" title="Finder Alerts"><a href="/simulate/web/beacon/alerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-eye"></i><p class="navtopalign ">Alarm</p></a></li> 
+	                          	    <li  class="zoom" title="Gateway Alerts"><a href="/simulate/gwalerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>	  -->
+	                          	    <li  class="zoom altNot " title="Alerts"><a href="/simulate/web/beacon/alerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>  
 	                          	                           	
 	                          	{{/if}}
 	                          	{{#if Gateway}}
-	                          		<li  class="zoom altNot" title="Alerts"><a href="/facesix/gwalerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>	                          		                          	
+	                          		<li  class="zoom altNot" title="Alerts"><a href="/simulate/gwalerts?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-bell-o"></i><p class="navtopalign ">Alert</p></a></li>	                          		                          	
 	                          	{{/if}}
 	                          	{{#if cid}}
-	                            	<li class="zoom" title="Venue"><a href="/facesix/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-map-marker"></i><p class="navtopalign">Venue</p></a></li>
+	                            	<li class="zoom" title="Venue"><a href="/simulate/web/site/list?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-map-marker"></i><p class="navtopalign">Venue</p></a></li>
 	                            	
 	                            {{/if}}
 	                            
 	                            {{#if sid}}
-	                                 <li class="zoom" title="Floor"><a href="/facesix/web/site/portion/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-building"></i><p class="navtopalign">Floor</p></a></li>
+	                                 <li class="zoom" title="Floor"><a href="/simulate/web/site/portion/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"><i class="fa fa-building"></i><p class="navtopalign">Floor</p></a></li>
 	                            	
 	                            {{/if}}
                             
 	                            {{#if GeoDraw}}
 			                 		<li class="addhide zoom" title="GeoDraw">
-				               		<a href="/facesix/web/site/portion/campaign?sid={{sid}}">
+				               		<a href="/simulate/web/site/portion/campaign?sid={{sid}}">
 									<i class="fa fa-map"></i><p class="navtopalign">venue</p> 
 										<span class="sb-name"></span>
 			                      	</a></li> 
 			                    {{/if}} 
-	                            <!--<li><a href="/facesix/web/site/portion/list?sid={{sid}}"><i class="fa fa-map"></i><span>Floors</span></a></li>
+	                            <!--<li><a href="/simulate/web/site/portion/list?sid={{sid}}"><i class="fa fa-map"></i><span>Floors</span></a></li>
 	                             -->
 	                            {{#if tree}}
-	                            	<li class="right_panel_icon zoom mhide" title="Device tree"><a><img src="/facesix/static/qcom/img/network.png" id="networkpng"/><p class="treenav">Tree</p></a></li>                                                       
+	                            	<li class="right_panel_icon zoom mhide" title="Device tree"><a><img src="/simulate/static/qcom/img/network.png" id="networkpng"/><p class="treenav">Tree</p></a></li>                                                       
 	                            {{/if}}
                             
 	                            {{#if MANAGEMENT_WRITE}}
-	                            	<li  class="zoom" title="User Management"><a href="/facesix/qubercloud/cloud/home#!/usermanagement"><i class="fa fa-users"></i><p class="navtopalign ">Users</p></a></li>
+	                            	<li  class="zoom" title="User Management"><a href="/simulate/qubercloud/cloud/home#!/usermanagement"><i class="fa fa-users"></i><p class="navtopalign ">Users</p></a></li>
 	                            {{/if}}
                             
-	                           	<li  class="zoom" title="User Account"><a href="/facesix/qubercloud/cloud/home#!/myaccount"><i class="fa fa-user"></i><p class="navtopalign ">Account</p></a></li>
+	                           	<li  class="zoom" title="User Account"><a href="/simulate/qubercloud/cloud/home#!/myaccount"><i class="fa fa-user"></i><p class="navtopalign ">Account</p></a></li>
 	                           
 	                          
 	                            <!--<li class="addhide"><a href="" class="csvOption" data-toggle="tooltip" title="CSV"><i class="fa fa-file-excel-o"></i><span>CSV</span></a></li>
@@ -175,38 +175,38 @@
                            {{/if}}
                            
                            {{#if Gateway}}
-                            	<li class="addhide zoom" title="Reports"><a href="/facesix/gwreports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-newspaper-o"></i><p class="navtopalign ">Report</p></a></li>
+                            	<li class="addhide zoom" title="Reports"><a href="/simulate/gwreports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-newspaper-o"></i><p class="navtopalign ">Report</p></a></li>
                            {{/if}}
                            
                            {{#if GatewayFinder}}
-                            	<li class="addhide zoom" title="Reports"><a href="/facesix/gwreports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-newspaper-o"></i><p class="navtopalign ">Report</p></a></li>                           
-                           		<!-- <li  class="addhide zoom" title="Finder Reports"><a href="/facesix/web/beacon/reports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-flag-checkered"></i><p class="navtopalign ">Record</p></a></li> -->                           		
+                            	<li class="addhide zoom" title="Reports"><a href="/simulate/gwreports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-newspaper-o"></i><p class="navtopalign ">Report</p></a></li>                           
+                           		<!-- <li  class="addhide zoom" title="Finder Reports"><a href="/simulate/web/beacon/reports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-flag-checkered"></i><p class="navtopalign ">Record</p></a></li> -->                           		
                            {{/if}}
                            
                            {{#if GeoFinder}}
-                           		<li  class="zoom" title="Reports"><a href="/facesix/web/beacon/reports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-newspaper-o"></i><p class="navtopalign ">Report</p></a></li>                           		
+                           		<li  class="zoom" title="Reports"><a href="/simulate/web/beacon/reports?cid={{cid}}&sid={{sid}}&spid={{spid}}"><i class="fa fa-newspaper-o"></i><p class="navtopalign ">Report</p></a></li>                           		
                            {{/if}}
 
                             {{#if GatewayFinder}}
                                <!--  {{#if param}}
-                          		<li class="zoom" title="Gateway Dashboard"><a href="/facesix/web/site/portion/dashboard?sid={{sid}}&spid={{spid}}&cid={{cid}}&param=1"><i class="fa fa-wifi"></i><p class="navtopalign">Gateway</p><span>Device floor</span></a></li>
-                          		<li class="zoom" title="Gateway Dashboard"><a href="/facesix/web/site/portion/dashboard?sid={{sid}}&spid={{spid}}&cid={{cid}}&param=2"><i class="fa fa-bluetooth-b"></i><p class="navtopalign ">Finder</p><span>Ble floor</span></a></li>
+                          		<li class="zoom" title="Gateway Dashboard"><a href="/simulate/web/site/portion/dashboard?sid={{sid}}&spid={{spid}}&cid={{cid}}&param=1"><i class="fa fa-wifi"></i><p class="navtopalign">Gateway</p><span>Device floor</span></a></li>
+                          		<li class="zoom" title="Gateway Dashboard"><a href="/simulate/web/site/portion/dashboard?sid={{sid}}&spid={{spid}}&cid={{cid}}&param=2"><i class="fa fa-bluetooth-b"></i><p class="navtopalign ">Finder</p><span>Ble floor</span></a></li>
                           		{{else}}
                           		{{#if dashview}}
-                          		<li class="zoom" title="Gateway Dashboard"><a href="/facesix/web/site/portion/dashview?sid={{sid}}&spid={{spid}}&cid={{cid}}&dashview=1"><i class="fa fa-wifi"></i><p class="navtopalign">Gateway</p><span>Device floor</span></a></li>
-                          		<li class="zoom" title="Finder Dashboard"><a href="/facesix/web/site/portion/dashview?sid={{sid}}&spid={{spid}}&cid={{cid}}&dashview=2"><i class="fa fa-bluetooth-b"></i><p class="navtopalign">Finder</p><span>Ble floor</span></a></li>
+                          		<li class="zoom" title="Gateway Dashboard"><a href="/simulate/web/site/portion/dashview?sid={{sid}}&spid={{spid}}&cid={{cid}}&dashview=1"><i class="fa fa-wifi"></i><p class="navtopalign">Gateway</p><span>Device floor</span></a></li>
+                          		<li class="zoom" title="Finder Dashboard"><a href="/simulate/web/site/portion/dashview?sid={{sid}}&spid={{spid}}&cid={{cid}}&dashview=2"><i class="fa fa-bluetooth-b"></i><p class="navtopalign">Finder</p><span>Ble floor</span></a></li>
                           		{{else}}
                           		{{#if logview}}
-                          		<li class="zoom" title="Gateway Dashboard"><a href="/facesix/web/site/portion/logview?sid={{sid}}&spid={{spid}}&cid={{cid}}&logview=1"><i class="fa fa-wifi"></i><p class="navtopalign">Gateway</p><span>Device floor</span></a></li>
-                          		<li class="zoom" title="Finder Dashboard"><a href="/facesix/web/site/portion/logview?sid={{sid}}&spid={{spid}}&cid={{cid}}&logview=2"><i class="fa fa-bluetooth-b"><p class="navtopalign">Finder</p></i><span>Ble floor</span></a></li>
+                          		<li class="zoom" title="Gateway Dashboard"><a href="/simulate/web/site/portion/logview?sid={{sid}}&spid={{spid}}&cid={{cid}}&logview=1"><i class="fa fa-wifi"></i><p class="navtopalign">Gateway</p><span>Device floor</span></a></li>
+                          		<li class="zoom" title="Finder Dashboard"><a href="/simulate/web/site/portion/logview?sid={{sid}}&spid={{spid}}&cid={{cid}}&logview=2"><i class="fa fa-bluetooth-b"><p class="navtopalign">Finder</p></i><span>Ble floor</span></a></li>
                           		{{/if}}
                           		{{/if}}
                           		{{/if}} -->
                             {{/if}}
                             {{#if ADMIN_WRITE}}
-                            <li  class="zoom" title="Logout" id=""><a href="/facesix/goodbye"><i class="fa fa-power-off"></i><p class="shutdown">Logout</p></a></li>
+                            <li  class="zoom" title="Logout" id=""><a href="/simulate/goodbye"><i class="fa fa-power-off"></i><p class="shutdown">Logout</p></a></li>
                             {{else}}
-                            <li  class="zoom" title="Logout" id="NavLogout"><a href="/facesix/goodbye"><i class="fa fa-power-off"></i><p class="shutdown">Logout</p></a></li>
+                            <li  class="zoom" title="Logout" id="NavLogout"><a href="/simulate/goodbye"><i class="fa fa-power-off"></i><p class="shutdown">Logout</p></a></li>
                             {{/if}}
 						</ul>
 					</div><!--/.nav-collapse -->

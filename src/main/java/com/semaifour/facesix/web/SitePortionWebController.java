@@ -427,7 +427,7 @@ public class SitePortionWebController extends WebController {
 		model.put("cid", cid);
 		prepare(model, request, response);
 		try {
-			String str = "/facesix/web/site/portion/list?sid=" + sid + "&cid=" + cid;
+			String str = "/simulate/web/site/portion/list?sid=" + sid + "&cid=" + cid;
 			response.sendRedirect(str);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -960,20 +960,20 @@ public class SitePortionWebController extends WebController {
 
 			try {
 				if (uid != null && size != 0) {
-					str = "/facesix/web/finder/device/list?cid=" + cid + "&uid=" + uid;
+					str = "/simulate/web/finder/device/list?cid=" + cid + "&uid=" + uid;
 				} else {
 					place = place == null ? "none" : place;
 					if (place.equals("gatewayfloor")) {
-						str = "/facesix/web/site/portion/dashboard?sid=" + sid + "&spid=" + spid + "&cid=" + cid;
+						str = "/simulate/web/site/portion/dashboard?sid=" + sid + "&spid=" + spid + "&cid=" + cid;
 					} else if (place.equals("gatewayconfig")) {
-						str = "/facesix/spots?cid=" + cid;
+						str = "/simulate/spots?cid=" + cid;
 					} else if (place.equals("gatewayvenue")) {
-						str = "/facesix/web/site/portion/dashview?sid=" + sid + "&cid=" + cid;
+						str = "/simulate/web/site/portion/dashview?sid=" + sid + "&cid=" + cid;
 					} else if (place.equals("gatewayfindervenue") || place.equals("steervenueGatewayFinder")) {
-						str = "/facesix/web/finder/device/devboard?sid=" + sid + "&cid=" + cid + "&uid=" + uid
+						str = "/simulate/web/finder/device/devboard?sid=" + sid + "&cid=" + cid + "&uid=" + uid
 								+ "&place=" + place;
 					} else if (place.equals("steervenue")) {
-						str = "/facesix/web/site/portion/GW_SteerList?sid=" + sid + "&cid=" + cid;
+						str = "/simulate/web/site/portion/GW_SteerList?sid=" + sid + "&cid=" + cid;
 					}
 				}
 				response.sendRedirect(str);
@@ -989,11 +989,11 @@ public class SitePortionWebController extends WebController {
 			if (dv != null && dv.spid == null) {
 				try {
 					if (sid != null) {
-						str = "/facesix/spots?cid=" + cid + "&sid=" + sid + "&uid=" + uid;
+						str = "/simulate/spots?cid=" + cid + "&sid=" + sid + "&uid=" + uid;
 					} else {
-						str = "/facesix/spots?cid=" + cid + "&uid=" + uid;
+						str = "/simulate/spots?cid=" + cid + "&uid=" + uid;
 					}
-					str = "/facesix/spots?cid=" + cid + "&uid=" + uid;
+					str = "/simulate/spots?cid=" + cid + "&uid=" + uid;
 					response.sendRedirect(str);
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -1008,7 +1008,7 @@ public class SitePortionWebController extends WebController {
 				// LOG.info("Welcome88");
 
 				if (cid != null && (spid == null || sid == null)) {
-					str = "/facesix/spots?cid=" + cid;
+					str = "/simulate/spots?cid=" + cid;
 					response.sendRedirect(str);
 					return _CCC.pages.getPage("facesix.spots", "facesix-spots");
 				}
@@ -1016,7 +1016,7 @@ public class SitePortionWebController extends WebController {
 				if (cid != null && sid != null && spid != null) {
 					// LOG.info("Welcome11199");
 
-					str = "/facesix/web/site/portion/devboard?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid="
+					str = "/simulate/web/site/portion/devboard?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid="
 							+ cid + "&type=ap";
 				}
 
@@ -1032,14 +1032,14 @@ public class SitePortionWebController extends WebController {
 				// LOG.info("Welcome222299");
 
 				if (cid != null && (sid == null || spid == null)) {
-					str = "/facesix/spots?cid=" + cid + "&uid=" + uid;
+					str = "/simulate/spots?cid=" + cid + "&uid=" + uid;
 				} else if ((place != null && place.equals("gatewayconfig")) || (sid == null && spid == null)) {
-					str = "/facesix/spots?cid=" + cid + "&uid=" + uid;
+					str = "/simulate/spots?cid=" + cid + "&uid=" + uid;
 				} else if (sid != null && spid != null) {
-					str = "/facesix/web/site/portion/devboard?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid="
+					str = "/simulate/web/site/portion/devboard?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid="
 							+ cid + "&type=ap";
 				} else if (place != null && place.equals("gatewayvenue") && (spid == null || sid == null)) {
-					str = "/facesix/spots?cid=" + cid + "&uid=" + uid;
+					str = "/simulate/spots?cid=" + cid + "&uid=" + uid;
 				}
 				response.sendRedirect(str);
 			} catch (IOException e) {
@@ -1164,7 +1164,7 @@ public class SitePortionWebController extends WebController {
 
 		if (dv == null) { // invalid UID search Redirection
 			try {
-				str = "/facesix/web/site/portion/heatmap?sid=" + sid + "&cid=" + cid;
+				str = "/simulate/web/site/portion/heatmap?sid=" + sid + "&cid=" + cid;
 				response.sendRedirect(str);
 			} catch (IOException e) {
 				LOG.info("While Page Redirection Error ", e);
@@ -1174,7 +1174,7 @@ public class SitePortionWebController extends WebController {
 		if (mid != null) {
 			if (spid == null && cid == null) {
 				try {
-					str = "/facesix/spots?cid=" + cid;
+					str = "/simulate/spots?cid=" + cid;
 					response.sendRedirect(str);
 				} catch (IOException e) {
 					LOG.info("While spots  Page Redirection Error ", e);
@@ -1184,9 +1184,9 @@ public class SitePortionWebController extends WebController {
 
 			try {
 				if (spid == null && sid == null) {
-					str = "/facesix/web/site/portion/heatmap?uid=" + uid + "&cid=" + cid;
+					str = "/simulate/web/site/portion/heatmap?uid=" + uid + "&cid=" + cid;
 				} else {
-					str = "/facesix/web/site/portion/heatmap?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid="
+					str = "/simulate/web/site/portion/heatmap?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid="
 							+ cid;
 				}
 
@@ -1204,7 +1204,7 @@ public class SitePortionWebController extends WebController {
 			}
 
 			try {
-				str = "/facesix/web/site/portion/heatmap?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid=" + cid;
+				str = "/simulate/web/site/portion/heatmap?sid=" + sid + "&spid=" + spid + "&uid=" + uid + "&cid=" + cid;
 				response.sendRedirect(str); // duplicate save avoid using page
 											// redirection
 			} catch (IOException e) {
@@ -1363,7 +1363,7 @@ public class SitePortionWebController extends WebController {
 		prepare(model, request, response);
 
 		try {
-			String str = "/facesix/web/site/portion/list?sid=" + newfso.getSiteId() + "&cid=" + cid;
+			String str = "/simulate/web/site/portion/list?sid=" + newfso.getSiteId() + "&cid=" + cid;
 			response.sendRedirect(str); // duplicate save avoid using page
 										// redirection
 		} catch (IOException e) {

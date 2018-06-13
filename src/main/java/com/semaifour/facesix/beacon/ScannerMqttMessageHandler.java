@@ -66,8 +66,8 @@ public class ScannerMqttMessageHandler extends DeviceUpdateEventHandler {
 			JSONObject jsonObject = (JSONObject) parser.parse(message);
 			String op = String.valueOf(jsonObject.get("opcode"));
 
-			LOG.info("Opcode===> " + op);
-			LOG.info("MAP ===> " + jsonObject);
+			/*LOG.info("Opcode===> " + op);
+			LOG.info("MAP ===> " + jsonObject);*/
 
 			
 		} catch (Exception e) {

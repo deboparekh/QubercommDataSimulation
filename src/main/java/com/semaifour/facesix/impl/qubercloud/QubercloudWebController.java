@@ -107,12 +107,12 @@ public class QubercloudWebController extends WelcomeController {
 					}
 
 					String solution = cust.getSolution();
-					String str = "/facesix/web/finder/device/list?cid=" + cid;
+					String str = "/simulate/web/finder/device/list?cid=" + cid;
 
 					SessionUtil.setCurrentCustomer(request.getSession(), cust.getId());
 
 					if (solution.contains("Gateway") || solution.equals("GeoLocation")) {
-						str = "/facesix/web/site/list?cid=" + cid;
+						str = "/simulate/web/site/list?cid=" + cid;
 					}
 
 					if (solution.contains("Gateway") || solution.equals("GeoLocation")) {
@@ -121,9 +121,9 @@ public class QubercloudWebController extends WelcomeController {
 								Site site = sitelist.get(0);
 								sid = site.getId();
 								if (solution.equals("GatewayFinder")) {
-									str = "/facesix/web/beacon/venuetag?sid=" + sid + "&cid=" + cid;
+									str = "/simulate/web/beacon/venuetag?sid=" + sid + "&cid=" + cid;
 								} else {
-									str = "/facesix/web/site/portion/dashview?sid=" + sid + "&cid=" + cid;
+									str = "/simulate/web/site/portion/dashview?sid=" + sid + "&cid=" + cid;
 								}
 							}
 						}
@@ -132,7 +132,7 @@ public class QubercloudWebController extends WelcomeController {
 
 						if (sitelist != null && sitelist.size() > 0) {
 
-							str = "/facesix/web/site/list?cid=" + cid;
+							str = "/simulate/web/site/list?cid=" + cid;
 
 							if (sitelist.size() == 1) {
 								Site site = sitelist.get(0);
@@ -141,7 +141,7 @@ public class QubercloudWebController extends WelcomeController {
 								if (portionlist != null && portionlist.size() > 0) {
 									Portion portion = portionlist.get(0);
 									spid = portion.getId();
-									str = "/facesix/web/beacon/venuetag?cid=" + cid + "&sid=" + sid + "&spid=" + spid;
+									str = "/simulate/web/beacon/venuetag?cid=" + cid + "&sid=" + sid + "&spid=" + spid;
 								}
 							}
 
@@ -151,7 +151,7 @@ public class QubercloudWebController extends WelcomeController {
 
 						if (sitelist != null && sitelist.size() > 0) {
 
-							str = "/facesix/web/site/list?cid=" + cid;
+							str = "/simulate/web/site/list?cid=" + cid;
 
 							if (sitelist.size() == 1) {
 								Site site = sitelist.get(0);
@@ -160,7 +160,7 @@ public class QubercloudWebController extends WelcomeController {
 								if (portionlist != null && portionlist.size() > 0) {
 									Portion portion = portionlist.get(0);
 									spid = portion.getId();
-									str = "/facesix/web/site/portion/fullheatmap?sid=" + sid + "&spid=" + spid + "&cid="
+									str = "/simulate/web/site/portion/fullheatmap?sid=" + sid + "&spid=" + spid + "&cid="
 											+ cid;
 								}
 							}
@@ -185,9 +185,9 @@ public class QubercloudWebController extends WelcomeController {
 				String str = "";
 
 				if (pref_url != null && !pref_url.isEmpty()) {
-					str = "/facesix/" + pref_url;
+					str = "/simulate/" + pref_url;
 				} else {
-					str = "/facesix/";
+					str = "/simulate/";
 				}
 				response.sendRedirect(str);
 				return _CCC.pages.getPage("facesix.login", "login");

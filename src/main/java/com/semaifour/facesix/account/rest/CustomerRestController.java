@@ -247,9 +247,9 @@ public class CustomerRestController extends WebController {
 						json.put("oauth", customer.getOauth());
 						json.put("userAccId", customer.getUserAccId());
 						json.put("spotsIcon", "fa fa-mixcloud");
-						json.put("spots", "/facesix/spots?cid=" + customer.getId());
+						json.put("spots", "/simulate/spots?cid=" + customer.getId());
 						json.put("findIcon", "fa fa-bluetooth");
-						json.put("find", "/facesix/web/finder/device/list?cid=" + customer.getId());
+						json.put("find", "/simulate/web/finder/device/list?cid=" + customer.getId());
 						json.put("inactivityMail", customer.getInactivityMail());
 						json.put("inactivitySMS", customer.getInactivitySMS());
 						json.put("vpn", customer.getVpn());
@@ -265,11 +265,11 @@ public class CustomerRestController extends WebController {
 							json.put("totalVenue", siteList.size());
 							json.put("icon", "fa fa-map-marker");
 							json.put("text", "Venue List");
-							json.put("link", "/facesix/web/site/list?cid=" + customer.getId());
+							json.put("link", "/simulate/web/site/list?cid=" + customer.getId());
 						} else {
 							json.put("icon", "fa fa-plus");
 							json.put("text", "Venue Config");
-							json.put("link", "/facesix/web/site/list?cid=" + customer.getId());
+							json.put("link", "/simulate/web/site/list?cid=" + customer.getId());
 						}
 
 						jsonArray.add(json);
@@ -674,7 +674,7 @@ public class CustomerRestController extends WebController {
 
 		try {
 
-			String default_url = customerUtils.cloudUrl() + "/facesix/";
+			String default_url = customerUtils.cloudUrl() + "/simulate/";
 			String preferred_url = "";
 			String message = "Hi " + customer.getCustomerName() + "\n\n";
 
@@ -1670,7 +1670,7 @@ public class CustomerRestController extends WebController {
 
 			if (state.equals("ACTIVE")) {
 				String peferred_url = customer.getPreferedUrlName().trim();
-				String default_url = customerUtils.cloudUrl() + "/facesix/";
+				String default_url = customerUtils.cloudUrl() + "/simulate/";
 				userMessage += default_url + peferred_url + "\n Login id: ";
 			}
 

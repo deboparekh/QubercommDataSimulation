@@ -56,7 +56,7 @@
         <div class="container-fluid">
             <div class="profile-box" ng-class="{'srink':showProfileMenu, 'open':showProfileMenuAll}">
                 <div class="profile-content userMgm">
-                    <!--  <img src="/facesix/static/qcom/img/logo.png"/> -->
+                    <!--  <img src="/simulate/static/qcom/img/logo.png"/> -->
                     <div class="profile-menu">
                         <a href="" ng-click="showAllProfileMenu()">
                             <span>Account Management</span>
@@ -104,8 +104,8 @@
                     <div class="card usercards" ng-repeat="ud in usersData | filter:searchText" ng-click="editOpenUd(ud)">
                         <div class="ui-card-inner">
                         <div class="left ">
-                        	<div class="user-icon-small"><span class="" style="background-image: url('/facesix/web/account/profilepic?userid={[{ud.id}]}');"></span></div>
-                            <!--  <img class="absolute-img" src="/facesix/static/qcom/img/users.png"/>
+                        	<div class="user-icon-small"><span class="" style="background-image: url('/simulate/web/account/profilepic?userid={[{ud.id}]}');"></span></div>
+                            <!--  <img class="absolute-img" src="/simulate/static/qcom/img/users.png"/>
                             <img ng-src="{[{path}]}"/>
                             -->
                         </div>
@@ -612,7 +612,7 @@
                         </div>
                         <div class="form-group" ng-hide="gpdata.portalType == 'radiocaptive'" ng-class="{'error':guestPassForm.guestpassexpireson.$invalid && errorMsgLable}">
                             <label>Access Expries in</label>
-                            <input type="text" class="form-control" name="guestpassexpireson"  ng-model="gpdata.guestpassexpireson" bs-datepicker data-date-format="dd/MM/yyyy" autoclose="true" ng-attr-data-template="/facesix/static/qcom/datepicker/datepicker.tpl.html" />
+                            <input type="text" class="form-control" name="guestpassexpireson"  ng-model="gpdata.guestpassexpireson" bs-datepicker data-date-format="dd/MM/yyyy" autoclose="true" ng-attr-data-template="/simulate/static/qcom/datepicker/datepicker.tpl.html" />
                                 
                         </div>
                        
@@ -630,7 +630,7 @@
                                 <span class="checkboxtext"><i class="fa fa-envelope"></i> Send By Email</span>
                         </div>     
                         <div style="margin-top: 23px;">
-                                 <img alt="" src="/facesix/static/qcom/img/captive.png" />
+                                 <img alt="" src="/simulate/static/qcom/img/captive.png" />
                                  </div>         
 						</div>
                     <div class="clearfix"></div>

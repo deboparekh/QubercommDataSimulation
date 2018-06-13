@@ -19,8 +19,8 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
 	/* Load Default templates */
 	$scope.casting = [];
 	/*$scope.casting = [
-		{id: 0, name: 'Screenshot', screenshot: 'http://localhost:8175/facesix/static/qcom/img/QLoginPage4.jpg', url: 'http://localhost:8175/facesix/static/qcom/img/QLoginPage4.jpg', type: 'http://localhost:8175/facesix/static/qcom/img/QLoginPage4.jpg' },
-		{id: 0, name: 'including multi-line ellipsis', screenshot: 'http://localhost:8175/facesix/static/qcom/img/QLoginPage4.jpg', url: 'http://localhost:8175/facesix/static/qcom/img/QLoginPage3.jpg', type: 'http://localhost:8175/facesix/static/qcom/img/QLoginPage3.jpg' }
+		{id: 0, name: 'Screenshot', screenshot: 'http://localhost:8175/simulate/static/qcom/img/QLoginPage4.jpg', url: 'http://localhost:8175/simulate/static/qcom/img/QLoginPage4.jpg', type: 'http://localhost:8175/simulate/static/qcom/img/QLoginPage4.jpg' },
+		{id: 0, name: 'including multi-line ellipsis', screenshot: 'http://localhost:8175/simulate/static/qcom/img/QLoginPage4.jpg', url: 'http://localhost:8175/simulate/static/qcom/img/QLoginPage3.jpg', type: 'http://localhost:8175/simulate/static/qcom/img/QLoginPage3.jpg' }
 	]; */
 	$scope.cids = '';
 	data.myProfile().then(function successCallback(response) {
@@ -29,7 +29,7 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
 		$scope.cids = customerData.customerId;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -40,8 +40,8 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
 		
 		if($scope.cid == '' || $scope.cid == undefined){  	
 			$scope.templates = [
-				{id: "0", name: "Captive Portal", url: '', editText: 'Create New Portal', isActive: 1, bgScreenShot: "/facesix/static/qcom/img/captive_portals/regform.jpg"},
-				{id: "1", name: "Login Form ", url: 'login', editText: 'Create New Login', isActive: 1, bgScreenShot: "/facesix/static/qcom/img/captive_portals/loginform.jpg"} 
+				{id: "0", name: "Captive Portal", url: '', editText: 'Create New Portal', isActive: 1, bgScreenShot: "/simulate/static/qcom/img/captive_portals/regform.jpg"},
+				{id: "1", name: "Login Form ", url: 'login', editText: 'Create New Login', isActive: 1, bgScreenShot: "/simulate/static/qcom/img/captive_portals/loginform.jpg"} 
 			];
 			$scope.cusList = '';
 			data.clientList().then(function successCallback(response) {
@@ -56,7 +56,7 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
 		}else{
 			$http({
 	 	 		method: 'GET',
-	 	 		url: '/facesix/rest/captive/portal/existingPortalType/?cid='+$scope.cid,  
+	 	 		url: '/simulate/rest/captive/portal/existingPortalType/?cid='+$scope.cid,  
 	 	 		headers: {'Content-Type': 'application/json'} 
 	 	 	}).then(function(response) {
 	 	 		 if(response.status == 200){
@@ -75,7 +75,7 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
  	$scope.loadPortals = function(){
  		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/portal/list/',  
+ 	 		url: '/simulate/rest/captive/portal/list/',  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) {
  	 		 if(response.status == 200){ 
@@ -139,7 +139,7 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
     	};
     	$http({
     		method: 'POST',
-    		url: '/facesix/rest/captive/portal/delete/',  
+    		url: '/simulate/rest/captive/portal/delete/',  
     		headers: {'Content-Type': 'application/json'}, 
     		data: JSON.stringify(data)
     	}).then(function(response) {
@@ -157,7 +157,7 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
     $scope.loadCastingList = function(){
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) {
  	 		console.log(response);
@@ -173,7 +173,7 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
     	};
     	$http({
     		method: 'POST',
-    		url: '/facesix/rest/captive/casting/castingDelete',  
+    		url: '/simulate/rest/captive/casting/castingDelete',  
     		headers: {'Content-Type': 'application/json'}, 
     		data: JSON.stringify(data)
     	}).then(function(response) {
@@ -327,7 +327,7 @@ function CPortantCtrl($location, $scope, $templateCache, $rootScope,$http, $time
 		$scope.uploadLoader = true;
 		 $http({
     		method: 'POST',
-    		url: '/facesix/rest/captive/casting/castingUpload',  
+    		url: '/simulate/rest/captive/casting/castingUpload',  
     		headers: {'Content-Type': 'application/json'},  
     		data: JSON.stringify($scope.jsonFile) 
     	}).then(function(response) {
@@ -443,7 +443,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 				$scope.dButton = true;
 			}
 					
-		 var url= "/facesix/rest/captive/portal/associationList?cid="+cid+"&associatedwith="+associatedwith
+		 var url= "/simulate/rest/captive/portal/associationList?cid="+cid+"&associatedwith="+associatedwith
 		// console.log(url);
 	    	$http({
 	    		method: 'GET',
@@ -525,7 +525,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 	$scope.customerName = '';
 	$http({
 		method: 'GET',
-		url: '/facesix/rest/captive/portal/get/?id='+param_id 
+		url: '/simulate/rest/captive/portal/get/?id='+param_id 
 	}).then(function(response) {
 		//console.log(response);
 		var data = response.data[0];
@@ -548,7 +548,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 		    }
 		    
 		    $scope.portalTheme = data.portalTheme;
-		    $scope.template = "/facesix/template/qcom/captive_portal/templates/"+$scope.portalTheme;
+		    $scope.template = "/simulate/template/qcom/captive_portal/templates/"+$scope.portalTheme;
 		    $scope.portalType = data.portalType;
 		    $scope.formValues = JSON.parse(data.portalComponents);
 		    $scope.loadEditingOptions(); 
@@ -576,7 +576,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 				$scope.dButton = true;
 			}
 					
-		 var url= "/facesix/rest/captive/portal/associationList?cid="+cid+"&associatedwith="+associatedwith
+		 var url= "/simulate/rest/captive/portal/associationList?cid="+cid+"&associatedwith="+associatedwith
 		 //console.log(url);
 	    	$http({
 	    		method: 'GET',
@@ -677,7 +677,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 	        /* 
 	        $http({
 	    		method: 'POST',
-	    		url: '/facesix/rest/captive/portal/portalBgUpload',  
+	    		url: '/simulate/rest/captive/portal/portalBgUpload',  
 	    		headers: {'Content-Type': undefined}, 
 	    		data: formData,
 	    		transformRequest: function(data, headersGetterFunction) {
@@ -779,7 +779,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 	    	$scope.urlFound == true;
 	    	$http({
 	    	   		method: 'GET',
-	    	   		url: '/facesix/rest/captive/portal/duplicatePreferedUrl?preferedUrl='+$scope.preferedUrl+'&id='+$scope.EditModeId+'&portalType'+$scope.portalType
+	    	   		url: '/simulate/rest/captive/portal/duplicatePreferedUrl?preferedUrl='+$scope.preferedUrl+'&id='+$scope.EditModeId+'&portalType'+$scope.portalType
     	   	}).then(function(response) { 
 	    	   		if(response.data.body === 'new'){
 	    	   			$scope.urlFound = true; 
@@ -835,7 +835,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 	        	    	// alert("thats"+ JSON.stringify($scope.finalOutput))
 	        	    	$http({
 	        	    		method: 'POST',
-	        	    		url: '/facesix/rest/captive/portal/save',  
+	        	    		url: '/simulate/rest/captive/portal/save',  
 	        	    		headers: {'Content-Type': 'application/json'},   
 	        	    		data: JSON.stringify($scope.finalOutput)
 	        	    	}).then(function(response) { 
@@ -940,7 +940,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 		$scope.filePopUp = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -973,7 +973,7 @@ function CPortantEditCtrl($location,$window, $scope, $templateCache, $rootScope,
 		$scope.uploadLoader = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -1047,7 +1047,7 @@ function CPortantAddCtrl($location,$window, $scope, $templateCache, $rootScope,$
 				$scope.dButton = true;
 			}
 					
-		 var url= "/facesix/rest/captive/portal/associationList?cid="+cid+"&associatedwith="+associatedwith
+		 var url= "/simulate/rest/captive/portal/associationList?cid="+cid+"&associatedwith="+associatedwith
 		 console.log(url);
 	    	$http({
 	    		method: 'GET',
@@ -1177,7 +1177,7 @@ function CPortantAddCtrl($location,$window, $scope, $templateCache, $rootScope,$
     }
     
 	console.log($scope.portalTheme);
-	$scope.template = "/facesix/template/qcom/captive_portal/templates/"+$scope.portalTheme;
+	$scope.template = "/simulate/template/qcom/captive_portal/templates/"+$scope.portalTheme;
 	
     $scope.setEditOptions = function(tab, item){ 
     	 
@@ -1219,10 +1219,10 @@ function CPortantAddCtrl($location,$window, $scope, $templateCache, $rootScope,$
     
     
     if($scope.portalType == 'registration'){
-    	$scope.formValues=[{id:0,type:"image",field_icon:"file-image-o",name:"test",value:"",isDefault:"",placeholder:"Image Field",content:"Submit",align:"center",font_size:14,label:"Image Field",inputType:"text",wrapperClass:"",imagePath:"/facesix/static/qubercomm/images/header/logo.png",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:1,type:"text",field_icon:"text",name:"test",value:"",isDefault:"",placeholder:"Text Field",content:"Register Here.",align:"center",font_size:14,label:"Text Field",inputType:"p",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#000000",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#89b923"},{id:2,type:"registration",field_icon:"registration",name:"registration",value:"",isDefault:1,registration_fields:[{name:"username",status:true,placeholder:"User Name"},{name:"email",status:true,placeholder:"Email"},{name:"phone",status:true,placeholder:"Phone"}],placeholder:"Registration Form",content:"",align:"left",font_size:14,label:"Registration",inputType:"",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:10,marginTop:0,marginRight:0,marginBottom:10,marginLeft:0,borderWidth:0,borderRadius:5,borderColor:"#000000",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:45,w_paddingTop:30,w_paddingRight:30,w_paddingBottom:15,w_paddingLeft:30,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#5f9018"},{id:3,type:"terms",field_icon:"file-image-o",name:"test",linkColor:"#000000",value:"",isDefault:"",placeholder:"Image Field",content:'Please review and accept our <a href="javascript:void(0);" target="_blank">Terms &amp; Conditions</a> for access to Wi-Fi. ',align:"left",font_size:16,label:"Terms",inputType:"text",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:10,w_paddingBottom:10,w_paddingLeft:10,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:4,type:"submit",field_icon:"input",name:"login",value:"",isDefault:1,placeholder:"Input Field",content:"Register",align:"center",font_size:14,label:"Input Field",inputType:"submit",wrapperClass:"",imagePath:"",paddingTop:10,paddingRight:15,paddingBottom:10,paddingLeft:15,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:10,borderColor:"#cccccc",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:15,w_paddingRight:0,w_paddingBottom:15,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#89b923"}];	
+    	$scope.formValues=[{id:0,type:"image",field_icon:"file-image-o",name:"test",value:"",isDefault:"",placeholder:"Image Field",content:"Submit",align:"center",font_size:14,label:"Image Field",inputType:"text",wrapperClass:"",imagePath:"/simulate/static/qubercomm/images/header/logo.png",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:1,type:"text",field_icon:"text",name:"test",value:"",isDefault:"",placeholder:"Text Field",content:"Register Here.",align:"center",font_size:14,label:"Text Field",inputType:"p",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#000000",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#89b923"},{id:2,type:"registration",field_icon:"registration",name:"registration",value:"",isDefault:1,registration_fields:[{name:"username",status:true,placeholder:"User Name"},{name:"email",status:true,placeholder:"Email"},{name:"phone",status:true,placeholder:"Phone"}],placeholder:"Registration Form",content:"",align:"left",font_size:14,label:"Registration",inputType:"",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:10,marginTop:0,marginRight:0,marginBottom:10,marginLeft:0,borderWidth:0,borderRadius:5,borderColor:"#000000",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:45,w_paddingTop:30,w_paddingRight:30,w_paddingBottom:15,w_paddingLeft:30,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#5f9018"},{id:3,type:"terms",field_icon:"file-image-o",name:"test",linkColor:"#000000",value:"",isDefault:"",placeholder:"Image Field",content:'Please review and accept our <a href="javascript:void(0);" target="_blank">Terms &amp; Conditions</a> for access to Wi-Fi. ',align:"left",font_size:16,label:"Terms",inputType:"text",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:10,w_paddingBottom:10,w_paddingLeft:10,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:4,type:"submit",field_icon:"input",name:"login",value:"",isDefault:1,placeholder:"Input Field",content:"Register",align:"center",font_size:14,label:"Input Field",inputType:"submit",wrapperClass:"",imagePath:"",paddingTop:10,paddingRight:15,paddingBottom:10,paddingLeft:15,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:10,borderColor:"#cccccc",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:15,w_paddingRight:0,w_paddingBottom:15,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#89b923"}];	
     }else if($scope.portalType == 'login'){
-    	$scope.backgroundImg = '/facesix/static/qcom/img/QLoginPage4.jpg';
-    	$scope.formValues=[{id:0,type:"image",field_icon:"file-image-o",name:"test",imagePath:"/facesix/static/qcom/img/logo-home.png"}];
+    	$scope.backgroundImg = '/simulate/static/qcom/img/QLoginPage4.jpg';
+    	$scope.formValues=[{id:0,type:"image",field_icon:"file-image-o",name:"test",imagePath:"/simulate/static/qcom/img/logo-home.png"}];
     }
     
     
@@ -1351,7 +1351,7 @@ function CPortantAddCtrl($location,$window, $scope, $templateCache, $rootScope,$
 	  	}
 	  	$http({
 		   		method: 'GET',
-		   		url: '/facesix/rest/captive/portal/duplicatePreferedUrl?preferedUrl='+$scope.preferedUrl+'&id='+$scope.EditModeId+'&portalType'+$scope.portalType
+		   		url: '/simulate/rest/captive/portal/duplicatePreferedUrl?preferedUrl='+$scope.preferedUrl+'&id='+$scope.EditModeId+'&portalType'+$scope.portalType
 		   	}).then(function(response) { 
 		   		if(response.data.body === 'new'){
 		   			$scope.urlFound = true; 
@@ -1414,7 +1414,7 @@ function CPortantAddCtrl($location,$window, $scope, $templateCache, $rootScope,$
                 	// console.log(JSON.stringify($scope.finalOutput));
                     $http({
                 		method: 'POST',
-                		url: '/facesix/rest/captive/portal/save',  
+                		url: '/simulate/rest/captive/portal/save',  
                 		headers: {'Content-Type': 'application/json'},   
                 		data: JSON.stringify($scope.finalOutput)
                 	}).then(function(response) { 
@@ -1516,7 +1516,7 @@ function CPortantAddCtrl($location,$window, $scope, $templateCache, $rootScope,$
 		$scope.filePopUp = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -1549,7 +1549,7 @@ function CPortantAddCtrl($location,$window, $scope, $templateCache, $rootScope,$
 		$scope.uploadLoader = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -1600,14 +1600,14 @@ function CPortantLoginAddCtrl($location,$window, $scope, $templateCache, $rootSc
 	$scope.portalName = 'Login Form';
 	$scope.portalTheme = 'login_form';
 	var param_id = $routeParams.path; 
-    $scope.backgroundImg = '/facesix/static/qcom/img/QLoginPage1.jpg';
-    $scope.logoImg = '/facesix/static/qcom/img/logo-home.png';
+    $scope.backgroundImg = '/simulate/static/qcom/img/QLoginPage1.jpg';
+    $scope.logoImg = '/simulate/static/qcom/img/logo-home.png';
     if(param_id != 1){
     	$location.path('/captiveportal');
 		$location.replace();
     }
     
-	$scope.template = "/facesix/template/qcom/captive_portal/templates/"+$scope.portalTheme;
+	$scope.template = "/simulate/template/qcom/captive_portal/templates/"+$scope.portalTheme;
 	$scope.bgChanged = false;
 	$scope.logoChanged = false;
 	 /* File Upload Actions */
@@ -1689,7 +1689,7 @@ function CPortantLoginAddCtrl($location,$window, $scope, $templateCache, $rootSc
     	    	 
     	    	$http({
     	    		method: 'POST',
-    	    		url: '/facesix/rest/captive/portal/save',  
+    	    		url: '/simulate/rest/captive/portal/save',  
     	    		headers: {'Content-Type': 'application/json'},   
     	    		data: JSON.stringify($scope.finalOutput)
     	    	}).then(function(response) { 
@@ -1746,7 +1746,7 @@ function CPortantLoginAddCtrl($location,$window, $scope, $templateCache, $rootSc
 		$scope.filePopUp = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -1779,7 +1779,7 @@ function CPortantLoginAddCtrl($location,$window, $scope, $templateCache, $rootSc
 		$scope.uploadLoader = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -1831,19 +1831,19 @@ function CPortantLoginEditCtrl($location,$window, $scope, $templateCache, $rootS
 	$scope.portalName = 'Login Form';
 	$scope.portalTheme = 'login_form';
 	
-    $scope.backgroundImg = '/facesix/static/qcom/img/QLoginPage1.jpg';
-    $scope.logoImg = '/facesix/static/qcom/img/logo-home.png';
+    $scope.backgroundImg = '/simulate/static/qcom/img/QLoginPage1.jpg';
+    $scope.logoImg = '/simulate/static/qcom/img/logo-home.png';
     
 	$http({
 		method: 'GET',
-		url: '/facesix/rest/captive/portal/get/?id='+param_id 
+		url: '/simulate/rest/captive/portal/get/?id='+param_id 
 	}).then(function(response) {
 		console.log(response);
 		var data = response.data[0];
 		console.log(data);
 		if(response.data != ''){  
 			$scope.portalName = data.portalName; 
-		    $scope.template = "/facesix/template/qcom/captive_portal/templates/"+$scope.portalTheme;
+		    $scope.template = "/simulate/template/qcom/captive_portal/templates/"+$scope.portalTheme;
 		    $scope.backgroundImg = data.backgroundImg; 
 		    $scope.logoImg = data.logoImg;
 		    $scope.bgScreenShot = data.bgScreenShot;
@@ -1867,7 +1867,7 @@ function CPortantLoginEditCtrl($location,$window, $scope, $templateCache, $rootS
 	});
 	
 	  
-	$scope.template = "/facesix/template/qcom/captive_portal/templates/"+$scope.portalTheme;
+	$scope.template = "/simulate/template/qcom/captive_portal/templates/"+$scope.portalTheme;
 	$scope.bgChanged = false;
 	$scope.logoChanged = false;
 	 /* File Upload Actions */
@@ -1949,7 +1949,7 @@ function CPortantLoginEditCtrl($location,$window, $scope, $templateCache, $rootS
     	    	 
     	    	$http({
     	    		method: 'POST',
-    	    		url: '/facesix/rest/captive/portal/save',  
+    	    		url: '/simulate/rest/captive/portal/save',  
     	    		headers: {'Content-Type': 'application/json'},   
     	    		data: JSON.stringify($scope.finalOutput)
     	    	}).then(function(response) { 
@@ -1983,7 +1983,7 @@ function CPortantLoginEditCtrl($location,$window, $scope, $templateCache, $rootS
 		$scope.filePopUp = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -2016,7 +2016,7 @@ function CPortantLoginEditCtrl($location,$window, $scope, $templateCache, $rootS
 		$scope.uploadLoader = true;
 		$http({
  	 		method: 'GET',
- 	 		url: '/facesix/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
+ 	 		url: '/simulate/rest/captive/casting/castingListAll/?cid='+$scope.cid+'&fileType='+$scope.fileFM,  
  	 		headers: {'Content-Type': 'application/json'} 
  	 	}).then(function(response) { 
  	 		 if(response.status == 200){
@@ -2076,19 +2076,19 @@ function CPortantViewCtrl($location,$window, $scope, $templateCache, $rootScope,
 	    		$scope.portalType = 'registration';
 	    		$scope.portalName = 'Captive Portal Registration Form';
 	    		$scope.portalTheme = 'registration_form';  
-	    		$scope.formValues=[{id:0,type:"image",field_icon:"file-image-o",name:"test",value:"",isDefault:"",placeholder:"Image Field",content:"Submit",align:"center",font_size:14,label:"Image Field",inputType:"text",wrapperClass:"",imagePath:"/facesix/static/qubercomm/images/header/logo.png",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:1,type:"text",field_icon:"text",name:"test",value:"",isDefault:"",placeholder:"Text Field",content:"Register Here.",align:"center",font_size:14,label:"Text Field",inputType:"p",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#000000",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#89b923"},{id:2,type:"registration",field_icon:"registration",name:"registration",value:"",isDefault:1,registration_fields:[{name:"username",status:true,placeholder:"User Name"},{name:"email",status:true,placeholder:"Email"},{name:"phone",status:true,placeholder:"Phone"}],placeholder:"Registration Form",content:"",align:"left",font_size:14,label:"Registration",inputType:"",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:10,marginTop:0,marginRight:0,marginBottom:10,marginLeft:0,borderWidth:0,borderRadius:5,borderColor:"#000000",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:45,w_paddingTop:30,w_paddingRight:30,w_paddingBottom:15,w_paddingLeft:30,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#5f9018"},{id:3,type:"terms",field_icon:"file-image-o",name:"test",linkColor:"#000000",value:"",isDefault:"",placeholder:"Image Field",content:'Please review and accept our <a href="javascript:void(0);" target="_blank">Terms &amp; Conditions</a> for access to Wi-Fi. ',align:"left",font_size:16,label:"Terms",inputType:"text",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:10,w_paddingBottom:10,w_paddingLeft:10,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:4,type:"submit",field_icon:"input",name:"login",value:"",isDefault:0,placeholder:"Input Field",content:"Register",align:"center",font_size:14,label:"Input Field",inputType:"submit",wrapperClass:"",imagePath:"",paddingTop:10,paddingRight:15,paddingBottom:10,paddingLeft:15,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:10,borderColor:"#cccccc",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:15,w_paddingRight:0,w_paddingBottom:15,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#89b923"}];
+	    		$scope.formValues=[{id:0,type:"image",field_icon:"file-image-o",name:"test",value:"",isDefault:"",placeholder:"Image Field",content:"Submit",align:"center",font_size:14,label:"Image Field",inputType:"text",wrapperClass:"",imagePath:"/simulate/static/qubercomm/images/header/logo.png",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:1,type:"text",field_icon:"text",name:"test",value:"",isDefault:"",placeholder:"Text Field",content:"Register Here.",align:"center",font_size:14,label:"Text Field",inputType:"p",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#000000",borderStyle:"solid",bgColor:"transparent",textColor:"#ffffff",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:0,w_paddingBottom:10,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#89b923"},{id:2,type:"registration",field_icon:"registration",name:"registration",value:"",isDefault:1,registration_fields:[{name:"username",status:true,placeholder:"User Name"},{name:"email",status:true,placeholder:"Email"},{name:"phone",status:true,placeholder:"Phone"}],placeholder:"Registration Form",content:"",align:"left",font_size:14,label:"Registration",inputType:"",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:10,marginTop:0,marginRight:0,marginBottom:10,marginLeft:0,borderWidth:0,borderRadius:5,borderColor:"#000000",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:45,w_paddingTop:30,w_paddingRight:30,w_paddingBottom:15,w_paddingLeft:30,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#000000",w_borderStyle:"solid",w_bgColor:"#5f9018"},{id:3,type:"terms",field_icon:"file-image-o",name:"test",linkColor:"#000000",value:"",isDefault:"",placeholder:"Image Field",content:'Please review and accept our <a href="javascript:void(0);" target="_blank">Terms &amp; Conditions</a> for access to Wi-Fi. ',align:"left",font_size:16,label:"Terms",inputType:"text",wrapperClass:"",imagePath:"",paddingTop:0,paddingRight:0,paddingBottom:0,paddingLeft:0,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:0,borderColor:"#ffffff",borderStyle:"solid",bgColor:"transparent",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:10,w_paddingRight:10,w_paddingBottom:10,w_paddingLeft:10,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#ffffff"},{id:4,type:"submit",field_icon:"input",name:"login",value:"",isDefault:0,placeholder:"Input Field",content:"Register",align:"center",font_size:14,label:"Input Field",inputType:"submit",wrapperClass:"",imagePath:"",paddingTop:10,paddingRight:15,paddingBottom:10,paddingLeft:15,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,borderWidth:0,borderRadius:10,borderColor:"#cccccc",borderStyle:"solid",bgColor:"#ffffff",textColor:"#000000",field_width:"",field_height:"",w_paddingTop:15,w_paddingRight:0,w_paddingBottom:15,w_paddingLeft:0,w_marginTop:0,w_marginRight:0,w_marginBottom:0,w_marginLeft:0,w_borderWidth:0,w_borderRadius:0,w_borderColor:"#f0f0f0",w_borderStyle:"solid",w_bgColor:"#89b923"}];
 	    		break; 
 	    	default:
 	    		$location.path('/captiveportal');
 				$location.replace();
 			break;
 	    } 
-		$scope.template = "/facesix/template/qcom/captive_portal/templates/view_"+$scope.portalTheme;
+		$scope.template = "/simulate/template/qcom/captive_portal/templates/view_"+$scope.portalTheme;
 		
 	}else{
 		$http({
 			method: 'GET',
-			url: '/facesix/rest/captive/portal/get/?id='+param_id 
+			url: '/simulate/rest/captive/portal/get/?id='+param_id 
 		}).then(function(response) { 
 			var data = response.data[0];
 			if(response.data != ''){
@@ -2104,7 +2104,7 @@ function CPortantViewCtrl($location,$window, $scope, $templateCache, $rootScope,
 			    }
 			    
 			    $scope.portalTheme = data.portalTheme;
-			    $scope.template = "/facesix/template/qcom/captive_portal/templates/view_"+$scope.portalTheme;
+			    $scope.template = "/simulate/template/qcom/captive_portal/templates/view_"+$scope.portalTheme;
 			    console.log($scope.template);
 			    $scope.portalType = data.portalType;
 			    $scope.formValues = JSON.parse(data.portalComponents);
@@ -2172,25 +2172,25 @@ function CPortantLoginViewCtrl($location,$window, $scope, $templateCache, $rootS
     $scope.portalType = 'login';
     
 	var param_id = $routeParams.path;   
-	$scope.backgroundImg = '/facesix/static/qcom/img/QLoginPage1.jpg';
-    $scope.logoImg = '/facesix/static/qcom/img/logo-home.png';
+	$scope.backgroundImg = '/simulate/static/qcom/img/QLoginPage1.jpg';
+    $scope.logoImg = '/simulate/static/qcom/img/logo-home.png';
 	if(param_id == 1){ 
 	    if(param_id != 1){
 	    	$location.path('/captiveportal');
 			$location.replace();
 	    }
 	    
-		$scope.template = "/facesix/template/qcom/captive_portal/templates/"+$scope.portalTheme;
+		$scope.template = "/simulate/template/qcom/captive_portal/templates/"+$scope.portalTheme;
 		
 	}else{ 
 		$http({
 			method: 'GET',
-			url: '/facesix/rest/captive/portal/get/?id='+param_id
+			url: '/simulate/rest/captive/portal/get/?id='+param_id
 		}).then(function(response) { 
 			var data = response.data[0];
 			if(response.data != ''){
 				$scope.portalName = data.portalName; 
-			    $scope.template = "/facesix/template/qcom/captive_portal/templates/"+$scope.portalTheme;
+			    $scope.template = "/simulate/template/qcom/captive_portal/templates/"+$scope.portalTheme;
 			    $scope.backgroundImg = data.backgroundImg; 
 			    $scope.logoImg = data.logoImg;
 			    $scope.bgScreenShot = data.bgScreenShot;
@@ -2249,7 +2249,7 @@ app.directive('portalAvailable', function($timeout, $q, $http) {
 	    			 
 	 		        $http({
 	 	    	   		method: 'GET',
-	 	    	   		url: '/facesix/rest/captive/portal/duplicatePreferedUrl?preferedUrl='+elm[0].value+'&id='+scope.EditModeId+'&portalType'+scope.portalType
+	 	    	   		url: '/simulate/rest/captive/portal/duplicatePreferedUrl?preferedUrl='+elm[0].value+'&id='+scope.EditModeId+'&portalType'+scope.portalType
 	 	    	   	}).then(function(response) {
 	 	    	   		console.log(response.data.body)
 	 	    	   		if(response.data.body === 'new'){

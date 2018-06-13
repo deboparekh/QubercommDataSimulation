@@ -148,7 +148,7 @@ public class SiteWebController extends WebController {
 
 		if (cid.isEmpty() || cid.equals("")) {
 			cid = SessionUtil.getCurrentCustomer(request.getSession());
-			String str = "/facesix/web/site/list?cid=" + cid + "&sid=" + sid + "&spid=" + spid;
+			String str = "/simulate/web/site/list?cid=" + cid + "&sid=" + sid + "&spid=" + spid;
 			response.sendRedirect(str);
 		} else {
 			SessionUtil.setCurrentSiteCustomerId(request.getSession(), cid);
@@ -386,7 +386,7 @@ public class SiteWebController extends WebController {
 
 				model.put("Site", TAB_HIGHLIGHTER);
 				String cid = SessionUtil.getCurrentSiteCustomerId(request.getSession());
-				String str = "/facesix/web/site/list?cid=" + cid;
+				String str = "/simulate/web/site/list?cid=" + cid;
 				response.sendRedirect(str);
 			}
 		} catch (Exception e) {
@@ -413,7 +413,7 @@ public class SiteWebController extends WebController {
 		String cid = SessionUtil.getCurrentSiteCustomerId(request.getSession());
 		try {
 			Site site = service.findById(sid);
-			// response.sendRedirect("/facesix/qubercloud/welcome");
+			// response.sendRedirect("/simulate/qubercloud/welcome");
 			if (site == null) {
 				newfso.setCreatedOn(new Date());
 				newfso.setModifiedOn(new Date());
@@ -445,7 +445,7 @@ public class SiteWebController extends WebController {
 				model.put("disabled", "disabled");
 				model.put("message", Message.newSuccess("Site saved successfully"));
 			}
-			String str = "/facesix/web/site/list?cid=" + cid;
+			String str = "/simulate/web/site/list?cid=" + cid;
 			response.sendRedirect(str); // duplicate save avoid using page
 										// redirection
 

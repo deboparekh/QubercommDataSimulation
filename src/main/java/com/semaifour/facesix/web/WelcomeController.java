@@ -1067,10 +1067,10 @@ public class WelcomeController extends WebController {
 
 				constructResetTokenEmail(appUrl, request.getLocale(), token, user, param);
 
-				String str = "/facesix/" + param;
+				String str = "/simulate/" + param;
 				response.sendRedirect(str);
 			} else {
-				response.sendRedirect("/facesix/reset");
+				response.sendRedirect("/simulate/reset");
 			}
 			LOG.info("Forgot Mail Notification:");
 
@@ -1142,9 +1142,9 @@ public class WelcomeController extends WebController {
 				String str = "";
 
 				if (preferred_url != null && !preferred_url.isEmpty()) {
-					str = "/facesix/" + preferred_url;
+					str = "/simulate/" + preferred_url;
 				} else {
-					str = "/facesix/";
+					str = "/simulate/";
 				}
 				response.sendRedirect(str);
 			}

@@ -15,7 +15,7 @@ app.config(function ($routeProvider, $locationProvider) {
     //Client View
 	 
 	.when('/', {
-	    templateUrl: '/facesix/template/qcom/captive_portal/view_template',
+	    templateUrl: '/simulate/template/qcom/captive_portal/view_template',
 	    controller: 'CPortantRegisterCtrl'
 	})
     .otherwise({
@@ -51,13 +51,13 @@ function CPortantRegisterCtrl($location,$window, $scope, $templateCache, $rootSc
 	 
     $http({
 		method: 'GET',
-		url: '/facesix/rest/captive/portal/prefferdUrl/?url='+param_id
+		url: '/simulate/rest/captive/portal/prefferdUrl/?url='+param_id
 	}).then(function(response) { 
 		
 		var data = response.data; 
 		if(response.data != ''){
 			$scope.portalName = data.portalName; 
-		   // $scope.template = "/facesix/template/qcom/captive_portal/templates/action_"+$scope.portalTheme;
+		   // $scope.template = "/simulate/template/qcom/captive_portal/templates/action_"+$scope.portalTheme;
 		    $scope.backgroundImg = data.backgroundImg; 
 		    $scope.portalId = data.id; 
 		    $scope.logoImg = data.logoImg;
@@ -121,7 +121,7 @@ function CPortantRegisterCtrl($location,$window, $scope, $templateCache, $rootSc
 			console.log($scope.validation);
 			$http({
 				method: 'POST',
-				url: '/facesix/rest/portal/users/validateOTP',  
+				url: '/simulate/rest/portal/users/validateOTP',  
 				headers: {'Content-Type': 'application/json'},   
 				data: JSON.stringify($scope.validation)
 			}).then(function(response) { 
@@ -162,7 +162,7 @@ function CPortantRegisterCtrl($location,$window, $scope, $templateCache, $rootSc
 		
 		$http({
     		method: 'POST',
-    		url: '/facesix/rest/portal/users/save',  
+    		url: '/simulate/rest/portal/users/save',  
     		headers: {'Content-Type': 'application/json'},   
     		data: JSON.stringify($scope.register)
     	}).then(function(response) { 

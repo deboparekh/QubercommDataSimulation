@@ -23,7 +23,7 @@ function header($location, $scope, $templateCache, $rootScope,$http, $timeout, d
 		$scope.namedood = response.data.fname + " " + response.data.lname ;
 		$http({
 			method: 'GET',
-			url: '/facesix/rest/customer/paramValue?cid='+customerData.customerId 
+			url: '/simulate/rest/customer/paramValue?cid='+customerData.customerId 
 		}).then(function(response) {  
 			 if(response.data.pref_url){
 				pref_url = response.data.customerName;
@@ -156,7 +156,7 @@ app.controller('ClientCtrl', ['$http', '$scope', 'data', function ($http, $scope
     $scope.checkUserDuplicate = function(value){ 
 		$http({
 	   		method: 'GET',
-	   		url: '/facesix/rest/customer/duplicateCustomerName?customerName='+value 
+	   		url: '/simulate/rest/customer/duplicateCustomerName?customerName='+value 
 	   	}).then(function(response) {
 	   		console.log(response.data.body)
 	            if(response.data.body === 'new'){
@@ -179,7 +179,7 @@ app.controller('ClientCtrl', ['$http', '$scope', 'data', function ($http, $scope
     	
     	$http({
     		method: 'POST',
-    		url: '/facesix/rest/token/restToken', 
+    		url: '/simulate/rest/token/restToken', 
     		headers: {'Content-Type': undefined}, 
     		data: postData
     	}).then(function(response) {
@@ -212,7 +212,7 @@ app.controller('ClientCtrl', ['$http', '$scope', 'data', function ($http, $scope
     	
     	$http({
     		method: 'POST',
-    		url: '/facesix/rest/token/mqttToken', 
+    		url: '/simulate/rest/token/mqttToken', 
     		headers: {'Content-Type': undefined}, 
     		data: postData 
     	}).then(function(response) {
@@ -692,7 +692,7 @@ app.controller('AccountCtrl', ['$scope', 'data', '$http', '$timeout' , function 
          formData.append("userid", $scope.profileData.id);  
         $http({
     		method: 'POST',
-    		url: '/facesix/rest/user/profileupload', // The URL to Post.
+    		url: '/simulate/rest/user/profileupload', // The URL to Post.
     		headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
     		data: formData,
     		transformRequest: function(data, headersGetterFunction) {
@@ -751,7 +751,7 @@ app.controller('AccountCtrl', ['$scope', 'data', '$http', '$timeout' , function 
         formData.append("userid", $scope.profileData.id); 
         $http({
     		method: 'POST',
-    		url: '/facesix/rest/user/profileupload', // The URL to Post.
+    		url: '/simulate/rest/user/profileupload', // The URL to Post.
     		headers: {'Content-Type': undefined}, // Set the Content-Type to undefined always.
     		data: formData,
     		transformRequest: function(data, headersGetterFunction) {
@@ -786,7 +786,7 @@ app.controller('AccountCtrl', ['$scope', 'data', '$http', '$timeout' , function 
            console.log($scope.profileData.imgpath);
             if($scope.profileData.imgpath != ''){
             	$scope.NewProfileImg = true;
-            	$scope.image_source = '/facesix/web/account/profilepic?userid='+$scope.profileData.id;
+            	$scope.image_source = '/simulate/web/account/profilepic?userid='+$scope.profileData.id;
             }else{
             	$scope.NewProfileImg = false;
             	$scope.image_source = '';
@@ -1197,7 +1197,7 @@ app.controller('UsermanagementCtrl', ['$http','$scope', 'data','$filter', functi
     	       
     	       $http({
     	    		method: 'POST',
-    	    		url: '/facesix/rest/customer/emailsupport', 
+    	    		url: '/simulate/rest/customer/emailsupport', 
     	    		headers: {'Content-Type': 'application/json'},
     	    		data: JSON.stringify(datas)
     	    	}).then(function(response) {
@@ -1403,7 +1403,7 @@ app.controller('UsermanagementCtrl', ['$http','$scope', 'data','$filter', functi
 
 	        	$http({
 	        		method: 'POST',
-	        		url: '/facesix/rest/customer/updateSupportDetails', 
+	        		url: '/simulate/rest/customer/updateSupportDetails', 
 	        		headers: {'Content-Type': 'application/json'},
 	        		data: JSON.stringify($scope.finalOutput)
 	        	}).then(function(response) {
@@ -1518,7 +1518,7 @@ app.controller('UsermanagementCtrl', ['$http','$scope', 'data','$filter', functi
     		if(cid != undefined){
     			$http({
     	 	 		method: 'GET',
-    	 	 		url: '/facesix/rest/customer/supportDetails?cid='+cid,
+    	 	 		url: '/simulate/rest/customer/supportDetails?cid='+cid,
     	 	 		headers: {'Content-Type': 'application/json'},
     	 	 	}).then(function(response) { 
     	 	 		 if(response.status == 200){
@@ -1647,7 +1647,7 @@ app.directive('usernameAvailable', function($timeout, $q, $http) {
            	if(elm[0].value != scope.ActivecustomerName && scope.ActivecustomerName != 'undefined' && scope.ActivecustomerName != ''){
            	$http({
            	  method: 'GET',
-           	  url: '/facesix/rest/customer/duplicateCustomerName?customerName='+elm[0].value
+           	  url: '/simulate/rest/customer/duplicateCustomerName?customerName='+elm[0].value
            	  }).then(function(response) {
            	  console.log(response.data.body)
            	           if(response.data.body === 'new'){
@@ -1664,7 +1664,7 @@ app.directive('usernameAvailable', function($timeout, $q, $http) {
            	var data = {customerName: elm[0].value};
                $http({
        	  method: 'GET',
-       	  url: '/facesix/rest/customer/duplicateCustomerName?customerName='+elm[0].value
+       	  url: '/simulate/rest/customer/duplicateCustomerName?customerName='+elm[0].value
        	  }).then(function(response) {
        	  console.log(response.data.body)
        	           if(response.data.body === 'new'){
@@ -1700,7 +1700,7 @@ app.directive('usernameAvailable', function($timeout, $q, $http) {
             	var data = {customerName: elm[0].value};
                 $http({
         	   		method: 'GET',
-        	   		url: '/facesix/rest/customer/duplicateCustomerName?customerName='+elm[0].value 
+        	   		url: '/simulate/rest/customer/duplicateCustomerName?customerName='+elm[0].value 
         	   	}).then(function(response) {
         	   		console.log(response.data.body)
         	            if(response.data.body === 'new'){
@@ -1736,7 +1736,7 @@ app.directive('urlAvailable', function($timeout, $q, $http) {
 		        	var data = {customerName: elm[0].value};
 		            $http({
 		    	   		method: 'GET',
-		    	   		url: '/facesix/rest/customer/duplicateUrlName?preferredUrl='+elm[0].value 
+		    	   		url: '/simulate/rest/customer/duplicateUrlName?preferredUrl='+elm[0].value 
 		    	   	}).then(function(response) {
 		    	   		console.log(response.data.body)
 		    	   		if(response.data.body === 'new'){

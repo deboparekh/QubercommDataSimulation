@@ -16,7 +16,7 @@
 				<div class="addVenue display-inline addhide">
 					
 						
-						<a href="/facesix/web/site/open?sid={{id}}&cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
+						<a href="/simulate/web/site/open?sid={{id}}&cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
                 <span class="btn-label"><i class="fa fa-map-marker"></i></span>&nbsp Add Venue</button></a>
                  
 				</div>
@@ -26,7 +26,7 @@
 					
 						
 						
-						<a href="/facesix/web/finder/device/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
+						<a href="/simulate/web/finder/device/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
                 <span class="btn-label"><i class="fa fa-bluetooth-b"></i></span>&nbsp Configuration</button></a>
 						
 						
@@ -35,7 +35,7 @@
 				{{#if Gateway}}
 				<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
 					
-					<a href="/facesix/spots?cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
+					<a href="/simulate/spots?cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
                 <span class="btn-label"><i class="fa fa-mixcloud"></i></span>&nbsp Configuration</button></a>
 						
 						
@@ -45,7 +45,7 @@
 				{{#if Heatmap}}
 				<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
 					
-					<a href="/facesix/spots?cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
+					<a href="/simulate/spots?cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
                 <span class="btn-label"><i class="fa fa-mixcloud"></i></span>&nbsp Configuration</button></a>
 						
 						
@@ -53,13 +53,13 @@
 				</div>
 				{{else}}
 		 		<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
-					<a href="/facesix/web/finder/device/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"
+					<a href="/simulate/web/finder/device/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"
 						class="btn btn-primary btn-lg btn3d btn-config-venue"><i
 						class="fa fa-bluetooth-b"></i> BLE Config</a>
 				</div>
 				
 				<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
-					<a href="/facesix/spots?cid={{cid}}"
+					<a href="/simulate/spots?cid={{cid}}"
 						class="btn btn-primary btn-lg btn3d btn-config-venue"><i
 						class="fa fa-mixcloud"></i> Gateway Config</a>
 				</div>					
@@ -134,7 +134,7 @@
 							<li>
 								<label class="view-floorlist">
 								{{#if SITE_WRITE}}
-									<a href="/facesix/web/site/open?sid={{id}}&cid={{cid}}">
+									<a href="/simulate/web/site/open?sid={{id}}&cid={{cid}}">
 										<i class="fa fa-globe" aria-hidden="true"></i> 
 										
 										<span class="hideMenu">Edit Venue </span>
@@ -147,7 +147,7 @@
 								<li class="noclick">
 									<label class="view-dashboard">
 																							
-										<a href="/facesix/web/beacon/venuetag?sid={{id}}&cid={{cid}}">
+										<a href="/simulate/web/beacon/venuetag?sid={{id}}&cid={{cid}}">
 											<i class="fa fa-bar-chart" aria-hidden="true"></i> 
 											<span class="hideMenu">View Dashboard</span>
 										</a>
@@ -157,7 +157,7 @@
 							<li class="noclick">
 									<label class="view-dashboard">
 									
-										<a href="/facesix/web/site/portion/fullheatmap?sid={{id}}&cid={{cid}}&dashview=0">
+										<a href="/simulate/web/site/portion/fullheatmap?sid={{id}}&cid={{cid}}&dashview=0">
 											<i class="fa fa-bar-chart" aria-hidden="true"></i> 
 											<span class="hideMenu">View Dashboard</span>
 										</a>
@@ -167,7 +167,7 @@
 								<li class="noclick">
 									<label class="view-dashboard">
 									
-										<a href="/facesix/web/site/portion/dashview?sid={{id}}&cid={{cid}}&dashview=0">
+										<a href="/simulate/web/site/portion/dashview?sid={{id}}&cid={{cid}}&dashview=0">
 											<i class="fa fa-bar-chart" aria-hidden="true"></i> 
 											<span class="hideMenu">View Dashboard</span>
 										</a>
@@ -178,7 +178,7 @@
 							<li>
 								<label class="view-floorlist">
 								
-									<a href="/facesix/web/site/portion/list?sid={{id}}&cid={{cid}}">
+									<a href="/simulate/web/site/portion/list?sid={{id}}&cid={{cid}}">
 										<i class="fa fa-building-o" aria-hidden="true"></i> 
 										<span class="hideMenu">View Floors </span>
 									</a>
@@ -187,8 +187,8 @@
 							<li class="pull-right" style="margin-right:0px">
 								<label>
 								{{#if SITE_WRITE}}
-									<a href="/facesix/web/site/delete?sid={{id}}"  class="submitDelete submit1" >
-										<img data-orig="/facesix/static/qubercomm/images/floorlist/delete.png" src="/facesix/static/qubercomm/images/floorlist/delete.png" >
+									<a href="/simulate/web/site/delete?sid={{id}}"  class="submitDelete submit1" >
+										<img data-orig="/simulate/static/qubercomm/images/floorlist/delete.png" src="/simulate/static/qubercomm/images/floorlist/delete.png" >
 									</a>
 									{{/if}}
 								</label>

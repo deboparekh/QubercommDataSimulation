@@ -101,7 +101,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	public void simulationSchedule() throws InterruptedException {
 
 		if (!simulation_enable) {
-			// return;
+			 return;
 		}
 		
 		List<Customer> customerList = getCustomerService().findBySimulationSolutionAndState(simulation,solution,cx_state);

@@ -85,7 +85,7 @@ public class DeviceEventPublisher implements MqttCallback {
 	private synchronized MqttTopic connect2Topic(String dvUID) {
 		// MqttClient mypubClient = null;
 		MqttTopic topic2publish = null;
-		String topic = mqttConfiguration.getTopic2Publish() + "/" + dvUID;
+		String topic = mqttConfiguration.getTopic2Publish();
 		// To be checked - no need to check actually [mahi]
 		// if (dvUID.length() < 16) {
 		// return false;
