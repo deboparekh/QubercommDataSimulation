@@ -1,356 +1,126 @@
-{{#partial "page"}}
-<div id="page-content">
-	<div class="addvenuePage addvenueAlter" >
-		<div class="container-fluid" >
-			<div class="venue-Details display-inline" >
-			<div class="NoOfVenues display-inline">
-				{{#if message}}
-					<label><font color="{{message.type}}">{{message.message}}</font></label>
-				{{/if}}
-				</div>
-							
-				<!-- <div class="NoOfVenues display-inline">
-					<label>{{numOfSites}} Venues</label>
-				</div> -->
-				{{#if SITE_WRITE}} 
-				<div class="addVenue display-inline addhide">
-					
-						
-						<a href="/simulate/web/site/open?sid={{id}}&cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
-                <span class="btn-label"><i class="fa fa-map-marker"></i></span>&nbsp Add Venue</button></a>
-                 
-				</div>
-				{{/if}}
-				{{#if GeoFinder}}	
-		 		<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
-					
-						
-						
-						<a href="/simulate/web/finder/device/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
-                <span class="btn-label"><i class="fa fa-bluetooth-b"></i></span>&nbsp Configuration</button></a>
-						
-						
-				</div>
-				{{else}}
-				{{#if Gateway}}
-				<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
-					
-					<a href="/simulate/spots?cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
-                <span class="btn-label"><i class="fa fa-mixcloud"></i></span>&nbsp Configuration</button></a>
-						
-						
-						
-				</div>
-				{{else}}
-				{{#if Heatmap}}
-				<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
-					
-					<a href="/simulate/spots?cid={{cid}}"><button type="button" class="btn btn-primary btn-lg btn3d btn-config-venue">
-                <span class="btn-label"><i class="fa fa-mixcloud"></i></span>&nbsp Configuration</button></a>
-						
-						
-						
-				</div>
-				{{else}}
-		 		<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
-					<a href="/simulate/web/finder/device/list?sid={{sid}}&spid={{spid}}&cid={{cid}}"
-						class="btn btn-primary btn-lg btn3d btn-config-venue"><i
-						class="fa fa-bluetooth-b"></i> BLE Config</a>
-				</div>
-				
-				<div class=" display-inline addhide" style="margin-left:20px;margin-top:3px;">
-					<a href="/simulate/spots?cid={{cid}}"
-						class="btn btn-primary btn-lg btn3d btn-config-venue"><i
-						class="fa fa-mixcloud"></i> Gateway Config</a>
-				</div>					
-				
-				{{/if}}
-				{{/if}}
-				{{/if}}
-				
-			</div>
-			<div class="add-floorPlan-form pull-right display-inline search-venues">
-				<div class="lth-right searchVenues">
-					<div class="search-opt">
-						<!-- <form> -->
-							<div class="form-group">
-								<div class="search-box">
-									<span class="icon">
-										<i class="fa fa-search " aria-hidden="true"></i>
-									</span>
-									<input type="search" class="form-control search-align" placeholder="">
-								</div>
-							</div>
-						<!-- </form> -->
-					</div>
-				</div>
-			</div>
-		<!-- <div class="row addVenueForm">
-			<div class="col-md-6 padmob">
-				<form>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Venue Title" >
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Venue Address">
-					</div>
-					<textarea class="form-control" rows="7" placeholder="Description"></textarea>
-					<div class="save-section pull-right addVenueBtn">
-						<button class="btn btn-default btn-save button button--aylen button--inverted width-120">Cancel</button>
-						<button class="btn btn-default btn-config  btn-theme width-120">Save</button>
-					</div>
-				</form>
-			</div>
-			<div class="col-md-6 padmob">
-				<div class="map-embed" >
-					<div style="overflow:hidden;width: 100%;height: 323px;resize:none;max-width:100%;">
-						<div id="google-maps-canvas" style="height:100%; width:100%;max-width:100%;">
-							<iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=M+G+Road,+KG+Halli,+Bangalore,+Karnataka,+India&amp;key=AIzaSyAN0om9mFmy1QN6Wf54tXAowK4eT0ZUPrU"></iframe>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
-			
-		<!-- online -->
-		<div class="col-md-12 venue-course mob-ven" style="padding-bottom:20px;">
-			<div class="venue-source">
-				<div class="network-heading active-collapse display-inline " style="margin-left:-14px;">
-					<div><label class="padL" style="font-size:18px;"> Venues List</label></div>
-                 
-				</div>
-			</div>
-														
-{{#each fsobjects}}
-			<div class=" col-md-12 venue-details-section row" data-venue-name="{{uid}}" style="background-color:white;margin-bottom:20px;box-shadow: 5px 6px 5px #cdd9e5;">
-							
-				<div class="col-md-12 venue-details">
-					<div class="view-details">
-						<ul>
-							<li class="displayBlockName">
-								<label class="venue-name">{{uid}}</label>
-							</li>
-							
-							<li>
-								<label class="view-floorlist">
-								{{#if SITE_WRITE}}
-									<a href="/simulate/web/site/open?sid={{id}}&cid={{cid}}">
-										<i class="fa fa-globe" aria-hidden="true"></i> 
-										
-										<span class="hideMenu">Edit Venue </span>
-									</a>
-									{{/if}}
-								</label>
-							</li>
-					         
-					        {{#if GeoFinder}}
-								<li class="noclick">
-									<label class="view-dashboard">
-																							
-										<a href="/simulate/web/beacon/venuetag?sid={{id}}&cid={{cid}}">
-											<i class="fa fa-bar-chart" aria-hidden="true"></i> 
-											<span class="hideMenu">View Dashboard</span>
-										</a>
-								</li>
-							{{else}}
-							{{#if Heatmap}}
-							<li class="noclick">
-									<label class="view-dashboard">
-									
-										<a href="/simulate/web/site/portion/fullheatmap?sid={{id}}&cid={{cid}}&dashview=0">
-											<i class="fa fa-bar-chart" aria-hidden="true"></i> 
-											<span class="hideMenu">View Dashboard</span>
-										</a>
-								</li>
-							
-							{{else}}
-								<li class="noclick">
-									<label class="view-dashboard">
-									
-										<a href="/simulate/web/site/portion/dashview?sid={{id}}&cid={{cid}}&dashview=0">
-											<i class="fa fa-bar-chart" aria-hidden="true"></i> 
-											<span class="hideMenu">View Dashboard</span>
-										</a>
-								</li>
-							{{/if}}
-							{{/if}}
-							
-							<li>
-								<label class="view-floorlist">
-								
-									<a href="/simulate/web/site/portion/list?sid={{id}}&cid={{cid}}">
-										<i class="fa fa-building-o" aria-hidden="true"></i> 
-										<span class="hideMenu">View Floors </span>
-									</a>
-								</label>
-							</li>
-							<li class="pull-right" style="margin-right:0px">
-								<label>
-								{{#if SITE_WRITE}}
-									<a href="/simulate/web/site/delete?sid={{id}}"  class="submitDelete submit1" >
-										<img data-orig="/simulate/static/qubercomm/images/floorlist/delete.png" src="/simulate/static/qubercomm/images/floorlist/delete.png" >
-									</a>
-									{{/if}}
-								</label>
-							</li>
-						</ul>
-					</div>
-				</div>
-												
-				<div class="col-md-6 col-sm-12 venuepeerChart" >
-					<div class="chart1">
-					<div style="overflow:hidden;width: 100%;height: 323px;resize:none;max-width:100%;">
-						<div id="google-maps-canvas" style="height:100%; width:100%;max-width:100%;">
-							<iframe style="height:100%;width:100%;border:0;box-shadow:2px 3px 2px #cdd9ef;" frameborder="0" src="https://www.google.com/maps/embed/v1/search?q={{name}}&key=AIzaSyBIb48XnrVG-JZvYup6AkfvNdCclhEnSwE"></iframe>									
-						</div>
-					</div>
-					</div>
-				</div>
-										
-				<div class="col-md-6 col-sm-12 ">
-				<div class="col-md-12 col-sm-12 thumbnail venueCarousel" style="box-shadow:2px 3px 2px #cdd9ef;">
-					<div
-						class="col-md-3 col-sm-3 floorChartLine padmob-10  padding-right-0" style="padding-left:0px!important;">
-						<div class="card-box1 fd-card">
-							<div class="cb-center">
-								<div class="circle-chart">
-									<div id="dchart-{{id}}" class="venue_progress" sid="{{id}}"></div>
-								</div>
-							</div>
-							<div class="cb-caption1">
-								<label>Floors</label>
-							</div>
-						</div>
-					</div>
+	<button><a href="/simulate/qubercloud/cloud/home" style="float:left">Customer List !</a></button>	
 	
-					<div
-						class="col-md-3 col-sm-3 floorChartLine padmob-10  padding-right-0" style="padding-left:0px!important;">
-						<div class="card-box1 fd-card">
-							<div class="cb-center">
+
+<br/><br/>
+<br/><br/>
+<div>
+<div class="w50">
+<form action="/simulate/rest/beacon/simulateTagDetails" method="post" id="configform" enctype='application/json'>
+
+<div class="form-group  disp-inline" style="display: none;">
+							<input	style="width: 250px" name="cid" id="cid" value="{{cid}}">
+						</div>
+						
+ 	<div class="form-group">
+		<div class="mylable">Simulate</div>
+		<div class="myinput">
+		<select class="form-control sideStyle" id="simulation" name="simulation">
+		
+			<option value="enable">Enable</option>
+			<option value="disable">Disable</option>
+		</select>
+		</div>
+	</div><br/>
+	<div class="form-group">
+		<div class="mylable">Simulate Via</div>
+		<div class="myinput">
+		<select class="form-control sideStyle" id="simulateVia" name="simulateVia">
+			<option value="mqtt">MQTT</option>
+			<option value="kafka">Kafka</option>
+			<option value="rest">Rest</option>
+		</select>
+		</div>
+	</div><br/>
+	<div class="form-group">
+		<div class="mylable">Tag Count</div>
+		<div class="myinput">
+				<input type="number" class="form-control sideStyle" id="tagCount" name="tagCount" value="1">
+		</div>
+	</div><br/>
+	<div class="form-group">
+		<div class="mylable">Device Count</div>
+		<div class="myinput">
+				<input type="number" class="form-control sideStyle" id="deviceCount" name="deviceCount" value="1">
+		</div>
+	</div><br/>
+	<div class="form-group">
+		<div class="mylable">Max Count</div>
+		<div class="myinput">
+				<input type="number" class="form-control sideStyle" id="maxCount" name="maxCount" value="3">
+		</div>
+	</div><br/><br/>
 	
-								<div class="circle-chart">
-									<div id="upchart-{{id}}" class="venue_progress"></div>
-								</div>
-							</div>
-							<div class="cb-caption1">
-								{{#if GeoFinder}}
-									<label>Finder Devices</label>
-								{{else}}
-								{{#if Gateway}}
-									<label>Mesh Network</label>						
-								{{else}}
-								{{#if Heatmap}}
-									<label>Mesh Network</label>	
-								{{else}}	
-									<label>Gateway Devices</label>
-								{{/if}}
-								{{/if}}
-								{{/if}}
-							</div>
-						</div>
-					</div>
-					<div
-						class="col-md-3 col-sm-3 floorChartLine padmob-10  padding-right-0" style="padding-left:0px!important;">
-						<div class="card-box1 fd-card">
-							<div class="cb-center">
-								<div class="circle-chart">
-									<div id="downchart-{{id}}" class="venue_progress"></div>
-								</div>
-							</div>
-						</div>
-						<div class="cb-caption1">
-							{{#if GeoFinder}}
-								<label>Active Tags</label>
-							{{else}}
-							{{#if Gateway}}
-								<label>AP Network</label>							
-							{{else}}
-							{{#if Heatmap}}		
-								<label>AP Network</label>
-							{{else}}			
-								<label>Active Tags</label>
-							{{/if}}
-							{{/if}}
-						    {{/if}}
-						</div>
-					</div>
-					
-					<div
-						class="col-md-3 col-sm-3 floorChartLine padmob-10  padding-right-0" style="padding-left:0px!important;">
-						<div class="card-box1 fd-card">
-							<div class="cb-center">
-								<div class="circle-chart">
-									
-									<div id="tagchart-{{id}}" class="venue_progress"></div>
-										
-								</div>
-							</div>
-						</div>
-						<div class="cb-caption1">
-							<label>Active Devices</label>
-						</div>
-					</div>				
-				
-				</div>
-				
-				
-				<div class="col-md-12 col-sm-12 thumbnail venueAlertAct">
-					<!-- recent alert -->
-					<div class="recentArea addvenueList recent-activities" data-source="alerts" data-id="{{id}}">
-						<div class="recent-heading">
-							<ul class="list-unstyled margin-btm-0">
-								<li class="dropdown profile-dash">
-									<a href="#" class="pad0 " role="button" aria-haspopup="true" aria-expanded="true">
-										Recent Alerts
-										
-									</a>
-									<ul class="dropdown-menu profile-dash-menu">
-										<li class="getRecent" data-type="alerts"><a>Recent Activities</a></li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-
-					</div>
-					
-				</div>
-				
-			</div>
-
-		</div>
-{{/each}}
-							
-		</div>
-			
-		</div>
+	
+	<button type="submit" class="btn btn-primary btn3d btn-config-venue"  width-120" id="valsubmit"  style="float:left">Submit</button>									
+		<p id="para" style="margin-top: 0;margin-left: 100px"></p>								
+	
+	</form>
 	</div>
-</div>
-	<script>
-		function allowClick(val) {
-			//console.log(">>>>>>" + val)
-			if (val == 0) {
-				$('.noclick').addClass('noclick');
-			} else {
-				$('.noclick').removeClass('noclick');
-			}
-		}
-	</script>
+	
 	<style>
-	.noclick {
-		pointer-events: none;
-	}
-	@media screen and (max-width: 767px){
-		.mob-ven{
-			padding: 25px;
-		}
-		.search-opt{
-			margin-top: 105px;
-    		margin-left: 20px;
-		}
-	}
+	.w50 { float:left; width:50%; max-width:450px; margin-top: 5px; margin-bottom: 10px;}
+				.form-control { height:30px!important; font-size:12px;} 
+				.sideStyle{
+				       margin-top: -23px;
+					    float: left;
+					    width: 35%;
+					    margin-left: 100px;
+				}
 	</style>
-{{/partial}} 
-{{>qubercomm/nav-top}}
-{{>qubercomm/nav-left}}
-{{>qubercomm/venue-list-addon}}
-{{>qubercomm/wrapper}}
+	<script src="/simulate/static/qubercomm/js/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="/simulate/static/qubercomm/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/simulate/static/qubercomm/js/jquery_validate_min_js.js" type="text/javascript"></script>
+
+<script src="https://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+
+<script type="text/javascript" src="/simulate/static/qubercomm/js/jquery.nicescroll.min.js"></script>
+
+<script type="text/javascript" src="/simulate/static/qubercomm/js/common.js"></script>
+<script type="text/javascript" src="/simulate/static/qubercomm/js/handlebars.min.js"></script>
+	
+ <script>
+$(document).ready(function() {
+    $("#configform").validate({
+        rules: {
+            tagCount: "required",
+            deviceCount: "required",
+            maxCount: "required"
+        },
+        messages: {
+            maxCount: ""
+
+        }
+    })
+
+    $('#valsubmit').click(function() {
+        $("#configform").valid();
+    });
+    
+    
+    $('#configform').submit(function(){
+    
+    $.ajax({
+      url: $('#configform').attr('action'),
+      type: 'POST',
+      data : $('#configform').serialize(),
+      success: function(response){
+        console.log('form submitted.' + response);
+        if(response == true){
+         $('#para').text("simulation success !!!")
+        } else {
+         $('#para').text("simulation Failure !!!")
+        }
+       
+      }
+    });
+    return false;
+});
+    
+    
+    
+    
+});
+
+ </script>
+ 
+	</div>

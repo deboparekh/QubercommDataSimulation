@@ -806,21 +806,23 @@ public class BeaconRestController extends WebController {
 	}
 	
 	@RequestMapping(value = "/simulateTagDetails", method = RequestMethod.POST)
-	public void simulateTagDetails(@RequestBody Map<String, Object> map) {
-
-		String cid = (String)map.get("cid");
-		String simulation = (String)map.get("simulation");
+	public boolean simulateTagDetails(HttpServletRequest request,HttpServletResponse response) {
+		LOG.info("simulated");
+		boolean result = false;
+		String cid = request.getParameter("cid");
+		String simulation = request.getParameter("simulation");
 		String simulateVia = "";
 		int maxCount = 0;
 		if (simulation.equals("enable")) {
-			simulateVia = (String) map.get("simulateVia");
-			int tagCount = (int) map.get("tagCount");
-			int deviceCount = (int) map.get("deviceCount");
-			maxCount = (int) map.get("maxCount");
+			simulateVia = request.getParameter("simulateVia");
+			int tagCount = Integer.valueOf(request.getParameter("tagCount"));
+			int deviceCount = Integer.valueOf(request.getParameter("deviceCount"));
+			maxCount = Integer.valueOf(request.getParameter("maxCount"));
 			beaconService.simulateTags(cid, tagCount);
 			beaconDeviceService.simulateDevices(cid, deviceCount);
 		}
-		customerUtils.setSimulation(cid,simulation,simulateVia,maxCount);
-		LOG.info("simulation is enabled for cid "+cid);
+		result = customerUtils.setSimulation(cid, simulation, simulateVia, maxCount);
+		LOG.info("simulation is enabled for cid " + cid);
+		return result;
 	}
 }

@@ -10,11 +10,10 @@
                         
                          <ul class="dropdown" id="dropdown1">
                        
-                            <li ng-repeat="role in roles" ng-if="role.CUST_WRITE" ng-click="newCustomerOpen()"><a href="" class="list-btn"><i class="fa fa-plus"></i> Add Customer</a></li>
                         
                         </ul>
                     </div>
-                    <div class="form-group search note-show">
+                    <div class="form-group search note-show" style="margin-right: 0px;">
                         <input type="text" class="form-control" ng-model="searchText" placeholder=" Search Customer"/>
                         <label><i class="fa fa-search"></i></label>
                     </div>
@@ -34,133 +33,31 @@
                     <div class="fl card-w75">
                       <h3 style=" margin-left: 23px; margin-top: -9px;">{[{x.customerName}]}</h3>
                           <div class="editicons" style="margin-top: -23px;margin-left: -12px; margin-bottom: 6px;">
-                             	<span ng-repeat="role in roles" ng-if="role.CUST_WRITE && x.status == 'ACTIVE'"  ng-click="singleAccount(x, x.id)"><i class="fa fa-edit"></i></span>
-                             	<span ng-repeat="role in roles" ng-if="role.CUST_WRITE && x.status == 'INACTIVE'"><i class="fa fa-edit"></i></span>
+                             	<span ng-repeat="role in roles" ng-if="role.CUST_WRITE && x.status == 'ACTIVE'"  ng-click=""><i class="fa fa-user"></i></span>
+                             	<span ng-repeat="role in roles" ng-if="role.CUST_WRITE && x.status == 'INACTIVE'"><i class="fa fa-user"></i></span>
                              	<span ng-repeat="role in roles" ng-if="role.APP_WRITE && x.status == 'ACTIVE'" ng-click=""><i class="fa fa-user"></i></span>
                         </div>
                         <div>
                         <div ng-if="x.solution =='GeoLocation' || x.solution == 'Gateway' || x.solution == 'Heatmap'">
-                        <p style="margin-left: 23px;margin-top: 10px;margin-bottom: 8px;">{[{x.text}]}
+                        <p style="margin-left: 23px;margin-top: 10px;margin-bottom: 8px;">Simulation
                         <div class="editicons" style="margin-top: -26px;margin-left: -12px;margin-bottom: 8px;">
                             <a href="{[{x.link}]}"><span  ng-if="x.status == 'ACTIVE'" ><i class='{[{x.icon}]}'></i></a></span>
                             <a href=""><span  ng-if="x.status == 'INACTIVE'" ><i class='{[{x.icon}]}'></i></a></span>
                         </div>
                         </p>
-                         <p style=" margin-left: 23px;">Gateway Config
-                         <div class="editicons" style="margin-top: -24px;margin-left: -12px;margin-bottom: 35px;">
-                            <a href="{[{x.spots}]}"><span  ng-if="x.status == 'ACTIVE'" ><i class='{[{x.spotsIcon}]}'></i></a></span>
-                            <a href=""><span  ng-if="x.status == 'INACTIVE'" ><i class='{[{x.spotsIcon}]}'></i></a></span>
-                        </div></p>
-                       
+                        
                           </div>
                           <div ng-if="x.solution=='GeoFinder'">
-                        <p style="margin-left: 23px;margin-top: 10px;margin-bottom: 8px;">{[{x.text}]}
+                        <p style="margin-left: 23px;margin-top: 10px;margin-bottom: 8px;">Simulation
                         <div class="editicons" style="margin-top: -26px;margin-left: -12px;margin-bottom: 8px;">
                             <a href="{[{x.link}]}"><span  ng-if="x.status == 'ACTIVE'" ><i class='{[{x.icon}]}'></i></a></span>
                              <a href=""><span  ng-if="x.status == 'INACTIVE'" ><i class='{[{x.icon}]}'></i></a></span>
                         </div>
                         </p>
-                         <p style=" margin-left: 23px;">Finder Config
-                         <div class="editicons" style="margin-top: -24px;margin-left: -12px;margin-bottom: 35px;">
-                            <a href="{[{x.find}]}"><span  ng-if="x.status == 'ACTIVE'" ><i class='{[{x.findIcon}]}'></i></a></span>
-                            <a href=""><span  ng-if="x.status == 'INACTIVE'" ><i class='{[{x.findIcon}]}'></i></a></span>
-                        </div></p>
+                       
                        
                           </div>
-                           <div ng-if="x.solution=='GatewayFinder'">
-                        <p style="margin-left: 23px;margin-top: 10px;margin-bottom: 8px;">{[{x.text}]}
-                        <div class="editicons" style="margin-top: -26px;margin-left: -12px;margin-bottom: 8px;">
-                            <a href="{[{x.link}]}"><span  ng-if="x.status == 'ACTIVE'" ><i class='{[{x.icon}]}'></i></a></span>
-                            <a href=""><span  ng-if="x.status == 'INACTIVE'" ><i class='{[{x.icon}]}'></i></a></span>
-                        </div>
-                        </p>
-                         <p style=" margin-left: 23px;">Gateway Config
-                         <div class="editicons" style="margin-top: -24px;margin-left: -12px;margin-bottom:10px;">
-                            <a href="{[{x.spots}]}"><span  ng-if="x.status == 'ACTIVE'" ><i class='{[{x.spotsIcon}]}'></i></a></span>
-                            <a href=""><span  ng-if="x.status == 'INACTIVE'" ><i class='{[{x.spotsIcon}]}'></i></a></span>
-                        </div></p>
-                         <div>
-                            <p style=" margin-left: 23px;">Finder Config
-                         <div class="editicons" style="margin-top: -24px;margin-left: -12px;margin-bottom: 5px;">
-                            <a href="{[{x.find}]}"><span  ng-if="x.status == 'ACTIVE'" ><i class='{[{x.findIcon}]}'></i></a></span>
-                            <a href=""><span  ng-if="x.status == 'INACTIVE'" ><i class='{[{x.findIcon}]}'></i></a></span>
-                            
-                        </div></p>
-                           
-                            </div>
-                          </div>
-                        <!-- <p ng-if="!x.totalVenue"><i class="fa fa-building"> Total Venue 0 </i></p>
-                         <p ng-if="x.totalVenue"><i class="fa fa-building"> Total Venue  {[{x.totalVenue}]}</i></p> 
-                        <p><i class="fa fa-map-marker"></i> {[{x.country}]}</p> -->
-                        <p class="ex-active"><small>Expiry Date: {[{x.serviceExpiryDate | date:'medium'}]}</small></p>
-                    </div>
-                 
-                    
-                    </div>
-                    <div class="fr tc">
-                        <div ng-if="x.solution != 'GatewayFinder'" style="margin-top: 6px;max-height: 40px;">
-                            <div style="margin-top: -33px;">
-                         
-                                <span class="label support">Support</span>
-                            </div>
-                             <label class="switch">
-                                <input type="checkbox" ng-true-value="'true'" ng-false-value="'false'" ng-model="x.qubercommAssist" disabled>
-                                <span></span>
-                            </label>
-                            <div style="margin-top:-8px">
-                                <span class="label support">Logs</span>
-                            </div>
-                             <label class="switch">
-                                <input ng-if="x.status == 'ACTIVE'" type="checkbox" ng-true-value="'true'" ng-false-value="'false'" ng-model="x.logs" ng-change= "updatelog(x)"/>
-                                <span></span>
-                            </label>
-                            <div style="margin-top:-8px">
-                                <span class="label support">VPN</span>
-                            </div>
-                             <label class="switch">
-                                <input ng-if="x.status == 'ACTIVE'" type="checkbox" ng-true-value="'true'" ng-false-value="'false'" ng-model="x.vpn" ng-change= "updateVpn(x)"/>
-                                <span></span>
-                            </label>
-                            <div class="clearfix"></div>
-                             
-                           <div>
-                                <input type="checkbox" ng-true-value="'ACTIVE'" ng-false-value="'INACTIVE'" ng-model="x.status" disabled>
-                             <span class="label label-success" ng-if="x.status == 'ACTIVE'">ACTIVE</span>
-                            <span class="label label-warning" ng-if="x.status == 'INACTIVE'">INACTIVE</span>
-                             </div>
-                        </div>
-                         
-                          <div ng-if="x.solution =='GatewayFinder'" style="margin-top: 11px;max-height: 40px;">
-                             <div style="margin-top: -37px;">
-                                <span class="label support">Support</span>
-                             </div>
-                         	 <label class="switch">
-                                <input type="checkbox" ng-true-value="'true'" ng-false-value="'false'" ng-model="x.qubercommAssist" disabled>
-                                <span></span>
-                             </label>
-                            <div style="margin-top:-8px"> 
-                                <span class="label support">Logs</span>
-                             </div>
-                            
-                             <label class="switch">
-                                <input type="checkbox" ng-true-value="'true'" ng-false-value="'false'" ng-model="x.logs" ng-change= "updatelog(x)"/>
-                                <span></span>
-                             </label>
-                             <div style="margin-top:-8px">
-                                <span class="label support">VPN</span>
-                            </div>
-                             <label class="switch">
-                                <input ng-if="x.status == 'ACTIVE'" type="checkbox" ng-true-value="'true'" ng-false-value="'false'" ng-model="x.vpn" ng-change= "updateVpn(x)"/>
-                                <span></span>
-                            </label>
-                            <div class="clearfix"></div>
-                           
-                            <div>
-                                <input type="checkbox" ng-true-value="'ACTIVE'" ng-false-value="'INACTIVE'" ng-model="x.status" disabled>
-                             	<span class="label label-success" ng-if="x.status == 'ACTIVE'">ACTIVE</span>
-                            	<span class="label label-warning" ng-if="x.status == 'INACTIVE'">INACTIVE</span>
-                             	</br>
-                            </div>
+                          
                         </div>
                         
                         <!-- <div class="editicons"> n 
