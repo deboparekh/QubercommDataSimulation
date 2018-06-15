@@ -124,6 +124,7 @@ public class BeaconAssociationService {
 					associatedBeacon.setSid(sid);
 					associatedBeacon.setSpid(spid);
 					associatedBeacon.setLat(lat);
+					associatedBeacon.setUid(chosenDevice.getUid());
 					associatedBeacon.setLon(lon);
 					save(associatedBeacon);
 				}
