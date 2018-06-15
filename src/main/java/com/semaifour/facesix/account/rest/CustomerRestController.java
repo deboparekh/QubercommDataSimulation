@@ -43,8 +43,6 @@ import com.semaifour.facesix.account.CustomerService;
 import com.semaifour.facesix.account.Privilege;
 import com.semaifour.facesix.account.PrivilegeService;
 import com.semaifour.facesix.beacon.data.Beacon;
-import com.semaifour.facesix.beacon.data.BeaconAlertData;
-import com.semaifour.facesix.beacon.data.BeaconAlertDataService;
 import com.semaifour.facesix.beacon.data.BeaconService;
 import com.semaifour.facesix.beacon.finder.geo.GeoFinderLayoutData;
 import com.semaifour.facesix.beacon.finder.geo.GeoFinderLayoutDataService;
@@ -65,8 +63,6 @@ import com.semaifour.facesix.data.site.Site;
 import com.semaifour.facesix.data.site.SiteService;
 import com.semaifour.facesix.domain.Restponse;
 import com.semaifour.facesix.rest.DeviceRestController;
-import com.semaifour.facesix.rest.NetworkConfRestController;
-import com.semaifour.facesix.rest.NetworkDeviceRestController;
 import com.semaifour.facesix.util.CustomerUtils;
 import com.semaifour.facesix.util.SessionUtil;
 import com.semaifour.facesix.web.SitePortionWebController;
@@ -98,9 +94,6 @@ public class CustomerRestController extends WebController {
 	PrivilegeService privilegeService;
 
 	@Autowired
-	NetworkConfRestController networkcntrl;
-
-	@Autowired
 	NetworkDeviceService networkDeviceService;
 
 	@Autowired
@@ -109,8 +102,6 @@ public class CustomerRestController extends WebController {
 	@Autowired
 	SitePortionWebController sitePortionWebController;
 
-	@Autowired
-	NetworkDeviceRestController networkDeviceRestController;
 
 	@Autowired
 	DeviceService devService;
@@ -132,9 +123,6 @@ public class CustomerRestController extends WebController {
 
 	@Autowired
 	CustomerUtils customerUtils;
-
-	@Autowired
-	BeaconAlertDataService beaconAlertDataService;
 
 	@Value("${facesix.cloud.version}")
 	private String cloud_version;
@@ -291,7 +279,6 @@ public class CustomerRestController extends WebController {
 		List<Beacon> beacon = null;
 		List<BeaconDevice> beaconDevice = null;
 		List<GeoFinderLayoutData> geofinder = null;
-		List<BeaconAlertData> beaconAlert = null;
 
 		try {
 			if (customerId != null) {
@@ -301,7 +288,6 @@ public class CustomerRestController extends WebController {
 				portion = portionService.findByCid(customerId);
 				siteList = siteService.findByCustomerId(customerId);
 				beacon = beaconService.getSavedBeaconByCid(customerId);
-				beaconAlert = beaconAlertDataService.findByCid(customerId);
 
 				if (beacon != null) {
 					for (Beacon b : beacon) {
@@ -309,12 +295,6 @@ public class CustomerRestController extends WebController {
 					}
 				}
 
-				// customized alert for Tag
-				if (beaconAlert != null) {
-					for (BeaconAlertData beaconAlertData : beaconAlert) {
-						beaconAlertDataService.delete(beaconAlertData);
-					}
-				}
 
 				beaconDevice = beaconDeviceService.findByCid(customerId);
 				if (beaconDevice != null) {

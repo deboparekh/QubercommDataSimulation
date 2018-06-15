@@ -62,8 +62,6 @@ import com.semaifour.facesix.util.SessionUtil;
 import com.semaifour.facesix.web.WebController;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import com.semaifour.facesix.probe.oui.ProbeOUI;
-import com.semaifour.facesix.probe.oui.ProbeOUIService;
 
 /**
  * 
@@ -90,14 +88,10 @@ public class DeviceRestController extends WebController {
 	@Autowired
 	private DeviceEventPublisher mqttPublisher;
 
-	@Autowired
-	NetworkConfRestController networkConfRestController;
 
 	@Autowired
 	NetworkDeviceService networkDeviceService;
 
-	@Autowired
-	FSqlRestController fsqlRestController;
 
 	@Autowired
 	private ElasticService elasticService;
@@ -106,15 +100,7 @@ public class DeviceRestController extends WebController {
 
 	String prop_event_table_index = "facesix-prop-client-event";
 
-	@Autowired
-	QubercommScannerRestController qubercommScannerRestController;
-
-	@Autowired
-	ProbeOUIService probeOUIService;
-
-	@Autowired
-	NetworkDeviceRestController networkDeviceRestController;
-
+	
 	@PostConstruct
 	public void init() {
 		indexname = _CCC.properties.getProperty("elasticsearch.indexnamepattern", "facesix*");

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import com.semaifour.facesix.data.elasticsearch.ElasticsearchConfiguration;
 import com.semaifour.facesix.data.graylog.GraylogConfiguration;
 import com.semaifour.facesix.kiweb.KiwebConfiguration;
-import com.semaifour.facesix.rest.ESQLRestController;
-import com.semaifour.facesix.rest.FSqlRestController;
 import com.semaifour.facesix.util.Cryptor;
 
 @Component
@@ -35,11 +33,6 @@ public class CCC {
 	@Autowired
 	public KiwebConfiguration kiweb;
 
-	@Autowired
-	public ESQLRestController esqlRestController;
-
-	@Autowired
-	public FSqlRestController fsqlRestController;
 
 	@Autowired
 	public ElasticsearchTemplate elasticsearchTemplate;

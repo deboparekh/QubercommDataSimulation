@@ -36,7 +36,6 @@ import com.semaifour.facesix.data.elasticsearch.device.NetworkDeviceService;
 import com.semaifour.facesix.data.site.Portion;
 import com.semaifour.facesix.data.site.PortionService;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
-import com.semaifour.facesix.rest.NetworkConfRestController;
 import com.semaifour.facesix.util.SessionUtil;
 import com.semaifour.facesix.util.SimpleCache;
 
@@ -52,9 +51,6 @@ public class BeaconDeviceService {
 
 	@Autowired
 	private DeviceEventPublisher mqttPublisher;
-
-	@Autowired
-	NetworkConfRestController netRestController;
 
 	@Autowired
 	NetworkDeviceService _networkDeviceService;
@@ -221,29 +217,6 @@ public class BeaconDeviceService {
 		return repository.findByStatus(status);
 	}
 
-	public void updateDeviceHealth(Map<String, Object> map) {
-		HeartBeat beat = new HeartBeat(map);
-		this.beaconDeviceHealthCache.putForGood(beat.getUid(), beat);
-
-		BeaconDevice beaconDevice = findOneByUid(beat.getUid());
-
-		if (beaconDevice != null) {
-			String status = beaconDevice.getState();
-			if (status.equals("inactive")) {
-				beaconDevice.setState("active");
-				beaconDevice.setModifiedBy("Cloud");
-				beaconDevice.setModifiedOn(new Date(System.currentTimeMillis()));
-				save(beaconDevice, false);
-
-				netRestController = new NetworkConfRestController();
-				try {
-					netRestController.updateblestate(beaconDevice, getNetworkDeviceService());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
 		/*
 		 * BeaconDevice beaconDevice = findOneByUid(beat.getUid());
 		 * 
@@ -263,7 +236,7 @@ public class BeaconDeviceService {
 		 * }
 		 */
 
-	}
+	
 
 	/*
 	 * 

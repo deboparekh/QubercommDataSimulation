@@ -52,9 +52,6 @@ import com.semaifour.facesix.data.site.SiteService;
 import com.semaifour.facesix.domain.Message;
 import com.semaifour.facesix.imageconverter.ImageConverter;
 import com.semaifour.facesix.imageconverter.JpegToTiffConverter;
-import com.semaifour.facesix.rest.ClientConfRestController;
-import com.semaifour.facesix.rest.NetworkConfRestController;
-import com.semaifour.facesix.rest.NetworkDeviceRestController;
 import com.semaifour.facesix.util.CustomerUtils;
 import com.semaifour.facesix.util.SessionUtil;
 
@@ -88,19 +85,10 @@ public class SitePortionWebController extends WebController {
 	NetworkDeviceService networkDeviceService;
 
 	@Autowired
-	NetworkDeviceRestController networkDeviceRestController;
-
-	@Autowired
-	NetworkConfRestController networkcntrl;
-
-	@Autowired
 	DeviceService _deviceService;
 
 	@Autowired
 	ClientDeviceService _clientDeviceService;
-
-	@Autowired
-	ClientConfRestController clientConfRestController;
 
 	@Autowired
 	CustomerService customerService;
@@ -402,8 +390,6 @@ public class SitePortionWebController extends WebController {
 					}
 				}
 
-				networkcntrl.deletespid(portion.getId()); // NetworkDevices
-				portionService.delete(portion.getId()); // Portion
 
 				geofinder = geoFinderLayoutDataService.getSavedGeoLayoutDataBySpid(spid); // JNI
 																							// GEOPOINTS

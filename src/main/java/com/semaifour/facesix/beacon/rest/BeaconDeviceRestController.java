@@ -47,7 +47,6 @@ import com.semaifour.facesix.data.elasticsearch.device.NetworkDeviceService;
 import com.semaifour.facesix.data.site.Portion;
 import com.semaifour.facesix.data.site.PortionService;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
-import com.semaifour.facesix.rest.FSqlRestController;
 import com.semaifour.facesix.spring.SpringComponentUtils;
 import com.semaifour.facesix.util.CustomerUtils;
 import com.semaifour.facesix.util.SessionUtil;
@@ -62,8 +61,6 @@ public class BeaconDeviceRestController extends WebController {
 	@Autowired
 	BeaconDeviceService beaconDeviceService;
 
-	@Autowired
-	FSqlRestController fsqlRestController;
 
 	@Autowired
 	NetworkDeviceService networkDeviceService;
@@ -1145,7 +1142,6 @@ public class BeaconDeviceRestController extends WebController {
 					+ "query=timestamp:>now-" + timeInterval + " AND cid:" + cid + " AND opcode:\"upgradeHistory\" "
 					+ "|value(userName,userName, NA);value(upgradeType,upgradeType,NA);value(time,time,NA);value(status,status,NA)|table ;";
 
-			upgradeHistory = fsqlRestController.query(fsql);
 		}
 		return upgradeHistory;
 	}

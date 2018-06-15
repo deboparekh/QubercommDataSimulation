@@ -530,8 +530,6 @@ import com.semaifour.facesix.data.site.PortionService;
 import com.semaifour.facesix.data.site.Site;
 import com.semaifour.facesix.data.site.SiteService;
 import com.semaifour.facesix.domain.Message;
-import com.semaifour.facesix.rest.NetworkConfRestController;
-import com.semaifour.facesix.rest.NetworkDeviceRestController;
 import com.semaifour.facesix.util.SessionUtil;
 
 /**
@@ -562,12 +560,6 @@ public class SitePortionWebNewController extends WebController {
 
 	@Autowired
 	NetworkDeviceService networkDeviceService;
-
-	@Autowired
-	NetworkDeviceRestController networkDeviceRestController;
-
-	@Autowired
-	NetworkConfRestController networkcntrl;
 
 	private String resolveSite(String sid, HttpServletRequest request, HttpServletResponse response) {
 		if (!sessionCache.equals(request.getSession(), "sid", sid)) {
@@ -736,8 +728,6 @@ public class SitePortionWebNewController extends WebController {
 
 		LOG.info("Delete SPID " + spid);
 		Portion portion = portionService.findById(spid);
-		networkcntrl.deletespid(spid);
-		portionService.delete(spid);
 		if (portion == null)
 			portion = new Portion();
 		portion.setId(null);
@@ -929,8 +919,6 @@ public class SitePortionWebNewController extends WebController {
 		model.put("sid", sid);
 		model.put("spid", spid);
 		model.put("uid", uid);
-		List<String> alerts = networkDeviceRestController.alerts(null, sid, spid, null, uid, "5d", request, response);
-		model.put("alerts", alerts);
 		prepare(model, request, response);
 		return _CCC.pages.getPage("facesix.iot.site.portion.logview", "site-portion-logview");
 	}

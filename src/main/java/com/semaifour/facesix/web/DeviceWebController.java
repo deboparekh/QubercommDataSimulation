@@ -17,7 +17,6 @@ import com.semaifour.facesix.data.elasticsearch.device.DeviceService;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDeviceService;
 import com.semaifour.facesix.domain.Message;
 import com.semaifour.facesix.rest.DeviceRestController;
-import com.semaifour.facesix.rest.NetworkConfRestController;
 import com.semaifour.facesix.spring.SpringComponentUtils;
 import com.semaifour.facesix.util.CustomerUtils;
 import com.semaifour.facesix.util.DeviceHelper;
@@ -45,9 +44,6 @@ public class DeviceWebController extends WebController {
 
 	@Autowired
 	NetworkDeviceService networkDeviceService;
-
-	@Autowired
-	NetworkConfRestController networkConfRestController;
 
 	@Autowired
 	CustomerUtils CustomerUtils;

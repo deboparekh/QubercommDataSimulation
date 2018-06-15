@@ -31,7 +31,6 @@ import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDevice;
 import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDeviceService;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.mqtt.Payload;
-import com.semaifour.facesix.rest.FSqlRestController;
 import com.semaifour.facesix.simulatedBeacon.BeaconAssociation;
 import com.semaifour.facesix.simulatedBeacon.BeaconAssociationService;
 import com.semaifour.facesix.util.CustomerUtils;
@@ -83,8 +82,6 @@ public class BeaconRestController extends WebController {
 	@Autowired
 	private BeaconService beaconService;
 
-	@Autowired
-	private FSqlRestController fsqlRestController;
 
 	@Autowired
 	private DeviceEventPublisher mqttPublisher;

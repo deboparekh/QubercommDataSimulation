@@ -36,8 +36,6 @@ import com.semaifour.facesix.data.site.PortionService;
 import com.semaifour.facesix.data.site.Site;
 import com.semaifour.facesix.data.site.SiteService;
 import com.semaifour.facesix.domain.Message;
-import com.semaifour.facesix.rest.NetworkConfRestController;
-import com.semaifour.facesix.rest.NetworkDeviceRestController;
 import com.semaifour.facesix.util.CustomerUtils;
 import com.semaifour.facesix.util.SessionUtil;
 
@@ -59,10 +57,6 @@ public class SiteWebController extends WebController {
 
 	@Autowired
 	HttpServletResponse response;
-
-	@Autowired
-	NetworkConfRestController networkcntrl;
-
 	@Autowired
 	CustomerService customerService;
 
@@ -80,9 +74,6 @@ public class SiteWebController extends WebController {
 
 	@Autowired
 	ClientDeviceService _clientDeviceService;
-
-	@Autowired
-	NetworkDeviceRestController networkDeviceRestController;
 
 	@Autowired
 	CustomerUtils CustomerUtils;
@@ -358,8 +349,6 @@ public class SiteWebController extends WebController {
 						getDeviceService().delete(device); // DEVICES
 					}
 				}
-
-				networkcntrl.deletesid(Site.getId()); // NETWORKDEVICES
 
 				portionList = portionService.findBySiteId(Site.getId()); // PORTION
 				if (portionList != null) {

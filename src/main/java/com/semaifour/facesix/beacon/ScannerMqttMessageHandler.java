@@ -16,7 +16,6 @@ import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
 import com.semaifour.facesix.beacon.data.Beacon;
 import com.semaifour.facesix.beacon.data.BeaconService;
-import com.semaifour.facesix.beacon.rest.BLENetworkDeviceRestController;
 import com.semaifour.facesix.boot.Application;
 import com.semaifour.facesix.data.elasticsearch.ElasticService;
 import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDevice;
@@ -25,13 +24,13 @@ import com.semaifour.facesix.data.elasticsearch.device.Device;
 import com.semaifour.facesix.data.elasticsearch.device.DeviceService;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDevice;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDeviceService;
-import com.semaifour.facesix.impl.qubercloud.DeviceUpdateEventHandler;
+import com.semaifour.facesix.mqtt.DefaultMqttMessageReceiver;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.mqtt.Payload;
 
 import net.sf.json.JSONObject;
 
-public class ScannerMqttMessageHandler extends DeviceUpdateEventHandler {
+public class ScannerMqttMessageHandler extends DefaultMqttMessageReceiver {
 
 	Logger LOG = LoggerFactory.getLogger(this.getClass());
 
@@ -40,16 +39,10 @@ public class ScannerMqttMessageHandler extends DeviceUpdateEventHandler {
 
 	private BeaconService _beaconService;
 
-	@Autowired
-	private CustomerService customerService;
-
 	NetworkDeviceService _networkDeviceService;
 
 	@Autowired
 	DeviceService deviceService;
-
-	@Autowired
-	private BLENetworkDeviceRestController bleRestController;
 
 	@Override
 	public boolean messageArrived(String topic, MqttMessage message) {
@@ -155,68 +148,5 @@ public class ScannerMqttMessageHandler extends DeviceUpdateEventHandler {
 
 	private DeviceEventPublisher _mqttPublisher;
 
-	private DeviceEventPublisher getDeviceEventPublisher() {
-
-		try {
-			if (_mqttPublisher == null) {
-				_mqttPublisher = Application.context.getBean(DeviceEventPublisher.class);
-			}
-		} catch (Exception e) {
-
-		}
-
-		return _mqttPublisher;
-	}
-
-	private CustomerService getCustomerService() {
-
-		try {
-			if (customerService == null) {
-				customerService = Application.context.getBean(CustomerService.class);
-			}
-		} catch (Exception e) {
-
-		}
-
-		return customerService;
-	}
-
-	private NetworkDeviceService getNetworkDeviceService() {
-
-		try {
-			if (_networkDeviceService == null) {
-				_networkDeviceService = Application.context.getBean(NetworkDeviceService.class);
-			}
-		} catch (Exception e) {
-
-		}
-		return _networkDeviceService;
-	}
-
-	private DeviceService getDeviceService() {
-
-		try {
-			if (deviceService == null) {
-				deviceService = Application.context.getBean(DeviceService.class);
-			}
-		} catch (Exception e) {
-
-		}
-
-		return deviceService;
-	}
-
-	private BLENetworkDeviceRestController getBLERestController() {
-
-		try {
-			if (bleRestController == null) {
-				bleRestController = Application.context.getBean(BLENetworkDeviceRestController.class);
-			}
-		} catch (Exception e) {
-
-		}
-
-		return bleRestController;
-	}
 
 }
