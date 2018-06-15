@@ -51,12 +51,6 @@ import com.semaifour.facesix.beacon.finder.geo.GeoFinderLayoutDataService;
 import com.semaifour.facesix.boot.Application;
 import com.semaifour.facesix.data.account.UserAccount;
 import com.semaifour.facesix.data.account.UserAccountService;
-import com.semaifour.facesix.data.captive.portal.CaptivePortal;
-import com.semaifour.facesix.data.captive.portal.CaptivePortalService;
-import com.semaifour.facesix.data.captive.portal.Casting;
-import com.semaifour.facesix.data.captive.portal.CastingService;
-import com.semaifour.facesix.data.captive.portal.PortalUsers;
-import com.semaifour.facesix.data.captive.portal.PortalUsersService;
 import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDevice;
 import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDeviceService;
 import com.semaifour.facesix.data.elasticsearch.device.ClientDevice;
@@ -70,8 +64,6 @@ import com.semaifour.facesix.data.site.PortionService;
 import com.semaifour.facesix.data.site.Site;
 import com.semaifour.facesix.data.site.SiteService;
 import com.semaifour.facesix.domain.Restponse;
-import com.semaifour.facesix.gustpass.Gustpass;
-import com.semaifour.facesix.gustpass.GustpassService;
 import com.semaifour.facesix.rest.DeviceRestController;
 import com.semaifour.facesix.rest.NetworkConfRestController;
 import com.semaifour.facesix.rest.NetworkDeviceRestController;
@@ -121,9 +113,6 @@ public class CustomerRestController extends WebController {
 	NetworkDeviceRestController networkDeviceRestController;
 
 	@Autowired
-	GustpassService gustpassService;
-
-	@Autowired
 	DeviceService devService;
 
 	@Autowired
@@ -143,15 +132,6 @@ public class CustomerRestController extends WebController {
 
 	@Autowired
 	CustomerUtils customerUtils;
-
-	@Autowired
-	CaptivePortalService captivePortalService;
-
-	@Autowired
-	CastingService castingService;
-
-	@Autowired
-	PortalUsersService portalUsersService;
 
 	@Autowired
 	BeaconAlertDataService beaconAlertDataService;
@@ -304,7 +284,6 @@ public class CustomerRestController extends WebController {
 
 		List<UserAccount> account = null;
 		List<Site> siteList = null;
-		Iterable<Gustpass> guestpassList = null;
 		List<Device> device = null;
 		List<NetworkDevice> networkDevice = null;
 		List<Portion> portion = null;
@@ -312,9 +291,6 @@ public class CustomerRestController extends WebController {
 		List<Beacon> beacon = null;
 		List<BeaconDevice> beaconDevice = null;
 		List<GeoFinderLayoutData> geofinder = null;
-		List<CaptivePortal> captivePortal = null;
-		Iterable<Casting> castingList = null;
-		Iterable<PortalUsers> portalUsers = null;
 		List<BeaconAlertData> beaconAlert = null;
 
 		try {
@@ -384,13 +360,6 @@ public class CustomerRestController extends WebController {
 					}
 				}
 
-				guestpassList = gustpassService.findByCustomerId(customerId); // GUESTPASS
-				if (guestpassList != null) {
-					for (Gustpass gustpass : guestpassList) {
-						gustpassService.delete(gustpass);
-					}
-				}
-
 				account = userAccountService.findByCustomerId(customerId); // CUSTOMER
 																			// ASSOCIATE
 																			// USERS
@@ -416,25 +385,6 @@ public class CustomerRestController extends WebController {
 					}
 				}
 
-				captivePortal = captivePortalService.findByCid(customerId);
-				if (captivePortal != null) {
-					for (CaptivePortal data : captivePortal) {
-						captivePortalService.delete(data);
-					}
-				}
-
-				castingList = castingService.findByCid(customerId);
-				if (castingList != null) {
-					for (Casting data : castingList) {
-						castingService.delete(data);
-					}
-				}
-				portalUsers = portalUsersService.findByCid(customerId);
-				if (portalUsers != null) {
-					for (PortalUsers data : portalUsers) {
-						portalUsersService.delete(data);
-					}
-				}
 
 				String rootPath = _CCC.properties.getProperty("facesix.fileio.binary.root", "/var/www/html");
 				String filePath = rootPath + "/" + "casting_" + customerId;

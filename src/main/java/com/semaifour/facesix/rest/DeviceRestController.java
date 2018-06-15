@@ -47,9 +47,7 @@ import com.itextpdf.text.Section;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.semaifour.facesix.account.rest.CaptivePortalRestController;
 import com.semaifour.facesix.boot.Application;
-import com.semaifour.facesix.data.captive.portal.CaptivePortalService;
 import com.semaifour.facesix.data.elasticsearch.ElasticService;
 import com.semaifour.facesix.data.elasticsearch.device.ClientDevice;
 import com.semaifour.facesix.data.elasticsearch.device.ClientDeviceService;
@@ -57,8 +55,6 @@ import com.semaifour.facesix.data.elasticsearch.device.Device;
 import com.semaifour.facesix.data.elasticsearch.device.DeviceService;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDevice;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDeviceService;
-import com.semaifour.facesix.data.qubercast.QuberCast;
-import com.semaifour.facesix.data.qubercast.QuberCastService;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.spring.SpringComponentUtils;
 import com.semaifour.facesix.util.DeviceHelper;
@@ -92,9 +88,6 @@ public class DeviceRestController extends WebController {
 	ClientDeviceService clientDeviceService;
 
 	@Autowired
-	QuberCastService qubercastService;
-
-	@Autowired
 	private DeviceEventPublisher mqttPublisher;
 
 	@Autowired
@@ -121,12 +114,6 @@ public class DeviceRestController extends WebController {
 
 	@Autowired
 	NetworkDeviceRestController networkDeviceRestController;
-
-	@Autowired
-	CaptivePortalService captivePortalService;
-
-	@Autowired
-	CaptivePortalRestController captivePortalRestController;
 
 	@PostConstruct
 	public void init() {
@@ -248,11 +235,6 @@ public class DeviceRestController extends WebController {
 				if (device.getAvgStaCntLb() != null) {
 					template.put("avg_sta_cnt_lb", device.getAvgStaCntLb());
 				}
-			}
-
-			JSONArray hotspot = captivePortalRestController.getHotspotLink(cid, sid, spid);
-			if (hotspot != null && hotspot.size() > 0) {
-				template.put("hotspot", hotspot);
 			}
 
 			return template.toString();
@@ -425,78 +407,6 @@ public class DeviceRestController extends WebController {
 			ret = "Error: FATAL error occured";
 			LOG.error("FAILURE: RPC Message Failed |uid :" + uid + "|cmd:" + cmd, e);
 			ret = "FAILURE: RPC Message Failed";
-		}
-
-		return ret;
-	}
-
-	@RequestMapping(value = "rpcQcast", method = RequestMethod.POST)
-	public String rpcQcast(@RequestParam(value = "uid", required = true) String uid,
-			@RequestParam(value = "ap", required = true) String ap,
-			@RequestParam(value = "mac", required = false) String mac,
-			@RequestParam(value = "cmd", required = true) String cmd,
-			@RequestParam(value = "args", required = false) String[] args) {
-
-		String ret = "SUCCESS: RPCQCAST Message Sent";
-		// LOG.info("RPCQCAST::UID" + uid);
-		// LOG.info("RPCQCAST::MAC" + mac);
-		// LOG.info("RPCQCAST::AP" + ap);
-		String qcastmqttMsgTemplate = " \"opcode\":\"{0}\", \"uid\":\"{1}\", \"by\":\"{2}\", \"newversion\":\"{3}\", \"value\":{4} ";
-
-		JSONObject jsonObject = new JSONObject();
-		QuberCast quber = qubercastService.findByReffId("a5a5");
-
-		if (quber != null) {
-			jsonObject.put("mediaPath", quber.getMediaPath());
-			jsonObject.put("multicastPort", quber.getMulticastPort());
-			jsonObject.put("mulicastAddress", quber.getMulicastAddress());
-			jsonObject.put("totalFiles", quber.getLogFile());
-			jsonObject.put("payLoad", quber.getLogLevel());
-		}
-
-		if (cmd.equals("KILL") || cmd.equals("REFRESH")) {
-			String header = cmd.equals("KILL") ? "QCAST_CLOSE" : "QCAST_RESTART";
-
-			Iterable<Device> devices = deviceManager.findAll();
-
-			if (devices != null) {
-				for (Device device : devices) {
-					String msg = MessageFormat.format(qcastmqttMsgTemplate, new Object[] { header,
-							device.getUid().toLowerCase(), "qubercloud", "0xFE", jsonObject.toString() });
-					mqttPublisher.publish("{" + msg + "}", device.getUid().toLowerCase());
-				}
-			}
-
-			return "OK";
-		}
-
-		try {
-
-			Device device = deviceManager.findOneByUid(uid);
-
-			if (device != null && !Device.STATUS.REGISTERED.name().equalsIgnoreCase(device.getStatus())) {
-
-				if (cmd.equals("QCAST") || cmd.equals("QCLOS") || cmd.equals("QCASTRESET")) {
-					String header = cmd.equals("QCAST") ? "AP_QCAST_START" : "AP_QCAST_CLOSE";
-
-					if (cmd.equals("QCASTRESET")) {
-						header = "AP_QCAST_RESET";
-					}
-					if (device != null) {
-						String msg = MessageFormat.format(qcastmqttMsgTemplate, new Object[] { header,
-								device.getUid().toLowerCase(), "qubercloud", "0xFE", jsonObject.toString() });
-						mqttPublisher.publish("{" + msg + "}", device.getUid().toLowerCase());
-					}
-				}
-
-				LOG.info("UID:" + uid + "|cmd:" + cmd + "jsonObject " + jsonObject);
-
-			} else {
-				ret = "FAILURE: Invalid Device";
-				LOG.info("Invalid Device");
-			}
-		} catch (Exception e) {
-			ret = "Error: FATAL error occured" + e;
 		}
 
 		return ret;

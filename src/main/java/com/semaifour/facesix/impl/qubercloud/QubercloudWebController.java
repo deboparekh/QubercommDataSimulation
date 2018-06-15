@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
-import com.semaifour.facesix.aws.pubsub.PublishSubscribeSample;
 import com.semaifour.facesix.data.account.UserAccount;
 import com.semaifour.facesix.data.account.UserAccountService;
 import com.semaifour.facesix.data.site.Portion;
@@ -50,9 +49,6 @@ public class QubercloudWebController extends WelcomeController {
 
 	@Autowired
 	CustomerUtils customerUtils;
-
-	@Autowired
-	PublishSubscribeSample PublishSubscribe;
 
 	@RequestMapping("/welcome")
 	public String welcome(Map<String, Object> model, @RequestParam(value = "u", required = false) String user,

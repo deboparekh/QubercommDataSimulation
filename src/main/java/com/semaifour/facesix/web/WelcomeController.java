@@ -51,14 +51,10 @@ import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
 import com.semaifour.facesix.data.account.UserAccount;
 import com.semaifour.facesix.data.account.UserAccountService;
-import com.semaifour.facesix.data.captive.portal.CaptivePortal;
-import com.semaifour.facesix.data.captive.portal.CaptivePortalService;
 import com.semaifour.facesix.data.graylog.GraylogRestClient;
 import com.semaifour.facesix.data.site.Site;
 import com.semaifour.facesix.data.site.SiteService;
 import com.semaifour.facesix.domain.Message;
-import com.semaifour.facesix.gustpass.Gustpass;
-import com.semaifour.facesix.gustpass.GustpassService;
 import com.semaifour.facesix.session.Contactus;
 import com.semaifour.facesix.util.SessionUtil;
 
@@ -80,9 +76,6 @@ public class WelcomeController extends WebController {
 	com.semaifour.facesix.util.CustomerUtils CustomerUtils;
 
 	@Autowired
-	GustpassService gustpassService;
-
-	@Autowired
 	UserAccountService userAccountService;
 
 	@Autowired
@@ -93,10 +86,7 @@ public class WelcomeController extends WebController {
 
 	@Autowired
 	AccountWebController accountWebController;
-
-	@Autowired
-	CaptivePortalService captivePortalService;
-
+	
 	@Autowired
 	private MailSender mailSender;
 
@@ -768,15 +758,6 @@ public class WelcomeController extends WebController {
 		return page;
 	}
 
-	@RequestMapping("/captiveportal")
-	public String captiveportal(Map<String, Object> model, @RequestParam(value = "id", required = true) String id,
-			HttpServletRequest request, HttpServletResponse response) {
-		Gustpass gustpass = gustpassService.findById(id);
-		model.put("fsobject", gustpass);
-		model.put("ssid", false);
-		return _CCC.pages.getPage("facesix.captiveportal", "captiveportal");
-	}
-
 	@RequestMapping(value = "/portalBg", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<?> getPlanFile(HttpServletRequest request, HttpServletResponse response) {
@@ -1156,32 +1137,6 @@ public class WelcomeController extends WebController {
 		return _CCC.pages.getPage("facesix.login", "login");
 	}
 
-	@RequestMapping(value = { "/portal/{portalUrl}" })
-	public String QubercommPortal(Map<String, Object> model,
-			@PathVariable(value = "portalUrl", required = true) String portalUrl,
-			@RequestParam(value = "mac", required = true) String mac) {
-
-		if (portalUrl != null && !portalUrl.isEmpty()) {
-
-			portalUrl = portalUrl.trim().toLowerCase();
-			CaptivePortal portal = null;
-			portal = captivePortalService.findByPreferedUrl(portalUrl);
-
-			if (mac != null) {
-				mac = mac.replaceAll("/", "");
-				model.put("mac", mac);
-			}
-
-			LOG.info("Captive Portal URL " + portalUrl);
-			LOG.info("Client Peer Mac " + mac);
-
-			if (portal != null) {
-				model.put("portal", portal);
-			}
-		}
-
-		return _CCC.pages.getPage("facesix.captive.portal", "captive.portal");
-	}
 
 	@RequestMapping("/GW_CustomizeAlert")
 	public String customizeAlert(Map<String, Object> model, @RequestParam(value = "sid", required = false) String sid,

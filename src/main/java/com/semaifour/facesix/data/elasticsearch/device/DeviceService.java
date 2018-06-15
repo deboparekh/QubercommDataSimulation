@@ -20,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
-import com.semaifour.facesix.account.rest.CaptivePortalRestController;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.util.SimpleCache;
 import net.sf.json.JSONArray;
@@ -39,9 +38,6 @@ public class DeviceService {
 
 	@Autowired
 	ClientDeviceService clientDeviceService;
-
-	@Autowired
-	CaptivePortalRestController captivePortalRestController;
 
 	String mqttMsgTemplate = " \"opcode\":\"{0}\", \"uid\":\"{1}\", \"by\":\"{2}\", \"newversion\":\"{3}\", \"value\":{4}, \"name\":\"{5}\" ";
 
@@ -360,10 +356,6 @@ public class DeviceService {
 				}
 			}
 
-			JSONArray hotspot = captivePortalRestController.getHotspotLink(cid, sid, spid);
-			if (hotspot != null && hotspot.size() > 0) {
-				template.put("hotspot", hotspot);
-			}
 
 			String mqttTemplate = " \"opcode\":\"{0}\", \"uid\":\"{1}\", \"by\":\"{2}\", \"newversion\":\"{3}\", \"value\":{4}";
 			String message = MessageFormat.format(mqttTemplate, new Object[] { opcode, device.getUid().toLowerCase(),

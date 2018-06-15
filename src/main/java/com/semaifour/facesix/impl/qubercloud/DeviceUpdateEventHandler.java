@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.semaifour.facesix.binary.BinarySetting;
-import com.semaifour.facesix.binary.BinarySettingService;
 import com.semaifour.facesix.boot.Application;
 import com.semaifour.facesix.data.elasticsearch.device.ClientDevice;
 import com.semaifour.facesix.data.elasticsearch.device.ClientDeviceService;
@@ -24,10 +22,6 @@ import com.semaifour.facesix.data.elasticsearch.device.Device;
 import com.semaifour.facesix.data.elasticsearch.device.DeviceService;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDevice;
 import com.semaifour.facesix.data.elasticsearch.device.NetworkDeviceService;
-import com.semaifour.facesix.data.qubercast.QuberCast;
-import com.semaifour.facesix.data.qubercast.QuberCastService;
-import com.semaifour.facesix.device.data.DeviceItem;
-import com.semaifour.facesix.device.data.DeviceItemService;
 import com.semaifour.facesix.mqtt.DefaultMqttMessageReceiver;
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.mqtt.Payload;
@@ -50,9 +44,6 @@ public class DeviceUpdateEventHandler extends DefaultMqttMessageReceiver {
 	ClientDeviceService _clientDeviceService;
 
 	@Autowired
-	QuberCastService _qubercastService;
-
-	@Autowired
 	NetworkConfRestController netRestController;
 
 	@Autowired
@@ -63,10 +54,6 @@ public class DeviceUpdateEventHandler extends DefaultMqttMessageReceiver {
 
 	@Autowired
 	private DeviceEventPublisher _mqttPublisher;
-
-	private DeviceItemService _deviceItemService;
-
-	BinarySettingService _binarySettingService;
 
 	public DeviceUpdateEventHandler() {
 	}
@@ -98,27 +85,11 @@ public class DeviceUpdateEventHandler extends DefaultMqttMessageReceiver {
 			} else if (StringUtils.equalsIgnoreCase(op, "device_register")) {
 				map.put("status", Device.STATUS.REGISTERED.name());
 				return create(map, false);
-			} else if (StringUtils.equalsIgnoreCase(op, "device_add_item")) {
-				String type = (String) map.get("typefs");
-				return createDeviceItem(map, type != null ? type : "ITEMLIST");
-			} else if (StringUtils.equalsIgnoreCase(op, "device_remove_item")) {
-				String type = (String) map.get("typefs");
-				return removeDeviceItem(map, type != null ? type : "ITEMLIST");
-			} else if (StringUtils.equalsIgnoreCase(op, "device_unallow_item")) {
-				return createDeviceItem(map, "ALLOWLIST");
-			} else if (StringUtils.equalsIgnoreCase(op, "device_block_item")) {
-				return createDeviceItem(map, "BLOCKLIST");
-			} else if (StringUtils.equalsIgnoreCase(op, "device_unblock_item")) {
-				return createDeviceItem(map, "BLOCKLIST");
 			} else if (StringUtils.equals(op, "device_heartbeat")) {
 				getDeviceService().updateDeviceHealth(map);
 				return true;
-			} else if (StringUtils.equals(op, "ping_request")) {
-				return ping(map);
-			} else if (StringUtils.equalsIgnoreCase(op, "peer_update")) {
+			}  else if (StringUtils.equalsIgnoreCase(op, "peer_update")) {
 				return peer_update(map);
-			} else if (StringUtils.equalsIgnoreCase(op, "QCAST_GET_CFG")) {
-				return qcast_update(map);
 			} else if (StringUtils.equalsIgnoreCase(op, "UPGRADE")) {
 				return binarySetting_upgrade(map);
 			} else if (StringUtils.equalsIgnoreCase(op, "bandbalance")
@@ -156,58 +127,7 @@ public class DeviceUpdateEventHandler extends DefaultMqttMessageReceiver {
 		return false;
 	}
 
-	private boolean createDeviceItem(Map<String, Object> map, String type) {
-		try {
-			String uid = (String) map.get("uid");
-			String mac = (String) map.get("mac");
-			String by = (String) map.get("by");
-			DeviceItem item = new DeviceItem(uid, mac, type);
-			item.setModifiedBy(by);
-			item.setCreatedBy(by);
-			Properties p = new Properties();
-			p.putAll(map);
-			item.setSettings(p);
-			deviceItemService().save(item, Boolean.valueOf((String) map.get("notify")));
-			// LOG.info("created DeviceItem[ {}, {}, {} ]", uid, mac, type);
-			return true;
-		} catch (Exception e) {
-			LOG.warn("exception createDeviceItem() [{}]", map.toString(), e);
-			return false;
-		}
-	}
-
-	private boolean removeDeviceItem(Map<String, Object> map, String type) {
-		try {
-			String uid = (String) map.get("uid");
-			String mac = (String) map.get("mac");
-			deviceItemService().delete(mac);
-			// LOG.info("removed DeviceItem[ {}, {}, {} ]", uid, mac, type);
-			return true;
-		} catch (Exception e) {
-			LOG.warn("exception createDeviceItem() [{}]", map.toString(), e);
-			return false;
-		}
-	}
-
-	/**
-	 * 
-	 * Send ping response
-	 * 
-	 * @param map
-	 * @return
-	 */
-	private boolean ping(Map<String, Object> map) {
-		String uid = (String) map.get("uid");
-		try {
-			String msg = (String) map.get("message");
-			Payload payload = new Payload("ping_response", uid, uid, msg);
-			getDeviceEventPublisher().publish(payload.toJSONString(), uid);
-		} catch (Exception e) {
-			LOG.warn("ping_response for ping_reqquest from [{}] failed", uid, e);
-		}
-		return true;
-	}
-
+	
 	public boolean create(Map<String, Object> map, boolean notify) throws Exception {
 		String uid = (String) map.get("uid");
 		String name = (String) map.get("name");
@@ -399,32 +319,7 @@ public class DeviceUpdateEventHandler extends DefaultMqttMessageReceiver {
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
-	public boolean qcast_update(Map<String, Object> map) throws Exception {
-		String qcastmqttMsgTemplate = " \"opcode\":\"{0}\", \"uid\":\"{1}\", \"by\":\"{2}\", \"newversion\":\"{3}\", \"value\":{4} ";
-
-		JSONObject jsonObject = new JSONObject();
-		String uid = (String) map.get("uid");
-		QuberCast quber = getQuberCastService().findByReffId("a5a5");
-		if (quber != null) {
-			jsonObject.put("mediaPath", quber.getMediaPath());
-			jsonObject.put("multicastPort", quber.getMulticastPort());
-			jsonObject.put("mulicastAddress", quber.getMulicastAddress());
-			jsonObject.put("totalFiles", quber.getLogFile());
-			jsonObject.put("payLoad", quber.getLogLevel());
-		}
-
-		Device device = getDeviceService().findOneByUid(uid);
-		String header = "AP_QCAST_START";
-		if (device != null) {
-			String msg = MessageFormat.format(qcastmqttMsgTemplate,
-					new Object[] { header, device.getUid(), "qubercloud", "0xFE", jsonObject.toString() });
-			getDeviceEventPublisher().publish("{" + msg + "}", device.getUid());
-		}
-
-		return true;
-	}
-
+	
 	private DeviceService getDeviceService() {
 
 		try {
@@ -472,17 +367,6 @@ public class DeviceUpdateEventHandler extends DefaultMqttMessageReceiver {
 		return _deviceRestController;
 	}
 
-	private QuberCastService getQuberCastService() {
-		try {
-			if (_qubercastService == null) {
-				_qubercastService = Application.context.getBean(QuberCastService.class);
-			}
-		} catch (Exception e) {
-
-		}
-		return _qubercastService;
-	}
-
 	private DeviceEventPublisher getDeviceEventPublisher() {
 
 		try {
@@ -493,31 +377,6 @@ public class DeviceUpdateEventHandler extends DefaultMqttMessageReceiver {
 
 		}
 		return _mqttPublisher;
-	}
-
-	private DeviceItemService deviceItemService() {
-
-		try {
-			if (_deviceItemService == null) {
-				_deviceItemService = Application.context.getBean(DeviceItemService.class);
-			}
-		} catch (Exception e) {
-
-		}
-
-		return _deviceItemService;
-	}
-
-	private BinarySettingService getBinarySettingService() {
-
-		try {
-			if (_binarySettingService == null) {
-				_binarySettingService = Application.context.getBean(BinarySettingService.class);
-			}
-		} catch (Exception e) {
-
-		}
-		return _binarySettingService;
 	}
 
 	private NetworkDeviceRestController getNetworkDeviceRestController() {

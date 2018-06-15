@@ -10,18 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.semaifour.facesix.data.elasticsearch.notif.Notification;
-import com.semaifour.facesix.data.elasticsearch.notif.NotificationService;
-
 @Component
 public class TopicMessageRouter implements MqttCallback {
 
 	private static Logger LOG = LoggerFactory.getLogger(TopicMessageRouter.class);
 
 	private Map<String, Topixel> msgRecvrMap;
-
-	@Autowired
-	private NotificationService notifService;
 
 	public TopicMessageRouter() {
 		super();
@@ -77,8 +71,6 @@ public class TopicMessageRouter implements MqttCallback {
 			LOG.debug("mysubClient.messageArrived(): {}", status);
 		if (topixel == null || topixel.persist == true) {
 			try {
-				Notification notif = new Notification(message.toString(), status.toString(), topic, "MqttPubSub");
-				notifService.save(notif);
 			} catch (Exception e) {
 				LOG.warn("Error persisting mqtt message :", e);
 			}

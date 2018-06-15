@@ -59,7 +59,7 @@ public class BeaconAssociationService {
 		return repository.findByCidAndMacaddr(cid,macaddr);
 	}
 	
-//	@Scheduled(fixedDelay=600000)
+	@Scheduled(fixedDelay=600000)
 	public void BeaconAssociation() {
 		String simulation = "enable";
 		String cx_state = "ACTIVE";

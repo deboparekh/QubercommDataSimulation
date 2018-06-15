@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
-import com.semaifour.facesix.beacon.TimeStats;
 import com.semaifour.facesix.beacon.data.Beacon;
 import com.semaifour.facesix.beacon.data.BeaconService;
 import com.semaifour.facesix.beacon.rest.BeaconRestController;
@@ -614,41 +613,7 @@ public class BeaconWebController extends WebController {
 		// return "beacon-move";
 	}
 
-	@RequestMapping("/location/stats")
-	public String beaconLocationStats(Map<String, Object> model, HttpServletRequest request,
-			HttpServletResponse response, @RequestParam(required = false) String from,
-			@RequestParam(required = false) String to, @RequestParam(value = "cid", required = false) String cid) {
-		List<TimeStats> fsobjects = restController.averageOfLocations(from, to);
-
-		List<TimeStats> locationStats = new ArrayList<TimeStats>();
-		List<TimeStats> hospitalStats = new ArrayList<TimeStats>();
-
-		/*
-		 * Time spend in hospital needs to be taken out and put into another
-		 * object from TimeStats
-		 */
-		for (TimeStats elem : fsobjects) {
-			if (elem.getLocation().contains("Hospital")) {
-				hospitalStats.add(elem);
-			} else {
-				locationStats.add(elem);
-			}
-		}
-		model.put("locationStats", locationStats);
-		model.put("hospitalStats", hospitalStats);
-		model.put("from", from);
-		model.put("to", to);
-		if (cid == null || cid.isEmpty()) {
-			cid = SessionUtil.getCurrentCustomer(request.getSession());
-		}
-		model.put("cid", cid);
-		model.put("GatewayFinder", customerUtils.GatewayFinder(cid));
-		model.put("GeoFinder", customerUtils.GeoFinder(cid));
-		model.put("Gateway", customerUtils.Gateway(cid));
-		model.put("GeoLocation", customerUtils.GeoLocation(cid));
-
-		return _CCC.pages.getPage("facesix.beacon.location.stats", "beacon-location-stats");
-	}
+	
 
 	@RequestMapping("/tagDashview")
 	public String dashview(Map<String, Object> model, @RequestParam(value = "macaddr", required = true) String macaddr,
