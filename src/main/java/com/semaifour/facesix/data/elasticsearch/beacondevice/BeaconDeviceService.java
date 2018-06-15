@@ -925,7 +925,9 @@ public class BeaconDeviceService {
 				List<NetworkDevice> deleteSublist = availableDevices.subList(0, deleteDevices);
 				for(NetworkDevice nd: deleteSublist) {
 					BeaconDevice bd = findOneByUid(nd.getUid());
-					delete(bd);
+					if(bd != null) {
+						delete(bd);
+					}
 					_networkDeviceService.delete(nd);
 				}
 			} else if(availDeviceCount < deviceCount) {
@@ -951,9 +953,11 @@ public class BeaconDeviceService {
 				int deviceInThisFloor = devicesInEachFloor;
 				if(i== floorCount-1){
 					deviceInThisFloor = deviceCount;
-				}
+				} 
 				deviceCount -= deviceInThisFloor;
-				simulatedDevices.addAll(createDevices(cid,sid,spid,deviceInThisFloor,width,height,rand));
+				if(deviceInThisFloor > 0) {
+					simulatedDevices.addAll(createDevices(cid,sid,spid,deviceInThisFloor,width,height,rand));
+				}
 			}
 		}
 		return simulatedDevices;

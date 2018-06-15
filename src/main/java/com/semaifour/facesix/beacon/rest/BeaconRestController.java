@@ -9,14 +9,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +34,12 @@ import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDeviceService
 import com.semaifour.facesix.mqtt.DeviceEventPublisher;
 import com.semaifour.facesix.mqtt.Payload;
 import com.semaifour.facesix.rest.FSqlRestController;
+import com.semaifour.facesix.simulatedBeacon.BeaconAssociation;
+import com.semaifour.facesix.simulatedBeacon.BeaconAssociationService;
 import com.semaifour.facesix.util.CustomerUtils;
 import com.semaifour.facesix.util.SessionUtil;
 import com.semaifour.facesix.web.WebController;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -55,6 +59,9 @@ public class BeaconRestController extends WebController {
 	
 	@Autowired
 	CustomerUtils customerUtils;
+	
+	@Autowired
+	BeaconAssociationService beaconAssociationService;
 
 	/* Room show preference */
 	Map<String, Integer> roomInxPreference = new HashMap<String, Integer>() {
@@ -820,6 +827,11 @@ public class BeaconRestController extends WebController {
 			maxCount = Integer.valueOf(request.getParameter("maxCount"));
 			beaconService.simulateTags(cid, tagCount);
 			beaconDeviceService.simulateDevices(cid, deviceCount);
+			List<BeaconAssociation> oldData = beaconAssociationService.findByCid(cid);
+			if(oldData != null && oldData.size()>0) {
+				beaconAssociationService.deleteAssociatedList(oldData);
+			}
+			beaconAssociationService.BeaconAssociation();
 		}
 		result = customerUtils.setSimulation(cid, simulation, simulateVia, maxCount);
 		LOG.info("simulation is enabled for cid " + cid);

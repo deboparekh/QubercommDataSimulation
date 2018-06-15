@@ -43,11 +43,19 @@ public class BeaconAssociationService {
 	@Autowired
 	private BeaconDeviceService beaconDeviceService;
 
-	private void save(BeaconAssociation associatedBeacon) {
+	public void save(BeaconAssociation associatedBeacon) {
 		repository.save(associatedBeacon);
 	}
+	
+	public void delete(BeaconAssociation associatedBeacon) {
+		repository.delete(associatedBeacon);
+	}
+	
+	public void deleteAssociatedList(List<BeaconAssociation> associatedBeacon) {
+		repository.delete(associatedBeacon);
+	}
 
-	private BeaconAssociation findByCidAndMacaddr(String cid,String macaddr) {
+	public BeaconAssociation findByCidAndMacaddr(String cid,String macaddr) {
 		return repository.findByCidAndMacaddr(cid,macaddr);
 	}
 	
