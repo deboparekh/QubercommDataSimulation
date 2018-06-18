@@ -228,11 +228,11 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			double lon = Double.valueOf(b.getLon());
 
 			if (rand.nextInt() % 2 == 0) {
-				lat = lat + (rand.nextDouble() * 0.1);
-				lon = lon - (rand.nextDouble() * 0.1);
+				lat = lat + (rand.nextDouble() * 0.000001);
+				lon = lon - (rand.nextDouble() * 0.000001);
 			} else {
-				lat = lat - (rand.nextDouble() * 0.1);
-				lon = lon + (rand.nextDouble() * 0.1);
+				lat = lat - (rand.nextDouble() * 0.000001);
+				lon = lon + (rand.nextDouble() * 0.000001);
 			}
 
 			coordinate.put("latitude", lat);
