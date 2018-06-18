@@ -3,6 +3,7 @@ package com.semaifour.facesix.schedule;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	List<String> solution = Arrays.asList("GatewayFinder", "GeoFinder");
 	String mqttMsgTemplate = "\"opcode\":\"{0}\", \"uid\":\"{1}\",\"spid\":\"{2}\""
 						   + ",\"tag_count\":{3}, \"record_num\":{4},\"max_record\":{5},"
-						   + "\"tag_list\":{6}";
+						   + "\"tag_list\":{6},\"count\":{7},\"time\":\"{8}\"";
 
 
 	ForkJoinPool forkJoinPool = null;
@@ -96,6 +97,9 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	private void setTagThreshold(int threshold){
 		this.threshold = threshold;
 	}
+	
+	public static int count = 0;
+	
 	
 	@Scheduled (fixedDelay=100)
 	public void simulationSchedule() throws InterruptedException {
@@ -157,6 +161,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		forkJoinPool.awaitTermination(Integer.MAX_VALUE, TimeUnit.DAYS);
 	}
 
+	
 	@Override
 	protected Integer compute() {
 		String spid = this.spid;
@@ -197,6 +202,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 				String msg = MessageFormat.format(mqttMsgTemplate,
 						new Object[] { opcode, uid, spid, tag_count,
 									   record_num, max_record, tag_list
+									   ,++count,new Date()
 									  });
 				getMqttPublisher().publish("{"+msg+"}",spid);
 				break;

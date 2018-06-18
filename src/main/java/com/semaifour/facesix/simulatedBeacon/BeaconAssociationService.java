@@ -59,15 +59,15 @@ public class BeaconAssociationService {
 		return repository.findByCidAndMacaddr(cid,macaddr);
 	}
 	
-	@Scheduled(fixedDelay=600000)
+	@Scheduled(fixedDelay=60000)
 	public void BeaconAssociation() {
 		String simulation = "enable";
 		String cx_state = "ACTIVE";
 		
 		List<String> solution = Arrays.asList("GatewayFinder","GeoFinder");
-		List<Customer> customerList =customerService.findBySimulationSolutionAndState(simulation,solution,cx_state);
-		/*//testing
-		customerList = customerService.findOneById("5a65cd7ddb9a525c12dd035e");*/
+		List<Customer> customerList = null;//customerService.findBySimulationSolutionAndState(simulation,solution,cx_state);
+
+		customerList = customerService.findOneById("5a65cd7ddb9a525c12dd035e");
 
 		for (Customer cx : customerList) {
 			associateBeaconForCx(cx);
