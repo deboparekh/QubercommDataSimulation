@@ -13,11 +13,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.semaifour.facesix.account.Customer;
+import com.semaifour.facesix.account.CustomerService;
 import com.semaifour.facesix.beacon.data.Beacon;
 import com.semaifour.facesix.beacon.data.BeaconService;
 import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDevice;
@@ -59,6 +60,9 @@ public class BeaconRestController extends WebController {
 	
 	@Autowired
 	BeaconAssociationService beaconAssociationService;
+	
+	@Autowired
+	CustomerService customerService;
 
 	/* Room show preference */
 	Map<String, Integer> roomInxPreference = new HashMap<String, Integer>() {
@@ -591,7 +595,8 @@ public class BeaconRestController extends WebController {
 			if(oldData != null && oldData.size()>0) {
 				beaconAssociationService.deleteAssociatedList(oldData);
 			}
-			beaconAssociationService.BeaconAssociation();
+			Customer cx = customerService.findById(cid);
+			beaconAssociationService.associateBeaconForCx(cx);
 		}
 		result = customerUtils.setSimulation(cid, simulation, simulateVia, maxCount);
 		LOG.info("simulation is enabled for cid " + cid);

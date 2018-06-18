@@ -63,19 +63,21 @@ public class BeaconAssociationService {
 	public void BeaconAssociation() {
 		String simulation = "enable";
 		String cx_state = "ACTIVE";
-		String deviceType = "receiver";
-		String cid = null;
-		Boolean logs = null;
 		
 		List<String> solution = Arrays.asList("GatewayFinder","GeoFinder");
 		List<Customer> customerList =customerService.findBySimulationSolutionAndState(simulation,solution,cx_state);
-		//testing
-		customerList = customerService.findOneById("5a65cd7ddb9a525c12dd035e");
-		List<String> cidList = new ArrayList<String>();
+		/*//testing
+		customerList = customerService.findOneById("5a65cd7ddb9a525c12dd035e");*/
+
+		for (Customer cx : customerList) {
+			associateBeaconForCx(cx);
+		}
+		
+	}
+
+	public void associateBeaconForCx(Customer cx) {
 		List<Beacon> beaconList = null;
 		List<BeaconDevice> deviceList = null;
-		
-		Map<String,Boolean> enableLogs = new HashMap<String,Boolean>();
 		
 		BeaconAssociation associatedBeacon = null;
 		
@@ -84,54 +86,52 @@ public class BeaconAssociationService {
 		Random rand = new Random();
 		
 		JSONParser parse = new JSONParser();
-
-		for (Customer cx : customerList) {
-			try {
-				cid = cx.getId();
-				logs = cx.getLogs() == null || cx.getLogs().equals("false") ? false : true;
-				cidList.add(cid);
-				enableLogs.put(cid, logs);
-				beaconList = beaconService.getSavedBeaconByCid(cid);
-				deviceList = beaconDeviceService.findByCidAndType(cid, deviceType);
-				if (beaconList == null || beaconList.isEmpty() || deviceList == null || deviceList.isEmpty()) {
-					continue;
-				}
-
-				num_of_devices = deviceList.size();
-				for (Beacon b : beaconList) {
-					
-					int index = rand.nextInt(num_of_devices);
-					BeaconDevice chosenDevice = deviceList.get(index);
-					String sid = chosenDevice.getSid();
-					String spid = chosenDevice.getSpid();
-					String pixelResult = chosenDevice.getPixelresult();
-					String macaddr = b.getMacaddr();
-					
-					org.json.simple.JSONObject result = (org.json.simple.JSONObject) parse.parse(pixelResult);
-					org.json.simple.JSONArray latAndLon = (org.json.simple.JSONArray) result.get("result");
-					
-					result = (org.json.simple.JSONObject)latAndLon.get(0);
-					String lat = (String)result.get("latitude");
-					String lon = (String)result.get("longitude");
-					
-					associatedBeacon = findByCidAndMacaddr(cid,macaddr);
-					
-					if (associatedBeacon == null) {
-						associatedBeacon = new BeaconAssociation();
-						associatedBeacon.setMacaddr(macaddr);
-					}
-					associatedBeacon.setCid(cid);
-					associatedBeacon.setSid(sid);
-					associatedBeacon.setSpid(spid);
-					associatedBeacon.setLat(lat);
-					associatedBeacon.setUid(chosenDevice.getUid());
-					associatedBeacon.setLon(lon);
-					save(associatedBeacon);
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
+		String deviceType = "receiver";
+		String cid = null;
+//		Boolean logs = null;
+		try {
+			cid = cx.getId();
+//			logs = cx.getLogs() == null || cx.getLogs().equals("false") ? false : true;
+			beaconList = beaconService.getSavedBeaconByCid(cid);
+			deviceList = beaconDeviceService.findByCidAndType(cid, deviceType);
+			if (beaconList == null || beaconList.isEmpty() || deviceList == null || deviceList.isEmpty()) {
+				return;
 			}
+
+			num_of_devices = deviceList.size();
+			for (Beacon b : beaconList) {
+				
+				int index = rand.nextInt(num_of_devices);
+				BeaconDevice chosenDevice = deviceList.get(index);
+				String sid = chosenDevice.getSid();
+				String spid = chosenDevice.getSpid();
+				String pixelResult = chosenDevice.getPixelresult();
+				String macaddr = b.getMacaddr();
+				
+				org.json.simple.JSONObject result = (org.json.simple.JSONObject) parse.parse(pixelResult);
+				org.json.simple.JSONArray latAndLon = (org.json.simple.JSONArray) result.get("result");
+				
+				result = (org.json.simple.JSONObject)latAndLon.get(0);
+				String lat = (String)result.get("latitude");
+				String lon = (String)result.get("longitude");
+				
+				associatedBeacon = findByCidAndMacaddr(cid,macaddr);
+				
+				if (associatedBeacon == null) {
+					associatedBeacon = new BeaconAssociation();
+					associatedBeacon.setMacaddr(macaddr);
+				}
+				associatedBeacon.setCid(cid);
+				associatedBeacon.setSid(sid);
+				associatedBeacon.setSpid(spid);
+				associatedBeacon.setLat(lat);
+				associatedBeacon.setUid(chosenDevice.getUid());
+				associatedBeacon.setLon(lon);
+				save(associatedBeacon);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}
