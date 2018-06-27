@@ -1,6 +1,8 @@
 package com.semaifour.facesix.schedule;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -69,10 +71,12 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	public final String simulation = "enable";
 	public final String opcode = "current-location-update";
 	public final String cx_state = "ACTIVE";
+	DateFormat format 			= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	public static int count = 0;
 	List<String> solution = Arrays.asList("GatewayFinder", "GeoFinder");
 	String mqttMsgTemplate = "\"opcode\":\"{0}\", \"uid\":\"{1}\",\"spid\":\"{2}\""
 						   + ",\"tag_count\":{3}, \"record_num\":{4},\"max_record\":{5},"
-						   + "\"tag_list\":{6},\"count\":{7},\"time\":\"{8}\"";
+						   + "\"tag_list\":{6},\"count\":\"{7}\",\"date\":\"{8}\"";
 
 
 	ForkJoinPool forkJoinPool = null;
@@ -97,9 +101,6 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	private void setTagThreshold(int threshold){
 		this.threshold = threshold;
 	}
-	
-	public static int count = 0;
-	
 	
 	@Scheduled (fixedDelay=100)
 	public void simulationSchedule() throws InterruptedException {
@@ -161,7 +162,6 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		forkJoinPool.awaitTermination(Integer.MAX_VALUE, TimeUnit.DAYS);
 	}
 
-	
 	@Override
 	protected Integer compute() {
 		String spid = this.spid;
@@ -195,14 +195,15 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			message.put("record_num", record_num);
 			message.put("max_record", max_record);
 			message.put("tag_list", tag_list);
+			message.put("count", 0);
+			message.put("date", format.format(new Date()));
 			//testing
 			simulateVia = "mqtt";
 			switch (simulateVia) {
 			case "mqtt":
 				String msg = MessageFormat.format(mqttMsgTemplate,
 						new Object[] { opcode, uid, spid, tag_count,
-									   record_num, max_record, tag_list
-									   ,++count,new Date()
+									   record_num, max_record, tag_list,String.valueOf(++count),format.format(new Date())
 									  });
 				getMqttPublisher().publish("{"+msg+"}",spid);
 				break;
