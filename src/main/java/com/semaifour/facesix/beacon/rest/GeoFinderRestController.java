@@ -572,4 +572,98 @@ public class GeoFinderRestController {
 		return portion.getPlotOperationStatus();
 	}
 
+	public JSONObject simulatePixels2Coordinate(String spid, String xposition, String yposition) {
+
+		int count = 1;
+		String filePath = "";
+		String result = "";
+		String rotationangel = "0";
+		boolean enablelog = false;
+		Customer cx = null;
+		String cid = null;
+
+		GeoFinderLayoutData obj = null;
+		obj = geoService.getSavedGeoLayoutDataBySpid(spid);
+
+		if (obj != null) {
+			cid = obj.getCid();
+			cx = customerservice.findById(cid);
+			if (cx.getLogs() != null && cx.getLogs().equals("true")) {
+				enablelog = true;
+			}
+		}
+
+		Pixel[] pixel = { new Pixel(convertDouble(xposition), convertDouble(yposition)) };
+
+		customerUtils.logs(enablelog, classname, " ********* Entry simulatePixels2Coordinate ******* ");
+		customerUtils.logs(enablelog, classname, " xposition " + xposition + " yposition " + yposition);
+
+		try {
+			if (obj != null) {
+				filePath = obj.getOutputFilePath();
+				rotationangel = obj.getRotationangel();
+
+				Path path = Paths.get(filePath);
+
+				if (Files.exists(path)) {
+
+					if (geoServiceJniHandler != null) {
+						result = geoServiceJniHandler.pixelToCoordinate(filePath, pixel, count,
+								Double.valueOf(rotationangel));
+
+						customerUtils.logs(enablelog, classname, " simulatePixels2Coordinate Result " + result);
+
+						if (result != null && result != "") {
+
+							net.sf.json.JSONObject resulStatus = net.sf.json.JSONObject.fromObject(result);
+							String jsonResult = (String) resulStatus.get("status");
+
+							customerUtils.logs(enablelog, classname,
+									" *** simulatePixels2Coordinate JNI Response Status ****" + jsonResult);
+
+							if (jsonResult.equalsIgnoreCase("success")) {
+
+								org.json.JSONObject myObject = new org.json.JSONObject(result);
+								org.json.JSONArray corr = myObject.getJSONArray("result");
+								org.json.JSONObject ob = corr.getJSONObject(0);
+
+								Double latitude = BigDecimal.valueOf(ob.getDouble("latitude")).doubleValue();
+								Double longitude = BigDecimal.valueOf(ob.getDouble("longitude")).doubleValue();
+								Double x1 = ob.getDouble("x");
+								Double y1 = ob.getDouble("y");
+
+								String lat = String.valueOf(latitude);
+								String lng = String.valueOf(longitude);
+								String x = String.valueOf(x1);
+								String y = String.valueOf(y1);
+
+								customerUtils.logs(enablelog, classname,
+										" lat " + lat + " lng " + lng + " x " + x + " y " + y);
+
+								JSONObject pixcel = new JSONObject();
+
+								pixcel.put("x", x);
+								pixcel.put("y", y);
+								pixcel.put("latitude", lat);
+								pixcel.put("longitude", lng);
+
+								customerUtils.logs(enablelog, classname, " ***pixcel JSON  " + pixcel);
+								return pixcel;
+
+							}
+						}
+					}
+
+				} else {
+					customerUtils.logs(enablelog, classname, " *** No such file or directory.****");
+					return null;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			customerUtils.logs(enablelog, classname, "while Pixel2Coordinate update error " + e);
+		}
+		return null;
+	}
+
 }
