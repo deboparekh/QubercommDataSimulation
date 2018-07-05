@@ -16,8 +16,10 @@ import com.semaifour.facesix.account.Customer;
 import com.semaifour.facesix.account.CustomerService;
 import com.semaifour.facesix.beacon.data.Beacon;
 import com.semaifour.facesix.beacon.data.BeaconService;
+import com.semaifour.facesix.beacon.rest.GeoFinderRestController;
 import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDevice;
 import com.semaifour.facesix.data.elasticsearch.beacondevice.BeaconDeviceService;
+import com.semaifour.facesix.data.site.PortionService;
 
 @Service
 public class BeaconAssociationService {
@@ -36,6 +38,12 @@ public class BeaconAssociationService {
 	
 	@Autowired
 	private BeaconDeviceService beaconDeviceService;
+	
+	@Autowired
+	private GeoFinderRestController geoFinderRestController;
+	
+	@Autowired
+	PortionService portionService;
 
 	public void save(BeaconAssociation associatedBeacon) {
 		repository.save(associatedBeacon);
@@ -53,7 +61,7 @@ public class BeaconAssociationService {
 		return repository.findByCidAndMacaddr(cid,macaddr);
 	}
 	
-	@Scheduled(fixedDelay=6000)
+	@Scheduled(fixedDelay=1000)
 	public void BeaconAssociation() {
 		String simulation = "enable";
 		String cx_state = "ACTIVE";
@@ -81,6 +89,11 @@ public class BeaconAssociationService {
 			final String cid = cx.getId();
 			
 //			logs = cx.getLogs() == null || cx.getLogs().equals("false") ? false : true;
+			/*List<String> macaddrs = Arrays.asList("TE:ST:00:75:50:64","TE:ST:00:27:40:01");
+
+			beaconList = beaconService.findByMacaddrs(macaddrs);*/
+
+
 			beaconList = beaconService.getSavedBeaconByCid(cid);
 			final List<BeaconDevice> deviceList = beaconDeviceService.findByCidAndType(cid, deviceType);
 			if (beaconList == null || beaconList.isEmpty() || deviceList == null || deviceList.isEmpty()) {
