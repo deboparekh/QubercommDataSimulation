@@ -135,8 +135,8 @@ public class DeviceEventPublisher implements MqttCallback {
 			}
 		}
 
-		LOG.info("MQTT TOPIC " + topic2publish);
-		LOG.info("MQTT MESSAGE " + message);
+		/*LOG.info("MQTT TOPIC " + topic2publish);
+		LOG.info("MQTT MESSAGE " + message);*/
 
 		MqttMessage mqttmsg = new MqttMessage(message.getBytes());
 		mqttmsg.setQos(deliveryQos);
