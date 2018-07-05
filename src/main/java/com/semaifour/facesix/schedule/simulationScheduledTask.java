@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	List<String> solution = Arrays.asList("GatewayFinder", "GeoFinder");
 	String mqttMsgTemplate = "\"opcode\":\"{0}\", \"uid\":\"{1}\",\"spid\":\"{2}\""
 						   + ",\"tag_count\":{3}, \"record_num\":{4},\"max_record\":{5},"
-						   + "\"tag_list\":{6},\"count\":\"{7}\",\"date\":\"{8}\"";
+						   + "\"tag_list\":{6},\"date\":\"{7}\"";
 
 
 	ForkJoinPool forkJoinPool = null;
@@ -85,6 +86,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	String spid = null;
 	String simulateVia = "mqtt";
 	int threshold = 50;
+	TimeZone timeZone = null;
 	
 	private void setSpid (String spid) {
 		this.spid = spid;
@@ -102,6 +104,10 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		this.threshold = threshold;
 	}
 	
+	private void setTimeZone(TimeZone timezone){
+		this.timeZone = timezone;
+	}
+	
 	@Scheduled (fixedDelay=100)
 	public void simulationSchedule() throws InterruptedException {
 
@@ -115,6 +121,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		Map<String,Boolean> enableLogs = new HashMap<String,Boolean>();
 		Map<String,String> simulationVia = new HashMap<String,String>();
 		Map<String,Integer> threshold = new HashMap<String,Integer>();
+		Map<String,TimeZone> timezone = new HashMap<String,TimeZone>();
 		String cid;
 		Boolean logs;
 		int num_of_forks =0;
@@ -126,6 +133,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			enableLogs.put(cid, logs);
 			simulationVia.put(cid, cx.getSimulationVia());
 			threshold.put(cid, Integer.valueOf(cx.getThreshold()));
+			timezone.put(cid, customerUtils.FetchTimeZone(cx.getTimezone()));
 		}
 		
 		List<Portion> portionList = getPortionService().findByCids(cidList);
@@ -138,6 +146,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			sst.setlog(enableLogs.get(cid));
 			sst.setSimulationVia(simulationVia.get(cid));
 			sst.setTagThreshold(threshold.get(cid));
+			sst.setTimeZone(timezone.get(cid));
 			recursiveTasks.add(sst);
 			forkJoinPool.execute(sst);
 			i++;
@@ -168,8 +177,9 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		boolean logenabled = this.logenabled;
 		String simulateVia = this.simulateVia;
 		int threshold = this.threshold;
+		format.setTimeZone(this.timeZone);
 		List<BeaconAssociation> associatedBeaconList = getBeaconAssociationService().findBySpid(spid);
-		getCustomerUtils().logs(logenabled, classname, "spid "+spid+" associatedBeaconList "+associatedBeaconList);
+//		getCustomerUtils().logs(logenabled, classname, "spid "+spid+" associatedBeaconList "+associatedBeaconList);
 		if(associatedBeaconList == null || associatedBeaconList.size()==0){
 			return 0;
 		}
@@ -195,7 +205,6 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			message.put("record_num", record_num);
 			message.put("max_record", max_record);
 			message.put("tag_list", tag_list);
-			message.put("count", 0);
 			message.put("date", format.format(new Date()));
 			//testing
 			simulateVia = "mqtt";
@@ -203,7 +212,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			case "mqtt":
 				String msg = MessageFormat.format(mqttMsgTemplate,
 						new Object[] { opcode, uid, spid, tag_count,
-									   record_num, max_record, tag_list,String.valueOf(++count),format.format(new Date())
+									   record_num, max_record, tag_list,format.format(new Date())
 									  });
 				getMqttPublisher().publish("{"+msg+"}",spid);
 				break;
