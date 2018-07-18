@@ -72,12 +72,12 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 	public final String simulation = "enable";
 	public final String opcode = "current-location-update";
 	public final String cx_state = "ACTIVE";
-	DateFormat format 			= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	DateFormat format =	new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	public static int count = 0;
 	List<String> solution = Arrays.asList("GatewayFinder", "GeoFinder");
 	String mqttMsgTemplate = "\"opcode\":\"{0}\", \"uid\":\"{1}\",\"spid\":\"{2}\""
 						   + ",\"tag_count\":{3}, \"record_num\":{4},\"max_record\":{5},"
-						   + "\"tag_list\":{6},\"date\":\"{7}\"";
+						   + "\"tag_list\":{6},\"server_send_ts\":\"{7}\"";
 
 
 	ForkJoinPool forkJoinPool = null;
@@ -108,7 +108,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 		this.timeZone = timezone;
 	}
 	
-	@Scheduled (fixedDelay=100)
+	@Scheduled (fixedDelay=1000)
 	public void simulationSchedule() throws InterruptedException {
 
 		if (!simulation_enable) {
@@ -197,7 +197,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			List<BeaconAssociation> subList = associatedBeaconList.subList(fromIndex, toIndex);
 			fromIndex = toIndex;
 			JSONArray tag_list = maketagList(subList);
-			JSONObject message = new JSONObject();
+			/*JSONObject message = new JSONObject();
 			message.put("opcode", opcode);
 			message.put("uid", uid);
 			message.put("spid", spid);
@@ -205,7 +205,7 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			message.put("record_num", record_num);
 			message.put("max_record", max_record);
 			message.put("tag_list", tag_list);
-			message.put("date", format.format(new Date()));
+			message.put("server_send_ts", format.format(new Date()));*/
 			//testing
 			simulateVia = "mqtt";
 			switch (simulateVia) {
@@ -243,13 +243,13 @@ public class simulationScheduledTask extends RecursiveTask<Integer> {
 			double lat = Double.valueOf(b.getLat());
 			double lon = Double.valueOf(b.getLon());
 
-			if (rand.nextInt() % 2 == 0) {
+			/*if (rand.nextInt() % 2 == 0) {
 				lat = lat + (rand.nextDouble() * 0.000001);
 				lon = lon - (rand.nextDouble() * 0.000001);
 			} else {
 				lat = lat - (rand.nextDouble() * 0.000001);
 				lon = lon + (rand.nextDouble() * 0.000001);
-			}
+			}*/
 
 			coordinate.put("latitude", lat);
 			coordinate.put("longitude", lon);

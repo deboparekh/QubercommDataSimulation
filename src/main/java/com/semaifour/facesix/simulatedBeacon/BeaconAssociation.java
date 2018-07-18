@@ -12,6 +12,10 @@ public class BeaconAssociation {
 	private String uid;
 	private String lat;
 	private String lon;
+	private String 	x;
+	private String 	y;
+	private int 	width;
+	private int 	height;
 	
 	public String getId() {
 		return id;
@@ -73,9 +77,42 @@ public class BeaconAssociation {
 		this.lon = lon;
 	}
 
+	public String getX() {
+		return x;
+	}
+
+	public void setX(String x) {
+		this.x = x;
+	}
+
+	public String getY() {
+		return y;
+	}
+
+	public void setY(String y) {
+		this.y = y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 	@Override
 	public String toString() {
 		return "BeaconAssociation [id=" + id + ", macaddr=" + macaddr + ", cid=" + cid + ", sid=" + sid + ", spid="
-				+ spid + ", uid=" + uid + ", lat=" + lat + ", lon=" + lon + "]";
+				+ spid + ", uid=" + uid + ", lat=" + lat + ", lon=" + lon + ", x=" + x + ", y=" + y + ", width=" + width
+				+ ", height=" + height + "]";
 	}
 }
